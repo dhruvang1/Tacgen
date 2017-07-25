@@ -1,0 +1,37 @@
+todo:
+
+1. encoding set karni he execute karte time (java -Dfile.encoding=UTF-8 -jar BANA.jar)  // done
+2. fill color wale funde hatane h  // done
+3. start end k funde hatane h polygon mein
+4. fill_color button hatana h  // done
+5. edit page 4 hatana h // done
+6. arc_restore humne hi kia h // done
+7. svg temp files path // done
+8. refresh mein addlistenertoscreenlabel kyu h hatake k dekho  // done
+9. svg file generate krte waqt khali nhi bnani  h   // done
+10. textraction cpp file mein temp.jpg tess delete krni h
+11. maths wali cpp mein lines, threshold check krni h
+
+Important - separate preview and science result selectable
+
+12. new system deploy ,"new folder" handle naam mein space
+13. properly deploy dekhna h
+14. math wala page h usko intuitive bnana h
+15. with html svg file also output
+16. ctrl+o and open mein gap
+17. close Alt+f4 bhi add kr denge file mein
+18. progress bar add krni h , navigation ki facility 
+19. Next prev ki position set krni h
+20. image ka jlabel aur side k options unki position fix  
+21. scroll with keyboard both frames
+
+
+slider for parameter 
+zoom in/out
+part of image
+preview // done
+skip coral draw intervention
+undo
+
+
+

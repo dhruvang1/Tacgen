@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup3">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup4">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup5">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup6">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup7">
+    </Component>
+    <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="jMenu1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="File"/>
+          </Properties>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Edit"/>
+          </Properties>
+        </Menu>
+      </SubComponents>
+    </Menu>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="SCRkucha1kuchGo_back_page4" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                  <Component id="SCRkucha1kuchLine" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                  <Component id="SCRkucha1kuchCircle" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                  <Component id="SCRkucha1kuchPolygon" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                  <Component id="SCRkucha1kuchArc" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                  <Component id="SCRkucha1kuchpolygon_start" alignment="0" min="-2" pref="59" max="-2" attributes="0"/>
+                  <Component id="SCRkucha1kuchpolygon_end" alignment="0" min="-2" pref="59" max="-2" attributes="0"/>
+                  <Component id="SCRkucha1kuchPath" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                  <Component id="SCRkucha1kuchRegion" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                  <Component id="SCRkucha1kuchdelete_page4" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <Component id="SCRkucha2kuchjScrollPane1" pref="100" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="SCRkucha1kuchpreview_button" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                          <Component id="SCRkucha1kuchzoom_slider" alignment="1" min="-2" pref="73" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="SCRkucha1kuchNext_page4" min="-2" pref="83" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="SCRkucha2kuchjScrollPane1" alignment="1" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchGo_back_page4" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchLine" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchCircle" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchArc" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchPolygon" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchpolygon_start" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchpolygon_end" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchPath" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchRegion" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="SCRkucha1kuchdelete_page4" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchNext_page4" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchpreview_button" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+              <Component id="SCRkucha1kuchzoom_slider" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JButton" name="SCRkucha1kuchLine">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Line"/>
+        <Property name="toolTipText" type="java.lang.String" value="Select two end points"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="SCRkucha1kuchArc">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Arc"/>
+        <Property name="toolTipText" type="java.lang.String" value="Select three points of arc in order"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SCRkucha1kuchArcActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="SCRkucha1kuchRegion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Region"/>
+        <Property name="toolTipText" type="java.lang.String" value="Draw a arbit shape"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="SCRkucha1kuchdelete_page4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Delete"/>
+        <Property name="toolTipText" type="java.lang.String" value="Delete selected shapes"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="SCRkucha2kuchjScrollPane1">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="SCRkucha1kuchGo_back_page4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Go Back"/>
+        <Property name="toolTipText" type="java.lang.String" value="Revert back to previous stage"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SCRkucha1kuchGo_back_page4ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="SCRkucha1kuchNext_page4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Next"/>
+        <Property name="toolTipText" type="java.lang.String" value="Go to next page if all shapes have been identified"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="SCRkucha1kuchPath">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Path"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="SCRkucha1kuchpolygon_start">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Start"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="SCRkucha1kuchpolygon_end">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="End"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SCRkucha1kuchpolygon_endActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="SCRkucha1kuchpreview_button">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="E:\Acads\CSD750\BANA_28_05\resources\Images\preview1_65x65.png"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="SCRkucha1kuchPolygon">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Polygon"/>
+        <Property name="toolTipText" type="java.lang.String" value="Select vertices of poygon in an order"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SCRkucha1kuchPolygonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="SCRkucha1kuchCircle">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Circle"/>
+        <Property name="toolTipText" type="java.lang.String" value="Select any three point of circle"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSlider" name="SCRkucha1kuchzoom_slider">
+      <Properties>
+        <Property name="majorTickSpacing" type="int" value="5"/>
+        <Property name="maximum" type="int" value="36"/>
+        <Property name="minimum" type="int" value="1"/>
+        <Property name="minorTickSpacing" type="int" value="1"/>
+        <Property name="orientation" type="int" value="1"/>
+        <Property name="paintLabels" type="boolean" value="true"/>
+        <Property name="paintTicks" type="boolean" value="true"/>
+        <Property name="value" type="int" value="16"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
