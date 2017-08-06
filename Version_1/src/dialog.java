@@ -10,6 +10,11 @@
  */
 public class dialog extends javax.swing.JFrame {
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel SCRkucha2kuchpreview_Label;
+    private javax.swing.JScrollPane SCRkucha2kuchpreview_ScrollPane;
+    // End of variables declaration//GEN-END:variables
+
     /**
      * Creates new form dialog
      */
@@ -88,8 +93,5 @@ public class dialog extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel SCRkucha2kuchpreview_Label;
-    private javax.swing.JScrollPane SCRkucha2kuchpreview_ScrollPane;
-    // End of variables declaration//GEN-END:variables
+
 }

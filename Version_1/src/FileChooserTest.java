@@ -6,10 +6,6 @@ import javax.swing.*;
 import javax.swing.filechooser.*;
 import javax.swing.filechooser.FileFilter;
  
-/**
- * @version 1.23 2007-06-12
- * @author Cay Horstmann
- */
 public class FileChooserTest
 {
    public static void main(String[] args)
@@ -18,10 +14,10 @@ public class FileChooserTest
          {
             public void run()
             {
-               ImageViewerFrame frame = new ImageViewerFrame();
-               frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-               frame.setVisible(true);
-//               frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+               ImageViewerFrame imageViewerFrame = new ImageViewerFrame();
+               imageViewerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+               imageViewerFrame.setVisible(true);
+//               imageViewerFrame.setExtendedState(imageViewerFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
             }
          });
    }
@@ -32,6 +28,12 @@ public class FileChooserTest
  */
 class ImageViewerFrame extends JFrame
 {
+    public static final int DEFAULT_WIDTH = 300;
+    public static final int DEFAULT_HEIGHT = 400;
+
+    private JLabel label;
+    private JFileChooser chooser;
+
    public ImageViewerFrame()
    {
       setTitle("FileChooserTest");
@@ -66,23 +68,23 @@ class ImageViewerFrame extends JFrame
  
       // set up file chooser
       File root = new File (".");
-      FileSystemView fsv = new SingleRootFileSystemView(root);
-      chooser = new JFileChooser(fsv);
+      FileSystemView fileSystemView = new SingleRootFileSystemView(root);
+      chooser = new JFileChooser(fileSystemView);
  
       // accept all image files ending with .jpg, .jpeg, .gif
       /*
-      final ExtensionFileFilter filter = new ExtensionFileFilter();
-      filter.addExtension("jpg");
-      filter.addExtension("jpeg");
-      filter.addExtension("gif");
-      filter.setDescription("Image files");
+      final ExtensionFileFilter fileNameExtensionFilter = new ExtensionFileFilter();
+      fileNameExtensionFilter.addExtension("jpg");
+      fileNameExtensionFilter.addExtension("jpeg");
+      fileNameExtensionFilter.addExtension("gif");
+      fileNameExtensionFilter.setDescription("Image files");
       */
-      FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "jpg", "jpeg", "gif");
-      chooser.setFileFilter(filter);
+      FileNameExtensionFilter fileNameExtensionFilter = new FileNameExtensionFilter("Image files", "jpg", "jpeg", "gif");
+      chooser.setFileFilter(fileNameExtensionFilter);
  
       chooser.setAccessory(new ImagePreviewer(chooser));
  
-      chooser.setFileView(new FileIconView(filter, new ImageIcon("palette.gif")));
+      chooser.setFileView(new FileIconView(fileNameExtensionFilter, new ImageIcon("palette.gif")));
    }
  
    /**
@@ -105,12 +107,6 @@ class ImageViewerFrame extends JFrame
          }
       }
    }
- 
-   public static final int DEFAULT_WIDTH = 300;
-   public static final int DEFAULT_HEIGHT = 400;
- 
-   private JLabel label;
-   private JFileChooser chooser;
 }
  
 /**
@@ -158,24 +154,24 @@ class ImagePreviewer extends JLabel
          {
             public void propertyChange(PropertyChangeEvent event)
             {
-               if (event.getPropertyName() == JFileChooser.SELECTED_FILE_CHANGED_PROPERTY)
+               if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(event.getPropertyName()))
                {
                   // the user has selected a new file
-                  File f = (File) event.getNewValue();
-                  if (f == null)
+                  File file = (File) event.getNewValue();
+                  if (file == null)
                   {
                      setIcon(null);
                      return;
                   }
  
-                  // read the image into an icon
-                  ImageIcon icon = new ImageIcon(f.getPath());
+                  // read the image into an imageIcon
+                  ImageIcon imageIcon = new ImageIcon(file.getPath());
  
-                  // if the icon is too large to fit, scale it
-                  if (icon.getIconWidth() > getWidth()) icon = new ImageIcon(icon.getImage()
+                  // if the imageIcon is too large to fit, scale it
+                  if (imageIcon.getIconWidth() > getWidth()) imageIcon = new ImageIcon(imageIcon.getImage()
                         .getScaledInstance(getWidth(), -1, Image.SCALE_DEFAULT));
  
-                  setIcon(icon);
+                  setIcon(imageIcon);
                }
             }
          });

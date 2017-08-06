@@ -1,115 +1,114 @@
 
 
-public class circle {
+public class Circle {
 	
-	public float get_radius(Pair<Float,Float> A, Pair<Float,Float> B){
-        float rad;
-        rad = (float) Math.pow(Math.pow((A.getL()-B.getL()), 2) + Math.pow((A.getR()-B.getR()), 2),0.5);
-
-        return rad;
+	public float getRadius(Pair<Float,Float> A, Pair<Float,Float> B){
+        return (float) Math.pow(Math.pow((A.getL()-B.getL()), 2) + Math.pow((A.getR()-B.getR()), 2),0.5);
     }
-    public  int calc_an(int a1,int a2){
-        int an=0;
-        an = (int) ( (double)(180.0/Math.PI) * Math.acos(a1/Math.pow((Math.pow(a1,2)+Math.pow(a2,2)),0.5))  );
+
+    public  int getAngleFromSides(int a1, int a2){
+        int angle = (int) ((180.0/Math.PI) * Math.acos(a1/Math.pow((Math.pow(a1,2)+Math.pow(a2,2)),0.5))  );
         if(a2>0){
-            an = 360-an;
+            angle = 360- angle;
         }
-        return an;    
+        return angle;
     }
 
-    public int[] calc_angles(int a1,int a2,int b1,int b2,int c1,int c2){
-        int [] p = calc(a1,a2,b1,b2,c1,c2);
-        int c_x = p[0];
-        int c_y = p[1];
-        int [] s1 = new int[3];
+    public int[] getArcAngles(int a1, int a2, int b1, int b2, int c1, int c2){
+        int[] center = getCenter(a1,a2,b1,b2,c1,c2);
+        int centerX = center[0];
+        int centerY = center[1];
+        int [] anglesFromCenter = new int[3];
         int [] arc_angles = new int[2];
         
-        s1[0] = calc_an(a1-c_x,a2-c_y);
-        
-        s1[1] = calc_an(b1-c_x,b2-c_y);
-        s1[2] = calc_an(c1-c_x,c2-c_y);
+        anglesFromCenter[0] = getAngleFromSides(a1- centerX,a2- centerY);
+        anglesFromCenter[1] = getAngleFromSides(b1- centerX,b2- centerY);
+        anglesFromCenter[2] = getAngleFromSides(c1- centerX,c2- centerY);
         //System.out.println(s1[0]+","+s1[1]+","+s1[2]);
-        if(s1[0]<s1[2]){
+        if(anglesFromCenter[0]< anglesFromCenter[2]){
             
-            if(s1[1]>s1[0]&&s1[1]<s1[2]){
-                arc_angles[1]=s1[2]-s1[0];
-                arc_angles[0]=s1[0];
+            if(anglesFromCenter[1]> anglesFromCenter[0]&& anglesFromCenter[1]< anglesFromCenter[2]){
+                arc_angles[1]= anglesFromCenter[2]- anglesFromCenter[0];
+                arc_angles[0]= anglesFromCenter[0];
             }
             else{
-                arc_angles[0]=s1[2];
-                arc_angles[1]=360-(s1[2]-s1[0]);
+                arc_angles[0]= anglesFromCenter[2];
+                arc_angles[1]=360-(anglesFromCenter[2]- anglesFromCenter[0]);
             }
         }
         else{
             
-            if(s1[1]<s1[2]||s1[0]<s1[1]){
-                arc_angles[1]=360-s1[0]+s1[2];
-                arc_angles[0]=s1[0];
+            if(anglesFromCenter[1]< anglesFromCenter[2]|| anglesFromCenter[0]< anglesFromCenter[1]){
+                arc_angles[1]=360- anglesFromCenter[0]+ anglesFromCenter[2];
+                arc_angles[0]= anglesFromCenter[0];
             }
             else{
-                arc_angles[0]=s1[2];
-                arc_angles[1]=s1[0]-s1[2];
+                arc_angles[0]= anglesFromCenter[2];
+                arc_angles[1]= anglesFromCenter[0]- anglesFromCenter[2];
             }
         }
         return arc_angles;
     }
-    public int[] calc(int a1,int a2,int b1,int b2,int c1,int c2){        
-        int m1,m2;
-        int n1,n2;
+
+    public int[] getCenter(int a1, int a2, int b1, int b2, int c1, int c2){
+        int m1,m2,n1,n2; //mid points
         m1=(a1+b1)/2;
         m2=(a2+b2)/2;
         n1=(a1+c1)/2;
         n2=(a2+c2)/2;
-        int cenx = 0;
-        int ceny = 0;
-        int a = 0,b = 0,c = 0;
-            int d = 0,e = 0,f = 0;
+        int centerX;
+        int centerY;
+        int a,b,c,d,e,f;
             if(a1==c1){
-                d=0;e=1;f=-n2;ceny = n2;
+                d=0;e=1;f=-n2;
+                centerY = n2;
                 if(a2==b2){
-                    cenx = m1;
+                    centerX = m1;
                 }
                 else{
                     a=b1-a1;
                     b=b2-a2;
                     c=-1*(a*m1+b*m2);
-                    cenx = (b*f-c)/a;
+                    centerX = (b*f-c)/a;
                 }
             }
             else if(a1==b1){
-                a=0;b=1;c=-m2;ceny = m2;
+                a=0;b=1;c=-m2;
+                centerY = m2;
                 if(a2==c2){
-                    cenx = n1;
+                    centerX = n1;
                 }
                 else{
                     d=c1-a1;
                     e=c2-a2;
                     f=-1*(d*n1+e*n2);
-                    cenx = (e*c-f)/d;
+                    centerX = (e*c-f)/d;
                 }
             }
             else if(a2==c2){
-                d=1;e=0;f=-n1;cenx = n1;
+                d=1;e=0;f=-n1;
+                centerX = n1;
                 if(a1==b1){
-                    ceny = m2;
+                    centerY = m2;
                 }
                 else{
                     a=b1-a1;
                     b=b2-a2;
                     c=-1*(a*m1+b*m2);
-                    ceny = (-1*c-a*n1)/b;
+                    centerY = (-1*c-a*n1)/b;
                 }
             }
             else if(a2==b2){
-                a=1;b=0;c=-m1;cenx = m1;
+                a=1;b=0;c=-m1;
+                centerX = m1;
                 if(a1==c1){
-                    ceny = m2;
+                    centerY = m2;
                 }
                 else{
                     d=c1-a1;
                     e=c2-a2;
                     f=-1*(d*n1+e*n2);
-                    ceny = (-1*f-d*m1)/e;
+                    centerY = (-1*f-d*m1)/e;
                 }
             }
             else{
@@ -119,12 +118,12 @@ public class circle {
                 d=c1-a1;
                 e=c2-a2;
                 f=-1*(d*n1+e*n2);
-                ceny = (a*f-c*d)/(b*d-a*e);
-                cenx = (b*f-c*e)/(a*e-b*d); 
+                centerY = (a*f-c*d)/(b*d-a*e);
+                centerX = (b*f-c*e)/(a*e-b*d);
             }
             int [] ret = new int[3];
-            ret[0] = cenx;
-            ret[1] = ceny;
+            ret[0] = centerX;
+            ret[1] = centerY;
             return ret;
     }
     
@@ -207,10 +206,10 @@ public class circle {
 //        System.out.println("final cent 1 "+final_cent[1]);
 
         int[] arc_angles=new int[2];
-//        System.out.println("calc_an for s "+(int)(s1-final_cent[0])+" , "+(int)(s2-final_cent[1]));
-//        System.out.println("calc_an for e "+(int)(e1-final_cent[0])+" , "+(int)(e2-final_cent[1]));
-        int s= calc_an((int)(s1-final_cent[0]),(int)(s2-final_cent[1]));
-        int e= calc_an((int)(e1-final_cent[0]),(int)(e2-final_cent[1]));
+//        System.out.println("getAngleFromSides for s "+(int)(s1-final_cent[0])+" , "+(int)(s2-final_cent[1]));
+//        System.out.println("getAngleFromSides for e "+(int)(e1-final_cent[0])+" , "+(int)(e2-final_cent[1]));
+        int s= getAngleFromSides((int)(s1-final_cent[0]),(int)(s2-final_cent[1]));
+        int e= getAngleFromSides((int)(e1-final_cent[0]),(int)(e2-final_cent[1]));
 //        System.out.println("s angle "+s);
 //        System.out.println("e angle "+e);
         arc_angles[0]=s;
@@ -233,7 +232,7 @@ public class circle {
     
     
     public static void main(String[] args){
-//        int [] s = calc_angles(50,0,0,50,100,50);
+//        int [] s = getArcAngles(50,0,0,50,100,50);
 //        System.out.println(s[0]+","+s[1]);
     }
 }

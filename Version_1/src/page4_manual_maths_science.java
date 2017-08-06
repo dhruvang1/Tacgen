@@ -4,103 +4,103 @@ import javax.swing.JPanel;
 
 public class page4_manual_maths_science extends JPanel{
     int r=0;
-    SCR t1 = new SCR(r);
+    Screen t1 = new Screen(r);
     public page4_manual_maths_science(){
-        SCR.a2.pane.removeAll(); 
-        SCR.main_frame.setJMenuBar(SCR.a1.menu_bar);
+        Screen.a2.pane.removeAll();
+        Screen.main_frame.setJMenuBar(Screen.a1.jMenuBar);
         refresh();
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(SCR.main_frame.getContentPane());
-        SCR.main_frame.getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(Screen.main_frame.getContentPane());
+        Screen.main_frame.getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SCR.a1.Go_back_page4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SCR.a1.Line, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SCR.a1.Circle, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SCR.a1.Polygon, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SCR.a1.Arc, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SCR.a1.polygon_start, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SCR.a1.polygon_end, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SCR.a1.Path, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SCR.a1.Region, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SCR.a1.delete_page4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Screen.a1.jGoBackPage4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.a1.drawLine, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.a1.drawCircle, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.a1.drawPolygon, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.a1.drawArc, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.a1.polygonStart, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.a1.polygonEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.a1.drawPath, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.a1.drawRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.a1.jDeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
-                .addComponent(SCR.a2.jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addComponent(Screen.a2.jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(SCR.a1.preview_button, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SCR.a1.zoom_slider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Screen.a1.jPreviewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Screen.a1.jZoomSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
-                    .addComponent(SCR.a1.Next_page4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Screen.a1.jNextPage4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SCR.a2.jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(Screen.a2.jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(SCR.a1.Go_back_page4)
+                .addComponent(Screen.a1.jGoBackPage4)
                 .addGap(16, 16, 16)
-                .addComponent(SCR.a1.Line)
+                .addComponent(Screen.a1.drawLine)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SCR.a1.Circle)
+                .addComponent(Screen.a1.drawCircle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SCR.a1.Arc)
+                .addComponent(Screen.a1.drawArc)
                 .addGap(18, 18, 18)
-                .addComponent(SCR.a1.Polygon)
+                .addComponent(Screen.a1.drawPolygon)
                 .addGap(18, 18, 18)
-                .addComponent(SCR.a1.polygon_start)
+                .addComponent(Screen.a1.polygonStart)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SCR.a1.polygon_end)
+                .addComponent(Screen.a1.polygonEnd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SCR.a1.Path)
+                .addComponent(Screen.a1.drawPath)
                 .addGap(18, 18, 18)
-                .addComponent(SCR.a1.Region)
+                .addComponent(Screen.a1.drawRegion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(SCR.a1.delete_page4)
+                .addComponent(Screen.a1.jDeleteButton)
                 .addGap(23, 23, 23))
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(SCR.a1.Next_page4)
+                .addComponent(Screen.a1.jNextPage4)
                 .addGap(63, 63, 63)
-                .addComponent(SCR.a1.preview_button)
+                .addComponent(Screen.a1.jPreviewButton)
                 .addGap(61, 61, 61)
-                .addComponent(SCR.a1.zoom_slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Screen.a1.jZoomSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        SCR.main_frame.setExtendedState(SCR.main_frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        SCR.main_frame.validate();
-        SCR.main_frame.repaint();
-        t1.repaint(SCR.screen,SCR.a2.screenCopy);
-        SCR.a2.jScrollPane1.setViewportView(SCR.a2.screenLabel);  //SCR.a2.screenLabel.repaint();
-        SCR.main_frame.setVisible(true);
+        Screen.main_frame.setExtendedState(Screen.main_frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        Screen.main_frame.validate();
+        Screen.main_frame.repaint();
+        t1.repaint(Screen.screen, Screen.a2.screenCopy);
+        Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+        Screen.main_frame.setVisible(true);
     }
     
     public void go_back() throws IOException{
-        SCR.line_object = new get_lines();
-    	SCR.circle_object = new get_circles();
-    	SCR.region_object = new get_regions();
-    	SCR.polygon_object = new get_polygon();
-        SCR.arc_object = new get_arc();
-        SCR.a16 = new get_paths();
-        SCR.a22=new page3_auto_maths_science();
+        Screen.line_object = new get_lines();
+    	Screen.circle_object = new GetCircles();
+    	Screen.region_object = new GetRegions();
+    	Screen.polygon_object = new get_polygon();
+        Screen.arc_object = new GetArc();
+        Screen.a16 = new GetPaths();
+        Screen.a22=new page3_auto_maths_science();
     }
     
     private void refresh(){
-        SCR.a1.Line.setSelected(false);
-        SCR.a1.Circle.setSelected(false);
-        SCR.a1.Arc.setSelected(false);
-        SCR.a1.Polygon.setSelected(false);
-        SCR.a1.deselect_rb1_rb2();
-        SCR.a1.Path.setSelected(false);
-        SCR.a1.Region.setSelected(false);
-        SCR.a1.Edit_page4.setSelected(false);
-        SCR.a1.delete_all_temp();
-        SCR.a1.preview_button.setEnabled(true);
-        SCR.preview_frame.setVisible(false);
+        Screen.a1.drawLine.setSelected(false);
+        Screen.a1.drawCircle.setSelected(false);
+        Screen.a1.drawArc.setSelected(false);
+        Screen.a1.drawPolygon.setSelected(false);
+        Screen.a1.deselectRadioButtons();
+        Screen.a1.drawPath.setSelected(false);
+        Screen.a1.drawRegion.setSelected(false);
+        Screen.a1.jEditPage4.setSelected(false);
+        Screen.a1.deleteAllTemp();
+        Screen.a1.jPreviewButton.setEnabled(true);
+        Screen.preview_frame.setVisible(false);
     }
 }

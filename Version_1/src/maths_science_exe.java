@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,13 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
-import javax.imageio.ImageIO;
 
 public class maths_science_exe {
     int r =0;
-    SCR t1 = new SCR(r);
+    Screen t1 = new Screen(r);
     public void load() throws FileNotFoundException, IOException, InterruptedException{
         String h1 = t1.current_file.getAbsolutePath();
         String h2 = String.valueOf(t1.current_file.getName());
@@ -24,12 +21,12 @@ public class maths_science_exe {
         File outputfile1 = new File(h4);
         
         // clear all data structures related to maths
-        SCR.line_object = new get_lines();
-    	SCR.circle_object = new get_circles();
-    	SCR.region_object = new get_regions();
-    	SCR.polygon_object = new get_polygon();
-        SCR.arc_object = new get_arc();
-        SCR.a16 = new get_paths();
+        Screen.line_object = new get_lines();
+    	Screen.circle_object = new GetCircles();
+    	Screen.region_object = new GetRegions();
+    	Screen.polygon_object = new get_polygon();
+        Screen.arc_object = new GetArc();
+        Screen.a16 = new GetPaths();
         
         
 //        BufferedImage temp = ImageIO.read(outputfile1);
@@ -65,7 +62,7 @@ public class maths_science_exe {
 //        ImageIO.write(temp, "PNG", outputfile);
         
         Runtime rt = Runtime.getRuntime();
-        File dir = new File(SCR.config.get("library_directory_path"));
+        File dir = new File(Screen.config.get("library_directory_path"));
         System.out.println("Math start");
         
         
@@ -81,9 +78,9 @@ public class maths_science_exe {
         // Lines with less than this number of points are disregarded - CV_HL
         int thresh_min_line_gap = 50; // The maximum gap between two points to be considered in the same line - CV_HL
     
-        min_dist = SCR.a1.dup_line_dist_slider.getValue();
-        angle_s = SCR.a1.dup_line_angle_slider.getValue();
-        Process pr = rt.exec("\""+SCR.config.get("maths.exe")+"\""+" "
+        min_dist = Screen.a1.duplicateLineDetectionByDistance.getValue();
+        angle_s = Screen.a1.duplicateLineDetectionByAngle.getValue();
+        Process pr = rt.exec("\""+ Screen.config.get("maths.exe")+"\""+" "
                 +"\""+outputfile1.getAbsolutePath()+"\""+" "
                 +angle_s+" "
                 +thresh_line_overlap_circle+" "
@@ -101,7 +98,7 @@ public class maths_science_exe {
         System.out.println("Math done");
         int ind=outputfile1.getAbsolutePath().lastIndexOf("\\");
         //File f = new File(outputfile1.getAbsolutePath().substring(0, ind+1)+"output.txt");
-        File f = new File(SCR.config.get("library_directory_path")+"//output.txt");
+        File f = new File(Screen.config.get("library_directory_path")+"//output.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f),"UTF-8"));
         String s1 = br.readLine();
         while(s1!=null){
@@ -114,8 +111,8 @@ public class maths_science_exe {
                 h11 = Integer.valueOf(gt[2]);h12=Integer.valueOf(gt[3]);
                 Pair<Integer,Integer> temp_pair_2 = new Pair <> (h11,h12);
                 boolean match = false;
-                for(int i=0;i<SCR.line_object.Lines.size()-1;i+=2){
-                    if(SCR.line_object.Lines.get(i).equals(temp_pair)&&SCR.line_object.Lines.get(i+1).equals(temp_pair_2)){
+                for(int i = 0; i< Screen.line_object.Lines.size()-1; i+=2){
+                    if(Screen.line_object.Lines.get(i).equals(temp_pair)&& Screen.line_object.Lines.get(i+1).equals(temp_pair_2)){
                         match = true;
                         //System.out.println(match);
                         break;
@@ -123,10 +120,10 @@ public class maths_science_exe {
                 }
                 if(!match){
                     //System.out.println("added a line");
-                    SCR.line_object.Lines.add(temp_pair);
-                    SCR.line_object.color_array.add(SCR.current_color);
-                    SCR.line_object.Lines.add(temp_pair_2);
-                    SCR.line_object.color_array.add(SCR.current_color);
+                    Screen.line_object.Lines.add(temp_pair);
+                    Screen.line_object.color_array.add(Screen.current_color);
+                    Screen.line_object.Lines.add(temp_pair_2);
+                    Screen.line_object.color_array.add(Screen.current_color);
                 }
             }
             if(s1.contains("c-")){
@@ -137,19 +134,19 @@ public class maths_science_exe {
                 float f3 = Float.valueOf(gt[2]);
                 Pair<Float,Float> temp_pair = new Pair <> (f1,f2);
                 boolean match = false;
-                for(int i=0;i<SCR.circle_object.Centers.size();i++){
-                    if(SCR.circle_object.Centers.get(i).equals_float(temp_pair)){
-                        if (Math.abs(SCR.circle_object.Radius.get(i)-f3)<=3) {
+                for(int i = 0; i< Screen.circle_object.centers.size(); i++){
+                    if(Screen.circle_object.centers.get(i).equals_float(temp_pair)){
+                        if (Math.abs(Screen.circle_object.radii.get(i)-f3)<=3) {
                             match = true;
                             break;
                         }
                     }
                 }
                 if(!match){
-                    SCR.circle_object.Centers.add(temp_pair);
-                    SCR.circle_object.Radius.add(f3);
-                    SCR.circle_object.color_array.add(SCR.current_color);
-                    SCR.circle_object.fill_or_not.add(0);
+                    Screen.circle_object.centers.add(temp_pair);
+                    Screen.circle_object.radii.add(f3);
+                    Screen.circle_object.colorArray.add(Screen.current_color);
+                    Screen.circle_object.fillArray.add(0);
                 }
             }
             s1 = br.readLine();
@@ -166,12 +163,12 @@ public class maths_science_exe {
         h4=h4.substring(0, index+1)+ty;
         File outputfile1 = new File(h4);
         Runtime rt = Runtime.getRuntime();
-        File dir = new File(SCR.config.get("library_directory_path"));
+        File dir = new File(Screen.config.get("library_directory_path"));
         System.out.println("Science start");
-        Process pr = rt.exec("\""+SCR.config.get("science.exe")+"\""+" "+"\""+outputfile1.getAbsolutePath()+"\"",null,dir);
+        Process pr = rt.exec("\""+ Screen.config.get("science.exe")+"\""+" "+"\""+outputfile1.getAbsolutePath()+"\"",null,dir);
         pr.waitFor();
         System.out.println("Science done");
-        File f = new File(SCR.config.get("library_directory_path")+"//regions.txt");
+        File f = new File(Screen.config.get("library_directory_path")+"//regions.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f),"UTF-8"));
         String s1 = br.readLine();
         while(s1!=null){
@@ -190,7 +187,7 @@ public class maths_science_exe {
             temp_Points_regions.add(temp_pair);
             boolean match = false;
             int temp_index;
-            for (ArrayList<Pair<Integer, Integer>> Region : SCR.a16.Regions) {
+            for (ArrayList<Pair<Integer, Integer>> Region : Screen.a16.regions) {
                 temp_index = Region.size() - 2;
                 //if (Region.size() == temp_Points_regions.size() && Region.get(0).equals(temp_Points_regions.get(0)) && Region.get(temp_index).equals(temp_Points_regions.get(temp_index))) {
                 if (Region.size() == temp_Points_regions.size()&&Region.get(0).equals(temp_Points_regions.get(0)) && Region.get(temp_index).equals(temp_Points_regions.get(temp_index))) {
@@ -199,10 +196,10 @@ public class maths_science_exe {
                 }
             }
             if(!match){
-                SCR.a16.Regions.add(temp_Points_regions);
+                Screen.a16.regions.add(temp_Points_regions);
                 Random rand = new Random();
                 Color randomColor = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat());
-                SCR.a16.color_array.add(randomColor);
+                Screen.a16.colorArray.add(randomColor);
             }
             s1 = br.readLine();
         }

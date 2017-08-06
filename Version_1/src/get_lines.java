@@ -13,7 +13,7 @@ public class get_lines {
     Point startPoint;
     Point endPoint;
     int r =0;
-    SCR t1 = new SCR(r);
+    Screen t1 = new Screen(r);
     int i=0;
     public get_lines() {
         Lines= new ArrayList<>();
@@ -33,25 +33,25 @@ public class get_lines {
         Pair<Integer,Integer> temp = new Pair<Integer,Integer>(x, y);
         if (!firstPointCaptured)
         {
-            startPoint = SCR.a1.get_original_point_coordinate(e);
+            startPoint = Screen.a1.getOriginalZoomedCoordinate(e);
             firstPointCaptured = true;
             temp.setL(startPoint.x);temp.setR(startPoint.y);
             endPoint = null;
             System.out.println("lines size : "+Lines.size());
             Lines.add(temp);
-            color_array.add(SCR.current_color);
+            color_array.add(Screen.current_color);
         }
         else
         {
-            endPoint = SCR.a1.get_original_point_coordinate(e);
+            endPoint = Screen.a1.getOriginalZoomedCoordinate(e);
             if(calc_distance(endPoint.x, endPoint.y,Lines.get(Lines.size()-1).getL() ,Lines.get(Lines.size()-1).getR())>5){
                 temp.setL(endPoint.x);temp.setR(endPoint.y);
                 Lines.add(temp);
                 firstPointCaptured = false;
-                color_array.add(SCR.current_color);
+                color_array.add(Screen.current_color);
             }
-            t1.repaint(SCR.screen, SCR.a2.screenCopy);
-            SCR.a2.jScrollPane1.setViewportView(SCR.a2.screenLabel);  //SCR.a2.screenLabel.repaint();
+            t1.repaint(Screen.screen, Screen.a2.screenCopy);
+            Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
         }
         
     }
@@ -69,8 +69,8 @@ public class get_lines {
             int y1 = Lines.get(i).getR();
             int x2 = Lines.get(i+1).getL();
             int y2 = Lines.get(i+1).getR();
-            int p1 = SCR.a1.get_original_point_coordinate(e).x;
-            int p2 = SCR.a1.get_original_point_coordinate(e).y;
+            int p1 = Screen.a1.getOriginalZoomedCoordinate(e).x;
+            int p2 = Screen.a1.getOriginalZoomedCoordinate(e).y;
             double d1 =Math.pow( Math.pow(x1-p1, 2)+Math.pow(y1-p2, 2) , 0.5);
             double d2 =Math.pow( Math.pow(x2-p1, 2)+Math.pow(y2-p2, 2) , 0.5);
             double d3 =Math.pow( Math.pow(x1-x2, 2)+Math.pow(y1-y2, 2) , 0.5);
@@ -96,8 +96,8 @@ public class get_lines {
             int y1 = Lines.get(i).getR();
             int x2 = Lines.get(i+1).getL();
             int y2 = Lines.get(i+1).getR();
-            int p1 = SCR.a1.get_original_point_coordinate(e).x;
-            int p2 = SCR.a1.get_original_point_coordinate(e).y;
+            int p1 = Screen.a1.getOriginalZoomedCoordinate(e).x;
+            int p2 = Screen.a1.getOriginalZoomedCoordinate(e).y;
             double d1 =Math.pow( Math.pow(x1-p1, 2)+Math.pow(y1-p2, 2) , 0.5);
             double d2 =Math.pow( Math.pow(x2-p1, 2)+Math.pow(y2-p2, 2) , 0.5);
             double d3 =Math.pow( Math.pow(x1-x2, 2)+Math.pow(y1-y2, 2) , 0.5);
@@ -105,8 +105,8 @@ public class get_lines {
             double area = Math.pow(s*(s-d1)*(s-d2)*(s-d3),0.5);
             double h = (2.0*area)/d3;
             if(h<4&&d1<d3&&d2<d3){
-                color_array.set(i,SCR.current_color);
-                color_array.set(i+1,SCR.current_color);
+                color_array.set(i, Screen.current_color);
+                color_array.set(i+1, Screen.current_color);
             }
             i = i+1;
         }

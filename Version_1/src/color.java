@@ -9,26 +9,24 @@ import javax.swing.event.ChangeListener;
 public class color extends JPanel
                                implements ActionListener,
                                           ChangeListener {
-	JColorChooser tcc;
-	
-    public color() {
-        
-    }
+//	JColorChooser tcc;
+
+    public color() {}
 
     public void actionPerformed(ActionEvent e) {
         Color newColor = JColorChooser.showDialog(
                                        color.this,
                                        "Choose Region Color",
-                                       SCR.a1.Selected_color.getBackground());
+                                       Screen.a1.jSelectedColor.getBackground());
         if (newColor != null) {
-                SCR.a1.Selected_color.setBackground(newColor);
-                SCR.current_color = newColor;
+                Screen.a1.jSelectedColor.setBackground(newColor);
+                Screen.current_color = newColor;
         }
     }
 
     public void stateChanged(ChangeEvent e) {
 //        Color newColor = tcc.getColor();
-//        SCR.a1.selected_color.setBackground(newColor);
+//        Screen.a1.selected_color.setBackground(newColor);
         
     }
 

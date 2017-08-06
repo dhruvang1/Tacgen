@@ -1,19 +1,19 @@
 
 public class refresh_all {
     public void refresh(){
-        SCR.label_counts = 0;
-        SCR.line_object = new get_lines();
-    	SCR.circle_object = new get_circles();
-    	SCR.region_object = new get_regions();
-    	SCR.textbox_object = new get_textbox();
-    	SCR.polygon_object = new get_polygon();
-        SCR.arc_object = new get_arc();
-        SCR.a9 = new modify_text();
-        SCR.a16 = new get_paths();
-        SCR.a10 = new which_polygon();
-//        SCR.text_exe = new load_labels();
-//        SCR.maths_science_exe = new load_lines_circles_regions();
-//        SCR.a13 = new svg_generate();
-        SCR.image_area_listeners = new Image_Area_Listeners();
+        Screen.label_counts = 0;
+        Screen.line_object = new get_lines();
+    	Screen.circle_object = new GetCircles();
+    	Screen.region_object = new GetRegions();
+    	Screen.textbox_object = new get_textbox();
+    	Screen.polygon_object = new get_polygon();
+        Screen.arc_object = new GetArc();
+        Screen.a9 = new modify_text();
+        Screen.a16 = new GetPaths();
+        Screen.a10 = new which_polygon();
+//        Screen.text_exe = new load_labels();
+//        Screen.maths_science_exe = new load_lines_circles_regions();
+//        Screen.a13 = new svg_generate();
+        Screen.image_area_listeners = new Image_Area_Listeners();
     }
 }

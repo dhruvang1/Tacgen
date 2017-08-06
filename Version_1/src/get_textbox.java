@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class get_textbox {
     int curX,curY ;
     int r =0;
-    SCR t1 = new SCR(r);
+    Screen t1 = new Screen(r);
     Rectangle captureRect;
     ArrayList<Rectangle> Rect_array=new ArrayList<Rectangle>();
     ArrayList<String> Language_array= new ArrayList<String>();
@@ -23,58 +23,58 @@ public class get_textbox {
             // TODO Auto-generated constructor stub
     }
     public void translate_text(MouseEvent me) throws NoninvertibleTransformException{
-        int w=SCR.textbox_object.Rect_array.get(SCR.a9.selected_rect).width;
-        int h = SCR.textbox_object.Rect_array.get(SCR.a9.selected_rect).height;
-        if(new Rectangle(SCR.rectangle_translate_start, new Dimension(w,h)).contains(SCR.start)){
-            Point p = SCR.a1.get_original_point_coordinate(me);
+        int w= Screen.textbox_object.Rect_array.get(Screen.a9.selected_rect).width;
+        int h = Screen.textbox_object.Rect_array.get(Screen.a9.selected_rect).height;
+        if(new Rectangle(Screen.rectangle_translate_start, new Dimension(w,h)).contains(Screen.start)){
+            Point p = Screen.a1.getOriginalZoomedCoordinate(me);
             curX = p.x;
             curY = p.y;
-            w=curX-SCR.start.x;h=curY-SCR.start.y;
-            int old_x = SCR.rectangle_translate_start.x;
-            int old_y = SCR.rectangle_translate_start.y;
-            Rect_array.get(SCR.a9.selected_rect).setLocation(old_x+w,old_y+h);
-            t1.repaint(SCR.screen, SCR.a2.screenCopy);
-            SCR.a2.jScrollPane1.setViewportView(SCR.a2.screenLabel);
+            w=curX- Screen.start.x;h=curY- Screen.start.y;
+            int old_x = Screen.rectangle_translate_start.x;
+            int old_y = Screen.rectangle_translate_start.y;
+            Rect_array.get(Screen.a9.selected_rect).setLocation(old_x+w,old_y+h);
+            t1.repaint(Screen.screen, Screen.a2.screenCopy);
+            Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);
         }
     }
     public void select_text(MouseEvent me) throws NoninvertibleTransformException{
-        Point p = SCR.a1.get_original_point_coordinate(me);
+        Point p = Screen.a1.getOriginalZoomedCoordinate(me);
         curX = p.x;
         curY = p.y;
-        int w=curX-SCR.start.x;int h=curY-SCR.start.y;
-        captureRect =new Rectangle(SCR.start.x, SCR.start.y,w,h);
-        t1.repaint(SCR.screen, SCR.a2.screenCopy);
-        SCR.a2.jScrollPane1.setViewportView(SCR.a2.screenLabel);  //SCR.a2.screenLabel.repaint();
+        int w=curX- Screen.start.x;int h=curY- Screen.start.y;
+        captureRect =new Rectangle(Screen.start.x, Screen.start.y,w,h);
+        t1.repaint(Screen.screen, Screen.a2.screenCopy);
+        Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
     }
     public void update_capture_rect(MouseEvent me) throws NoninvertibleTransformException{
-        Point p = SCR.a1.get_original_point_coordinate(me);
+        Point p = Screen.a1.getOriginalZoomedCoordinate(me);
         curX = p.x;
         curY = p.y;
-        int w=curX-SCR.start.x;int h=curY-SCR.start.y;
+        int w=curX- Screen.start.x;int h=curY- Screen.start.y;
         if(w>5&&h>5){
-            Rectangle tempRect =new Rectangle(SCR.start.x, SCR.start.y,w,h);
+            Rectangle tempRect =new Rectangle(Screen.start.x, Screen.start.y,w,h);
             Rect_array.add(tempRect);
-            Language_array.add(SCR.text_exe.language);
-            SCR.label_counts++;
+            Language_array.add(Screen.text_exe.language);
+            Screen.label_counts++;
             String h1 = "";String t1 = "";
             Pair<String,String> temp_pair = new Pair <String,String> (h1,t1);
-            temp_pair.setL(String.valueOf(SCR.label_counts));
-            temp_pair.setR("label - "+SCR.label_counts);
+            temp_pair.setL(String.valueOf(Screen.label_counts));
+            temp_pair.setR("label - "+ Screen.label_counts);
             label.add(temp_pair);
-            SCR.a9.selected_rect = Rect_array.size()-1;
-            SCR.a1.Label.setEditable(true);
-            SCR.a1.save_page2.setEnabled(true);
-            SCR.a1.delete_page2.setEnabled(true);
-            SCR.a1.Label.setEnabled(true);
-            SCR.a1.Label.requestFocus(true);
+            Screen.a9.selected_rect = Rect_array.size()-1;
+            Screen.a1.jLabel.setEditable(true);
+            Screen.a1.jSavePage2.setEnabled(true);
+            Screen.a1.jDeletePage2.setEnabled(true);
+            Screen.a1.jLabel.setEnabled(true);
+            Screen.a1.jLabel.requestFocus(true);
             
-//            SCR.a1.Label.setFocusable(true);
-            if(SCR.textbox_object.label.get(SCR.a9.selected_rect).getR().contains("label -")){
-                SCR.a1.Label.setText("");
-//                SCR.a1.Label.requestFocusInWindow();
+//            Screen.a1.Label.setFocusable(true);
+            if(Screen.textbox_object.label.get(Screen.a9.selected_rect).getR().contains("label -")){
+                Screen.a1.jLabel.setText("");
+//                Screen.a1.Label.requestFocusInWindow();
             }
             else{
-                SCR.a1.Label.setText(SCR.textbox_object.label.get(SCR.a9.selected_rect).getR());
+                Screen.a1.jLabel.setText(Screen.textbox_object.label.get(Screen.a9.selected_rect).getR());
             }
         }
         captureRect = null;
@@ -82,7 +82,7 @@ public class get_textbox {
     
     public void add_indices(MouseEvent e) throws NoninvertibleTransformException{
         for(int i=0;i<Rect_array.size();i++){
-            if(Rect_array.get(i).contains(SCR.a1.get_original_point_coordinate(e))){
+            if(Rect_array.get(i).contains(Screen.a1.getOriginalZoomedCoordinate(e))){
                 if(rect_indices.contains(i)){
                     rect_indices.remove((Integer)i );
                 }
@@ -93,17 +93,17 @@ public class get_textbox {
         }
     }
     public void delete_indices(){
-        if(SCR.a9.selected_rect!=10000){
-            Rect_array.remove(SCR.a9.selected_rect);
-            label.remove(SCR.a9.selected_rect);
-            Language_array.remove(SCR.a9.selected_rect);
-            SCR.a1.Label.setEditable(false);
-            SCR.a1.save_page2.setEnabled(false);
-            SCR.a1.delete_page2.setEnabled(false);
-            SCR.a1.Label.setEnabled(false);
+        if(Screen.a9.selected_rect!=10000){
+            Rect_array.remove(Screen.a9.selected_rect);
+            label.remove(Screen.a9.selected_rect);
+            Language_array.remove(Screen.a9.selected_rect);
+            Screen.a1.jLabel.setEditable(false);
+            Screen.a1.jSavePage2.setEnabled(false);
+            Screen.a1.jDeletePage2.setEnabled(false);
+            Screen.a1.jLabel.setEnabled(false);
             
-            SCR.a1.Label.setText("");
-            SCR.a9.selected_rect=10000;
+            Screen.a1.jLabel.setText("");
+            Screen.a9.selected_rect=10000;
         }
     }
 }

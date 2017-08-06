@@ -4,76 +4,76 @@ import javax.swing.JPanel;
 
 public class page4_maths_parameter extends JPanel{
     int r=0;
-    SCR t1 = new SCR(r);
+    Screen t1 = new Screen(r);
     public page4_maths_parameter(){
-        SCR.a2.pane.removeAll(); 
-        SCR.main_frame.setJMenuBar(SCR.a1.menu_bar);
+        Screen.a2.pane.removeAll();
+        Screen.main_frame.setJMenuBar(Screen.a1.jMenuBar);
         refresh();
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(SCR.main_frame.getContentPane());
-        SCR.main_frame.getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(Screen.main_frame.getContentPane());
+        Screen.main_frame.getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
-                        .addComponent(SCR.a1.Go_back_parameter_page4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Screen.a1.jMathGoBackPage4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SCR.a2.jScrollPane1)
+                        .addComponent(Screen.a2.jScrollPane1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(SCR.a1.Next_parameter_page4, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
-                            .addComponent(SCR.a1.preview_button)
-                            .addComponent(SCR.a1.zoom_slider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(Screen.a1.jMathNextPage4, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                            .addComponent(Screen.a1.jPreviewButton)
+                            .addComponent(Screen.a1.jZoomSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(SCR.a1.ToolBar_page4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(Screen.a1.jToolbarPage4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(SCR.a1.ToolBar_page4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Screen.a1.jToolbarPage4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SCR.a2.jScrollPane1)
+                    .addComponent(Screen.a2.jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(41, 41, 41)
-                                .addComponent(SCR.a1.Next_parameter_page4)
+                                .addComponent(Screen.a1.jMathNextPage4)
                                 .addGap(50, 50, 50)
-                                .addComponent(SCR.a1.preview_button))
+                                .addComponent(Screen.a1.jPreviewButton))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(42, 42, 42)
-                                .addComponent(SCR.a1.Go_back_parameter_page4)))
+                                .addComponent(Screen.a1.jMathGoBackPage4)))
                         .addGap(85, 85, 85)
-                        .addComponent(SCR.a1.zoom_slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Screen.a1.jZoomSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
-        SCR.main_frame.setExtendedState(SCR.main_frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        SCR.main_frame.validate();
-        SCR.main_frame.repaint();
-        t1.repaint(SCR.screen,SCR.a2.screenCopy);
-        SCR.a2.jScrollPane1.setViewportView(SCR.a2.screenLabel);  //SCR.a2.screenLabel.repaint();
-        SCR.main_frame.setVisible(true);
+        Screen.main_frame.setExtendedState(Screen.main_frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        Screen.main_frame.validate();
+        Screen.main_frame.repaint();
+        t1.repaint(Screen.screen, Screen.a2.screenCopy);
+        Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+        Screen.main_frame.setVisible(true);
     }
     
     public void go_back() throws IOException{
-        SCR.line_object = new get_lines();
-        System.out.println("lines : "+SCR.line_object.Lines.size());
-    	SCR.circle_object = new get_circles();
-    	SCR.region_object = new get_regions();
-    	SCR.polygon_object = new get_polygon();
-        SCR.arc_object = new get_arc();
-        SCR.a16 = new get_paths();
-        SCR.a22=new page3_auto_maths_science();
+        Screen.line_object = new get_lines();
+        System.out.println("lines : "+ Screen.line_object.Lines.size());
+    	Screen.circle_object = new GetCircles();
+    	Screen.region_object = new GetRegions();
+    	Screen.polygon_object = new get_polygon();
+        Screen.arc_object = new GetArc();
+        Screen.a16 = new GetPaths();
+        Screen.a22=new page3_auto_maths_science();
     }
     
     private void refresh(){
-        SCR.a1.delete_all_temp();
-        SCR.a1.preview_button.setEnabled(true);
-        SCR.preview_frame.setVisible(false);
+        Screen.a1.deleteAllTemp();
+        Screen.a1.jPreviewButton.setEnabled(true);
+        Screen.preview_frame.setVisible(false);
     }
 }

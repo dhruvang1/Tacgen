@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
 
 public class restore_svg {
     int r=0;
-    SCR t1 = new SCR(r);
+    Screen t1 = new Screen(r);
     public void restore() throws SAXException, ParserConfigurationException, IOException, XPathExpressionException, ScriptException, NoSuchMethodException{
         String h1 = t1.current_file.getAbsolutePath();
         String h2 = String.valueOf(t1.current_file.getName());
@@ -60,10 +60,10 @@ public class restore_svg {
             y2 = Integer.valueOf(svgPaths.item(i+4).getNodeValue());
             col = svgPaths.item(i).getNodeValue().substring(1);
             i = i+4;
-            SCR.line_object.Lines.add(new Pair<>(x1,y1));
-            SCR.line_object.color_array.add(new Color(Integer.decode("0x"+col)));
-            SCR.line_object.color_array.add(new Color(Integer.decode("0x"+col)));
-            SCR.line_object.Lines.add(new Pair<>(x2,y2));
+            Screen.line_object.Lines.add(new Pair<>(x1,y1));
+            Screen.line_object.color_array.add(new Color(Integer.decode("0x"+col)));
+            Screen.line_object.color_array.add(new Color(Integer.decode("0x"+col)));
+            Screen.line_object.Lines.add(new Pair<>(x2,y2));
         }
     }
     public void circle_restore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
@@ -86,15 +86,15 @@ public class restore_svg {
             stroke_col = svgPaths.item(i+4).getNodeValue().substring(1);
             i = i+4;
             if(col.contentEquals("one")){
-                SCR.circle_object.fill_or_not.add(0);
-                SCR.circle_object.color_array.add(new Color(Integer.decode("0x"+stroke_col)));
+                Screen.circle_object.fillArray.add(0);
+                Screen.circle_object.colorArray.add(new Color(Integer.decode("0x"+stroke_col)));
             }
             else{
-                SCR.circle_object.fill_or_not.add(1);
-                SCR.circle_object.color_array.add(new Color(Integer.decode("0x"+col)));
+                Screen.circle_object.fillArray.add(1);
+                Screen.circle_object.colorArray.add(new Color(Integer.decode("0x"+col)));
             }
-            SCR.circle_object.Centers.add(new Pair<>(cx,cy));
-            SCR.circle_object.Radius.add(r);
+            Screen.circle_object.centers.add(new Pair<>(cx,cy));
+            Screen.circle_object.radii.add(r);
         }   
     }
     
@@ -113,7 +113,7 @@ public class restore_svg {
         XPath xpath_1 = xpf_1.newXPath();
         XPathExpression expression_1= xpath_1.compile(xpathExpression_1);
         NodeList svgPaths_1 = (NodeList)expression_1.evaluate(document, XPathConstants.NODESET);
-        circle c = new circle();
+        Circle c = new Circle();
         for(int i=0;i<svgPaths.getLength();i++){
             String [] p = svgPaths.item(i).getNodeValue().split(",|\\ ");
             float [] ret = c.potential_centers(Float.valueOf(p[1]),Float.valueOf(p[2]),
@@ -121,18 +121,18 @@ public class restore_svg {
             
             Pair<Float,Float> center = new Pair<Float,Float>(ret[0], ret[1]);
             Pair<Integer,Integer> temp_angle = new Pair<Integer,Integer>((int)ret[2],(int)ret[3]);
-            SCR.arc_object.Centers.add(center);
-            SCR.arc_object.Radius.add(Float.valueOf(p[4]));
-            SCR.arc_object.arc_angles.add(temp_angle);
+            Screen.arc_object.centers.add(center);
+            Screen.arc_object.radii.add(Float.valueOf(p[4]));
+            Screen.arc_object.arcAngles.add(temp_angle);
             String col = svgPaths_1.item(3*i+1).getNodeValue().substring(1);
             String stroke_col = svgPaths_1.item(3*i+2).getNodeValue().substring(1);
             if(col.contentEquals("one")){
-                SCR.arc_object.fill_or_not.add(0);
-                SCR.arc_object.color_array.add(new Color(Integer.decode("0x"+stroke_col)));
+                Screen.arc_object.fillArray.add(0);
+                Screen.arc_object.colorArray.add(new Color(Integer.decode("0x"+stroke_col)));
             }
             else{
-                SCR.arc_object.fill_or_not.add(1);
-                SCR.arc_object.color_array.add(new Color(Integer.decode("0x"+col)));
+                Screen.arc_object.fillArray.add(1);
+                Screen.arc_object.colorArray.add(new Color(Integer.decode("0x"+col)));
             }
             
         }
@@ -165,14 +165,14 @@ public class restore_svg {
             String col = svgPaths_1.item(3*i).getNodeValue().substring(1);
             String stroke_col = svgPaths_1.item(3*i+2).getNodeValue().substring(1);
             if(col.contentEquals("one")){
-                SCR.region_object.fill_or_not.add(0);
-                SCR.region_object.color_array.add(new Color(Integer.decode("0x"+stroke_col)));
+                Screen.region_object.fillArray.add(0);
+                Screen.region_object.colorArray.add(new Color(Integer.decode("0x"+stroke_col)));
             }
             else{
-                SCR.region_object.fill_or_not.add(1);
-                SCR.region_object.color_array.add(new Color(Integer.decode("0x"+col)));
+                Screen.region_object.fillArray.add(1);
+                Screen.region_object.colorArray.add(new Color(Integer.decode("0x"+col)));
             }
-            SCR.region_object.Regions.add(Points_regions);
+            Screen.region_object.regions.add(Points_regions);
         }
     }
     
@@ -203,8 +203,8 @@ public class restore_svg {
             
             String col = svgPaths_1.item(3*i+2).getNodeValue().substring(1);
             
-            SCR.a16.color_array.add(new Color(Integer.decode("0x"+col)));
-            SCR.a16.Regions.add(Points_regions);
+            Screen.a16.colorArray.add(new Color(Integer.decode("0x"+col)));
+            Screen.a16.regions.add(Points_regions);
         }
     }    
     
@@ -241,35 +241,35 @@ public class restore_svg {
             h = Integer.valueOf(svgPaths.item(i).getNodeValue());
             w = Integer.valueOf(svgPaths.item(i+2).getNodeValue());
             i = i+4;
-            SCR.label_counts++;
-            String h1 = String.valueOf(SCR.label_counts);
+            Screen.label_counts++;
+            String h1 = String.valueOf(Screen.label_counts);
             String h2 = "label - "+h1;
             if(svgPaths1.item(i/5).getNodeValue().length()>0){
                 h2 = svgPaths1.item(i/5).getNodeValue();
             }
-            SCR.textbox_object.Rect_array.add(new Rectangle(x, y, w, h));
+            Screen.textbox_object.Rect_array.add(new Rectangle(x, y, w, h));
             if(svgPaths2.item((i/5)*3).getNodeValue().contains("Kruti Dev 010")){
-                SCR.textbox_object.Language_array.add("hin");
+                Screen.textbox_object.Language_array.add("hin");
                 ScriptEngineManager factory1 = new ScriptEngineManager();
                 ScriptEngine engine = factory1.getEngineByName("JavaScript");
-                engine.eval(Files.newBufferedReader(Paths.get(SCR.config.get("hindi_helper")), StandardCharsets.UTF_8));
+                engine.eval(Files.newBufferedReader(Paths.get(Screen.config.get("hindi_helper")), StandardCharsets.UTF_8));
                 Invocable inv = (Invocable) engine;
                 h2 = (String) inv.invokeFunction("Convert_to_Kritidev_010", h2);
             }
             else if(svgPaths2.item((i/5)*3).getNodeValue().contains("bengali")){
-                SCR.textbox_object.Language_array.add("ben");
+                Screen.textbox_object.Language_array.add("ben");
                 ScriptEngineManager factory1 = new ScriptEngineManager();
                 ScriptEngine engine = factory1.getEngineByName("JavaScript");
-                engine.eval(Files.newBufferedReader(Paths.get(SCR.config.get("bangla_helper")), StandardCharsets.UTF_8));
-                engine.eval(Files.newBufferedReader(Paths.get(SCR.config.get("bangla_helper_main")), StandardCharsets.UTF_8));
+                engine.eval(Files.newBufferedReader(Paths.get(Screen.config.get("bangla_helper")), StandardCharsets.UTF_8));
+                engine.eval(Files.newBufferedReader(Paths.get(Screen.config.get("bangla_helper_main")), StandardCharsets.UTF_8));
                 Invocable inv = (Invocable) engine;
                 h2 = (String) inv.invokeFunction("ConvertToASCII", "bijoy",h2);
             }
             else{
-                SCR.textbox_object.Language_array.add("eng");
+                Screen.textbox_object.Language_array.add("eng");
             }
             
-            SCR.textbox_object.label.add(new Pair<>(h1,h2));
+            Screen.textbox_object.label.add(new Pair<>(h1,h2));
         }
     }    
 }
