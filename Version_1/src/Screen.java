@@ -24,14 +24,14 @@ public class Screen {
     static Hashtable<String,String> config;
     static AllControlsAndListeners a1 = null;
     static initial_setup_of_frames a2=null;
-    static get_lines line_object = null;
+    static GetLines line_object = null;
     static GetCircles circle_object = null;
     static BufferedImage screen = null;
     static BufferedImage white = null;
     static BufferedImage screen1 = null;
     static GetRegions region_object = null;
-    static get_textbox textbox_object = null;
-    static get_polygon polygon_object = null;
+    static GetTextbox textbox_object = null;
+    static GetPolygon polygon_object = null;
     static GetArc arc_object = null;
     static modify_text a9 = null;
     static which_polygon a10 = null;
@@ -143,33 +143,33 @@ public class Screen {
         
         g.setColor(Color.blue);
         if(copy.getWidth()==1340){
-            System.out.println("drawing points : "+line_object.Lines.size());
+            System.out.println("drawing points : "+line_object.lines.size());
         }
-    	for(int k=0;k<line_object.Lines.size();k++){
+    	for(int k = 0; k<line_object.lines.size(); k++){
             g.setColor(current_color);
             
-            g.fillRect(line_object.Lines.get(k).getL(), line_object.Lines.get(k).getR(), 2,2);
+            g.fillRect(line_object.lines.get(k).getL(), line_object.lines.get(k).getR(), 2,2);
     	}
-    	for(int k=0;k<line_object.Lines.size()-1;k++){
-            g.setColor(line_object.color_array.get(k));
-            if(line_object.line_indices.contains(k)){
+    	for(int k = 0; k<line_object.lines.size()-1; k++){
+            g.setColor(line_object.colorArray.get(k));
+            if(line_object.lineIndices.contains(k)){
                 g.setStroke(new BasicStroke(3.0f));
-                g.drawLine(line_object.Lines.get(k).getL(), line_object.Lines.get(k).getR(), line_object.Lines.get(k+1).getL(), line_object.Lines.get(k+1).getR());
+                g.drawLine(line_object.lines.get(k).getL(), line_object.lines.get(k).getR(), line_object.lines.get(k+1).getL(), line_object.lines.get(k+1).getR());
                 g.setStroke(new BasicStroke(1.0f));
             }
             else{
-                g.drawLine(line_object.Lines.get(k).getL(), line_object.Lines.get(k).getR(), line_object.Lines.get(k+1).getL(), line_object.Lines.get(k+1).getR());
+                g.drawLine(line_object.lines.get(k).getL(), line_object.lines.get(k).getR(), line_object.lines.get(k+1).getL(), line_object.lines.get(k+1).getR());
             }
             g.setColor(current_color);
             k++;
     	}
-        if(polygon_object.Points!=null){
+        if(polygon_object.points !=null){
             g.setColor(current_color);
-            for(int h=0;h<polygon_object.Points.size();h++){
-                g.fillRect(polygon_object.Points.get(h).getL(),polygon_object.Points.get(h).getR(), 2,2);
+            for(int h = 0; h<polygon_object.points.size(); h++){
+                g.fillRect(polygon_object.points.get(h).getL(),polygon_object.points.get(h).getR(), 2,2);
             }
-            for(int k=0;k<polygon_object.Points.size()-1;k++){
-                g.drawLine(polygon_object.Points.get(k).getL(), polygon_object.Points.get(k).getR(), polygon_object.Points.get(k+1).getL(), polygon_object.Points.get(k+1).getR());
+            for(int k = 0; k<polygon_object.points.size()-1; k++){
+                g.drawLine(polygon_object.points.get(k).getL(), polygon_object.points.get(k).getR(), polygon_object.points.get(k+1).getL(), polygon_object.points.get(k+1).getR());
             }
             
         }
@@ -184,24 +184,24 @@ public class Screen {
             }
         }
         
-    	for(int k=0;k<polygon_object.Polygons.size();k++){
-            g.setColor(polygon_object.color_array.get(k));
-            if(polygon_object.polygon_indices.contains(k)){
+    	for(int k = 0; k<polygon_object.polygons.size(); k++){
+            g.setColor(polygon_object.colorArray.get(k));
+            if(polygon_object.polygonIndices.contains(k)){
                 g.setStroke(new BasicStroke(3.0f));
-                for(int h=0;h<polygon_object.Polygons.get(k).size()-1;h++){
-                    g.drawLine(polygon_object.Polygons.get(k).get(h).getL(),polygon_object.Polygons.get(k).get(h).getR(), polygon_object.Polygons.get(k).get(h+1).getL(),polygon_object.Polygons.get(k).get(h+1).getR());
+                for(int h = 0; h<polygon_object.polygons.get(k).size()-1; h++){
+                    g.drawLine(polygon_object.polygons.get(k).get(h).getL(),polygon_object.polygons.get(k).get(h).getR(), polygon_object.polygons.get(k).get(h+1).getL(),polygon_object.polygons.get(k).get(h+1).getR());
                 }
                 g.setStroke(new BasicStroke(1.0f));
             }
             else{
-                for(int h=0;h<polygon_object.Polygons.get(k).size()-1;h++){
-                    g.drawLine(polygon_object.Polygons.get(k).get(h).getL(),polygon_object.Polygons.get(k).get(h).getR(), polygon_object.Polygons.get(k).get(h+1).getL(),polygon_object.Polygons.get(k).get(h+1).getR());
+                for(int h = 0; h<polygon_object.polygons.get(k).size()-1; h++){
+                    g.drawLine(polygon_object.polygons.get(k).get(h).getL(),polygon_object.polygons.get(k).get(h).getR(), polygon_object.polygons.get(k).get(h+1).getL(),polygon_object.polygons.get(k).get(h+1).getR());
                 }
             }
-            if(polygon_object.fill_or_not.get(k)==1){
+            if(polygon_object.fillOrNot.get(k)==1){
                 Polygon p = new Polygon();
-                for(int h=0;h<polygon_object.Polygons.get(k).size()-1;h++){
-                    p.addPoint(polygon_object.Polygons.get(k).get(h).getL(), polygon_object.Polygons.get(k).get(h).getR());
+                for(int h = 0; h<polygon_object.polygons.get(k).size()-1; h++){
+                    p.addPoint(polygon_object.polygons.get(k).get(h).getL(), polygon_object.polygons.get(k).get(h).getR());
                 }
                 g.fillPolygon(p);
             }
@@ -315,11 +315,11 @@ public class Screen {
             g.setColor(current_color);
     	}
         //System.out.println(a1.Label.getFont());
-        for(int k=0;k<textbox_object.Rect_array.size();k++){
+        for(int k = 0; k<textbox_object.rectangleArray.size(); k++){
             g.setColor(Color.black);
             AttributedString at = new AttributedString(textbox_object.label.get(k).getR());
             
-            switch (textbox_object.Language_array.get(k)) {
+            switch (textbox_object.languageArray.get(k)) {
                 case "hin":
                     //System.out.println("setting hindi font");
                     g.setFont(Screen.a1.hindiFont);
@@ -338,63 +338,63 @@ public class Screen {
                 default:
                     break;
             }
-            if(textbox_object.rect_indices.contains(k)){
+            if(textbox_object.rectangleIndices.contains(k)){
     		if(!textbox_object.label.get(k).getR().contains("label -")){
                     if(text_shift_required()){
-                        g.drawString(at.getIterator(),textbox_object.Rect_array.get(k).x, textbox_object.Rect_array.get(k).y-4);
+                        g.drawString(at.getIterator(),textbox_object.rectangleArray.get(k).x, textbox_object.rectangleArray.get(k).y-4);
                     }
                     else{
                         g.drawString(at.getIterator(),
-                                textbox_object.Rect_array.get(k).x, 
-                                textbox_object.Rect_array.get(k).y+textbox_object.Rect_array.get(k).height);                            
+                                textbox_object.rectangleArray.get(k).x,
+                                textbox_object.rectangleArray.get(k).y+textbox_object.rectangleArray.get(k).height);
                     }
                 }
                 
                 g.setStroke(new BasicStroke(3.0f));
                 if(rect_draw_required()){
-                    g.drawRect(textbox_object.Rect_array.get(k).x, textbox_object.Rect_array.get(k).y,
-                            textbox_object.Rect_array.get(k).width,textbox_object.Rect_array.get(k).height);
+                    g.drawRect(textbox_object.rectangleArray.get(k).x, textbox_object.rectangleArray.get(k).y,
+                            textbox_object.rectangleArray.get(k).width,textbox_object.rectangleArray.get(k).height);
                 }
                 g.setStroke(new BasicStroke(1.0f));
             }
             else{
                 if(!textbox_object.label.get(k).getR().contains("label -")){
                     if(text_shift_required()){
-                        g.drawString(at.getIterator(),textbox_object.Rect_array.get(k).x, textbox_object.Rect_array.get(k).y-4);
+                        g.drawString(at.getIterator(),textbox_object.rectangleArray.get(k).x, textbox_object.rectangleArray.get(k).y-4);
                     }
                     else{
                         g.drawString(at.getIterator(),
-                                textbox_object.Rect_array.get(k).x, 
-                                textbox_object.Rect_array.get(k).y+textbox_object.Rect_array.get(k).height);                            
+                                textbox_object.rectangleArray.get(k).x,
+                                textbox_object.rectangleArray.get(k).y+textbox_object.rectangleArray.get(k).height);
                     }
                 }
                 if(rect_draw_required()){
-                    g.drawRect(textbox_object.Rect_array.get(k).x, textbox_object.Rect_array.get(k).y, textbox_object.Rect_array.get(k).width,textbox_object.Rect_array.get(k).height);
+                    g.drawRect(textbox_object.rectangleArray.get(k).x, textbox_object.rectangleArray.get(k).y, textbox_object.rectangleArray.get(k).width,textbox_object.rectangleArray.get(k).height);
                 }
             }
             if(a9.selected_rect==k){
                 g.setColor(Color.RED);
                 if(!textbox_object.label.get(k).getR().contains("label -")){
                     if(text_shift_required()){
-                        g.drawString(at.getIterator(),textbox_object.Rect_array.get(k).x, textbox_object.Rect_array.get(k).y-4);
+                        g.drawString(at.getIterator(),textbox_object.rectangleArray.get(k).x, textbox_object.rectangleArray.get(k).y-4);
                     }
                     else{
                         g.drawString(at.getIterator(),
-                                textbox_object.Rect_array.get(k).x, 
-                                textbox_object.Rect_array.get(k).y+textbox_object.Rect_array.get(k).height);                            
+                                textbox_object.rectangleArray.get(k).x,
+                                textbox_object.rectangleArray.get(k).y+textbox_object.rectangleArray.get(k).height);
                     }
                 }
                 if(rect_draw_required()){
-                    g.drawRect(textbox_object.Rect_array.get(k).x+2, textbox_object.Rect_array.get(k).y+2, textbox_object.Rect_array.get(k).width-4,textbox_object.Rect_array.get(k).height-4);
+                    g.drawRect(textbox_object.rectangleArray.get(k).x+2, textbox_object.rectangleArray.get(k).y+2, textbox_object.rectangleArray.get(k).width-4,textbox_object.rectangleArray.get(k).height-4);
                 }
                 g.setColor(current_color);
             }
             g.setColor(current_color);
         }
         
-    	if(textbox_object.captureRect!= null){
+    	if(textbox_object.captureRectangle != null){
             g.setColor(Color.black);
-            g.drawRect(textbox_object.captureRect.x, textbox_object.captureRect.y, textbox_object.captureRect.width, textbox_object.captureRect.height);
+            g.drawRect(textbox_object.captureRectangle.x, textbox_object.captureRectangle.y, textbox_object.captureRectangle.width, textbox_object.captureRectangle.height);
             g.setColor(current_color);
         }
     	g.dispose();
@@ -439,11 +439,11 @@ public class Screen {
         main_frame.setExtendedState(main_frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         a1 = new AllControlsAndListeners();
     	a2 = new initial_setup_of_frames();
-    	line_object = new get_lines();
+    	line_object = new GetLines();
     	circle_object = new GetCircles();
     	region_object = new GetRegions();
-    	textbox_object = new get_textbox();
-    	polygon_object = new get_polygon();
+    	textbox_object = new GetTextbox();
+    	polygon_object = new GetPolygon();
         arc_object = new GetArc();
         a9 = new modify_text();
         a10 = new which_polygon();

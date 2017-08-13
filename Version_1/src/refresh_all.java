@@ -2,11 +2,11 @@
 public class refresh_all {
     public void refresh(){
         Screen.label_counts = 0;
-        Screen.line_object = new get_lines();
+        Screen.line_object = new GetLines();
     	Screen.circle_object = new GetCircles();
     	Screen.region_object = new GetRegions();
-    	Screen.textbox_object = new get_textbox();
-    	Screen.polygon_object = new get_polygon();
+    	Screen.textbox_object = new GetTextbox();
+    	Screen.polygon_object = new GetPolygon();
         Screen.arc_object = new GetArc();
         Screen.a9 = new modify_text();
         Screen.a16 = new GetPaths();

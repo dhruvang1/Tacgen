@@ -41,7 +41,7 @@ public class GetArc {
             }
             else if(!secondPointCaptured){
                 selectedPoint2 = Screen.a1.getOriginalZoomedCoordinate(e);
-                if(Screen.line_object.calc_distance(selectedPoint2.x, selectedPoint2.y, selectedPoint1.x, selectedPoint1.y)>5){
+                if(Screen.line_object.getDistance(selectedPoint2.x, selectedPoint2.y, selectedPoint1.x, selectedPoint1.y)>5){
                     arcB.setL((float) selectedPoint2.x);arcB.setR((float) selectedPoint2.y);
                     circles.add(arcB);
                     secondPointCaptured = true;
@@ -49,8 +49,8 @@ public class GetArc {
             }
             else{
                 selectedPoint3 = Screen.a1.getOriginalZoomedCoordinate(e);
-                if((Screen.line_object.calc_distance(selectedPoint2.x, selectedPoint2.y, selectedPoint3.x, selectedPoint3.y)>5)&&(Screen.line_object.calc_distance(selectedPoint3.x, selectedPoint3.y, selectedPoint1.x, selectedPoint1.y)>5)
-                            &&!Screen.line_object.collinear(selectedPoint1.x, selectedPoint1.y, selectedPoint2.x, selectedPoint2.y, selectedPoint3.x, selectedPoint3.y)){
+                if((Screen.line_object.getDistance(selectedPoint2.x, selectedPoint2.y, selectedPoint3.x, selectedPoint3.y)>5)&&(Screen.line_object.getDistance(selectedPoint3.x, selectedPoint3.y, selectedPoint1.x, selectedPoint1.y)>5)
+                            &&!Screen.line_object.isCollinear(selectedPoint1.x, selectedPoint1.y, selectedPoint2.x, selectedPoint2.y, selectedPoint3.x, selectedPoint3.y)){
                     arcC.setL((float) selectedPoint3.x);arcC.setR((float) selectedPoint3.y);
                     circles.add(arcC);
                     firstPointCaptured = secondPointCaptured = false;

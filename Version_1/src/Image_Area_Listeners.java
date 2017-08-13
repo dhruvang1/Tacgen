@@ -43,15 +43,15 @@ public class Image_Area_Listeners {
 
                     } else if (Screen.a1.jGoBackPage2.isDisplayable()) {
                         if (Screen.a9.selected_rect != 10000) {
-                            Screen.textbox_object.translate_text(me);//
+                            Screen.textbox_object.translateText(me);//
 
                         } else {
-                            Screen.textbox_object.select_text(me);//
+                            Screen.textbox_object.selectText(me);//
 
                         }
                     } else if (Screen.a1.jGoBackPage3.isDisplayable()) {
                         if (Screen.a9.selected_rect != 10000) {
-                            Screen.textbox_object.translate_text(me);//
+                            Screen.textbox_object.translateText(me);//
 
                         }
                     }
@@ -69,14 +69,14 @@ public class Image_Area_Listeners {
                 try {
                     Screen.start = Screen.a1.getOriginalZoomedCoordinate(e);
                     if (Screen.a1.drawLine.isSelected() && Screen.a1.drawLine.isDisplayable()) {
-                        System.out.println("lines size : " + Screen.line_object.Lines.size());
-                        Screen.line_object.get_line(e); //
+                        System.out.println("lines size : " + Screen.line_object.lines.size());
+                        Screen.line_object.getLine(e); //
                     } else if (Screen.a1.drawCircle.isSelected() && Screen.a1.drawCircle.isDisplayable()) {
                         Screen.circle_object.getCircle(e); //
                     } else if (Screen.a1.drawArc.isSelected() && Screen.a1.drawArc.isDisplayable()) {
                         Screen.arc_object.getCircle(e); //
                     } else if (Screen.a1.drawPolygon.isSelected() && Screen.a1.drawPolygon.isDisplayable()) {
-                        Screen.polygon_object.get_polygons(e); //
+                        Screen.polygon_object.getPolygons(e); //
                     } else if (Screen.a1.drawRegion.isSelected() && Screen.a1.drawRegion.isDisplayable()) {
 
                     } else if (Screen.a1.drawPath.isSelected() && Screen.a1.drawPath.isDisplayable()) {
@@ -86,10 +86,10 @@ public class Image_Area_Listeners {
                     //                }
                     else if (Screen.a1.jGoBackPage4.isDisplayable()) {
                         try {
-                            Screen.line_object.add_indices(e);//
+                            Screen.line_object.addIndices(e);//
                             Screen.circle_object.addIndices(e);//
                             Screen.region_object.addIndices(e);//
-                            Screen.polygon_object.add_indices(e);//
+                            Screen.polygon_object.addIndices(e);//
                             Screen.arc_object.addIndices(e);//
                             Screen.a16.addIndices(e);//
                         } catch (NoninvertibleTransformException ex) {
@@ -100,27 +100,27 @@ public class Image_Area_Listeners {
                     if (Screen.a1.jGoBackPage5.isDisplayable()) {
                         Screen.region_object.addColorIndices(e);
                         Screen.circle_object.addColorIndices(e);
-                        Screen.line_object.add_color_indices(e);
-                        Screen.polygon_object.add_color_indices(e);
+                        Screen.line_object.addColorIndices(e);
+                        Screen.polygon_object.addColorIndices(e);
                         Screen.a16.addColorIndices(e);
                         Screen.arc_object.addColorIndices(e);
                     }
                     if (Screen.a1.jGoBackPage3.isDisplayable()) {
                         Screen.a9.modify_selected_rect(e);
                         if (Screen.a9.selected_rect != 10000) {
-                            Screen.rectangle_translate_start = Screen.textbox_object.Rect_array.get(Screen.a9.selected_rect).getLocation();
+                            Screen.rectangle_translate_start = Screen.textbox_object.rectangleArray.get(Screen.a9.selected_rect).getLocation();
                         }
                     }
                     if (Screen.a1.jGoBackPage2.isDisplayable()) {
                         Screen.a9.modify_selected_rect(e);
                         if (Screen.a9.selected_rect != 10000) {
-                            Screen.rectangle_translate_start = Screen.textbox_object.Rect_array.get(Screen.a9.selected_rect).getLocation();
+                            Screen.rectangle_translate_start = Screen.textbox_object.rectangleArray.get(Screen.a9.selected_rect).getLocation();
                             Screen.a1.jLabel.setEditable(true);
                             Screen.a1.jSavePage2.setEnabled(true);
                             Screen.a1.jDeletePage2.setEnabled(true);
                             Screen.a1.jLabel.setEnabled(true);
                             Screen.a1.jLabel.requestFocus(true);
-                            String language = Screen.textbox_object.Language_array.get(Screen.a9.selected_rect);
+                            String language = Screen.textbox_object.languageArray.get(Screen.a9.selected_rect);
                             System.out.println("current box's language = " + language);
                             switch (language) {
                                 case "hin":
@@ -175,7 +175,7 @@ public class Image_Area_Listeners {
                         Screen.a9.selected_rect = 10000;
                     } else {
                         try {
-                            Screen.textbox_object.update_capture_rect(me); //
+                            Screen.textbox_object.updateCaptureRectangle(me); //
                         } catch (NoninvertibleTransformException ex) {
                             Logger.getLogger(Image_Area_Listeners.class.getName()).log(Level.SEVERE, null, ex);
                         }

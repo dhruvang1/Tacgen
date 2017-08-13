@@ -60,10 +60,10 @@ public class restore_svg {
             y2 = Integer.valueOf(svgPaths.item(i+4).getNodeValue());
             col = svgPaths.item(i).getNodeValue().substring(1);
             i = i+4;
-            Screen.line_object.Lines.add(new Pair<>(x1,y1));
-            Screen.line_object.color_array.add(new Color(Integer.decode("0x"+col)));
-            Screen.line_object.color_array.add(new Color(Integer.decode("0x"+col)));
-            Screen.line_object.Lines.add(new Pair<>(x2,y2));
+            Screen.line_object.lines.add(new Pair<>(x1,y1));
+            Screen.line_object.colorArray.add(new Color(Integer.decode("0x"+col)));
+            Screen.line_object.colorArray.add(new Color(Integer.decode("0x"+col)));
+            Screen.line_object.lines.add(new Pair<>(x2,y2));
         }
     }
     public void circle_restore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
@@ -247,9 +247,9 @@ public class restore_svg {
             if(svgPaths1.item(i/5).getNodeValue().length()>0){
                 h2 = svgPaths1.item(i/5).getNodeValue();
             }
-            Screen.textbox_object.Rect_array.add(new Rectangle(x, y, w, h));
+            Screen.textbox_object.rectangleArray.add(new Rectangle(x, y, w, h));
             if(svgPaths2.item((i/5)*3).getNodeValue().contains("Kruti Dev 010")){
-                Screen.textbox_object.Language_array.add("hin");
+                Screen.textbox_object.languageArray.add("hin");
                 ScriptEngineManager factory1 = new ScriptEngineManager();
                 ScriptEngine engine = factory1.getEngineByName("JavaScript");
                 engine.eval(Files.newBufferedReader(Paths.get(Screen.config.get("hindi_helper")), StandardCharsets.UTF_8));
@@ -257,7 +257,7 @@ public class restore_svg {
                 h2 = (String) inv.invokeFunction("Convert_to_Kritidev_010", h2);
             }
             else if(svgPaths2.item((i/5)*3).getNodeValue().contains("bengali")){
-                Screen.textbox_object.Language_array.add("ben");
+                Screen.textbox_object.languageArray.add("ben");
                 ScriptEngineManager factory1 = new ScriptEngineManager();
                 ScriptEngine engine = factory1.getEngineByName("JavaScript");
                 engine.eval(Files.newBufferedReader(Paths.get(Screen.config.get("bangla_helper")), StandardCharsets.UTF_8));
@@ -266,7 +266,7 @@ public class restore_svg {
                 h2 = (String) inv.invokeFunction("ConvertToASCII", "bijoy",h2);
             }
             else{
-                Screen.textbox_object.Language_array.add("eng");
+                Screen.textbox_object.languageArray.add("eng");
             }
             
             Screen.textbox_object.label.add(new Pair<>(h1,h2));

@@ -121,10 +121,10 @@ public final class AllControlsAndListeners extends JFrame {
     }
 
     public void deleteAllTemp() {
-        Screen.line_object.delete_temp();
+        Screen.line_object.deleteTemp();
         Screen.circle_object.deleteTemp();
         Screen.arc_object.deleteTemp();
-        Screen.polygon_object.delete_temp();
+        Screen.polygon_object.deleteTemp();
         screen.repaint(Screen.screen, Screen.a2.screenCopy);
         Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);
     }
@@ -539,7 +539,7 @@ public final class AllControlsAndListeners extends JFrame {
 
         jDeletePage2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Screen.textbox_object.delete_indices();
+                Screen.textbox_object.deleteIndices();
                 screen.repaint(Screen.screen, Screen.a2.screenCopy);
                 Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
             }
@@ -785,7 +785,7 @@ public final class AllControlsAndListeners extends JFrame {
             public void itemStateChanged(ItemEvent e) {
                 try {
                     MouseEvent m = null;
-                    Screen.polygon_object.get_polygons(m);
+                    Screen.polygon_object.getPolygons(m);
                 } catch (NoninvertibleTransformException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -839,9 +839,9 @@ public final class AllControlsAndListeners extends JFrame {
         jDeleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Screen.circle_object.deleteIndices();
-                Screen.line_object.delete_line_indices();
+                Screen.line_object.deleteLineIndices();
                 Screen.arc_object.deleteIndices();
-                Screen.polygon_object.delete_indices();
+                Screen.polygon_object.deleteIndices();
                 Screen.region_object.deleteIndices();
                 Screen.a16.deleteIndices();
                 screen.repaint(Screen.screen, Screen.a2.screenCopy);

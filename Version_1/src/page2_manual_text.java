@@ -74,7 +74,7 @@ public class page2_manual_text{
     
     public void go_back(){
         Screen.label_counts = 0;
-        Screen.textbox_object = new get_textbox();
+        Screen.textbox_object = new GetTextbox();
         Screen.a9 = new modify_text();
         File f = new File(Screen.current_file.getAbsolutePath()+".txt");
         f.delete();

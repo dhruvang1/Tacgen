@@ -26,18 +26,18 @@ public class svg_generate {
         OutputStreamWriter o = new OutputStreamWriter(new FileOutputStream(f),"UTF-8");
 //        o.append("<svg>");
         o.append(Constants.NEWLINE);
-        if(Screen.line_object.Lines.size()>1){
+        if(Screen.line_object.lines.size()>1){
             blanksvg = false;
         }
-        for(int i = 0; i< Screen.line_object.Lines.size()-1; i++){
-            o.append("<line x1="+"\""+ Screen.line_object.Lines.get(i).getL()+"\" ");
-            o.append("y1="+"\""+ Screen.line_object.Lines.get(i).getR()+"\" ");
+        for(int i = 0; i< Screen.line_object.lines.size()-1; i++){
+            o.append("<line x1="+"\""+ Screen.line_object.lines.get(i).getL()+"\" ");
+            o.append("y1="+"\""+ Screen.line_object.lines.get(i).getR()+"\" ");
             i++;
-            o.append("x2="+"\""+ Screen.line_object.Lines.get(i).getL()+"\" ");
-            o.append("y2="+"\""+ Screen.line_object.Lines.get(i).getR()+"\" ");
-            String hash_code = rgbtohash(Screen.line_object.color_array.get(i).getRed(),
-                    Screen.line_object.color_array.get(i).getGreen(),
-                    Screen.line_object.color_array.get(i).getBlue());
+            o.append("x2="+"\""+ Screen.line_object.lines.get(i).getL()+"\" ");
+            o.append("y2="+"\""+ Screen.line_object.lines.get(i).getR()+"\" ");
+            String hash_code = rgbtohash(Screen.line_object.colorArray.get(i).getRed(),
+                    Screen.line_object.colorArray.get(i).getGreen(),
+                    Screen.line_object.colorArray.get(i).getBlue());
             o.append("stroke="+"\""+"#"+hash_code+"\"" +"/>");
             o.append(Constants.NEWLINE);  
         }
@@ -132,20 +132,20 @@ public class svg_generate {
         OutputStreamWriter o = new OutputStreamWriter(new FileOutputStream(f),"UTF-8");
 //        o.append("<svg>");
         o.append(Constants.NEWLINE);
-        if(Screen.polygon_object.Polygons.size()>0){
+        if(Screen.polygon_object.polygons.size()>0){
             blanksvg = false;
         }
-        for(int i = 0; i< Screen.polygon_object.Polygons.size(); i++){
+        for(int i = 0; i< Screen.polygon_object.polygons.size(); i++){
             o.append("<polygon points="+"\"");
-            for(int j = 0; j< Screen.polygon_object.Polygons.get(i).size()-1; j++){
-                o.append(Screen.polygon_object.Polygons.get(i).get(j).getL()+","+ Screen.polygon_object.Polygons.get(i).get(j).getR()+" ");
+            for(int j = 0; j< Screen.polygon_object.polygons.get(i).size()-1; j++){
+                o.append(Screen.polygon_object.polygons.get(i).get(j).getL()+","+ Screen.polygon_object.polygons.get(i).get(j).getR()+" ");
             }
             o.append("\" ");
-            String hash_code = rgbtohash(Screen.polygon_object.color_array.get(i).getRed(),
-                    Screen.polygon_object.color_array.get(i).getGreen(),
-                    Screen.polygon_object.color_array.get(i).getBlue());
+            String hash_code = rgbtohash(Screen.polygon_object.colorArray.get(i).getRed(),
+                    Screen.polygon_object.colorArray.get(i).getGreen(),
+                    Screen.polygon_object.colorArray.get(i).getBlue());
             
-            if(Screen.polygon_object.fill_or_not.get(i)==0){
+            if(Screen.polygon_object.fillOrNot.get(i)==0){
                 o.append("stroke=\"#"+hash_code+"\" fill=\""+"none"+"\"" +"/>");//o.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
             }
             else{
@@ -216,16 +216,16 @@ public class svg_generate {
         OutputStreamWriter o = new OutputStreamWriter(new FileOutputStream(f),"UTF-8");
 //        o.append("<svg>");
         o.append(Constants.NEWLINE);
-        for(int i = 0; i< Screen.textbox_object.Rect_array.size(); i++){
+        for(int i = 0; i< Screen.textbox_object.rectangleArray.size(); i++){
             if(!Screen.textbox_object.label.get(i).getR().contains("label -")){
                 blanksvg = false;
-                int x1 = Screen.textbox_object.Rect_array.get(i).x;
-                int y1 = Screen.textbox_object.Rect_array.get(i).y+ Screen.textbox_object.Rect_array.get(i).height;
-                int y3 = Screen.textbox_object.Rect_array.get(i).height;
+                int x1 = Screen.textbox_object.rectangleArray.get(i).x;
+                int y1 = Screen.textbox_object.rectangleArray.get(i).y+ Screen.textbox_object.rectangleArray.get(i).height;
+                int y3 = Screen.textbox_object.rectangleArray.get(i).height;
                 y3 = 15;
                 o.append("<text x="+"\""+x1+"\" ");
                 o.append("y="+"\""+y1+"\" ");
-                String language = Screen.textbox_object.Language_array.get(i);
+                String language = Screen.textbox_object.languageArray.get(i);
                 String ret = Screen.textbox_object.label.get(i).getR();
                 
                 switch (language) {
@@ -268,13 +268,13 @@ public class svg_generate {
         File f = new File(dir,"rect.svg");
         OutputStreamWriter o = new OutputStreamWriter(new FileOutputStream(f),"UTF-8");
         o.append(Constants.NEWLINE);
-        for(int i = 0; i< Screen.textbox_object.Rect_array.size(); i++){
+        for(int i = 0; i< Screen.textbox_object.rectangleArray.size(); i++){
             if(!Screen.textbox_object.label.get(i).getR().contains("label -")){
                 blanksvg = false;
-                int x1 = Screen.textbox_object.Rect_array.get(i).x;
-                int y1 = Screen.textbox_object.Rect_array.get(i).y;
-                int h1 = Screen.textbox_object.Rect_array.get(i).height;
-                int w1 = Screen.textbox_object.Rect_array.get(i).width;
+                int x1 = Screen.textbox_object.rectangleArray.get(i).x;
+                int y1 = Screen.textbox_object.rectangleArray.get(i).y;
+                int h1 = Screen.textbox_object.rectangleArray.get(i).height;
+                int w1 = Screen.textbox_object.rectangleArray.get(i).width;
                 o.append("<rect x="+"\""+x1+"\" ");
                 o.append("y="+"\""+y1+"\" ");
                 o.append("height="+"\""+h1+"\" ");

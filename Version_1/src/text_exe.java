@@ -50,7 +50,7 @@ public class text_exe {
                 String [] gt = fr[0].split(",");
                 Rectangle r1 = new Rectangle(Integer.valueOf(gt[0]),Integer.valueOf(gt[1]),Integer.valueOf(gt[2]),Integer.valueOf(gt[3]));
                // Pair<String,Rectangle> p = new Pair<String,Rectangle>(language,r1);
-                if(!Screen.textbox_object.Rect_array.contains(r1)){
+                if(!Screen.textbox_object.rectangleArray.contains(r1)){
                     switch (language) {
                         case "hin":
                             {
@@ -84,8 +84,8 @@ public class text_exe {
                     temp_pair.setL(String.valueOf(Screen.label_counts));
                     temp_pair.setR(label);
                     Screen.textbox_object.label.add(temp_pair);
-                    Screen.textbox_object.Rect_array.add(r1);
-                    Screen.textbox_object.Language_array.add(language);
+                    Screen.textbox_object.rectangleArray.add(r1);
+                    Screen.textbox_object.languageArray.add(language);
                 }
             }
             s1 = br.readLine();
@@ -95,11 +95,11 @@ public class text_exe {
     public void store() throws FileNotFoundException, IOException, SAXException, ParserConfigurationException, XPathExpressionException, ScriptException, NoSuchMethodException{
         Screen.a13.svg_file();
         BufferedImage temp = ImageIO.read(t1.current_file);
-        for(int i = 0; i< Screen.textbox_object.Rect_array.size(); i++){
-            int x1 = Screen.textbox_object.Rect_array.get(i).x;
-            int y1 = Screen.textbox_object.Rect_array.get(i).y;
-            int w = Screen.textbox_object.Rect_array.get(i).width;
-            int h = Screen.textbox_object.Rect_array.get(i).height;
+        for(int i = 0; i< Screen.textbox_object.rectangleArray.size(); i++){
+            int x1 = Screen.textbox_object.rectangleArray.get(i).x;
+            int y1 = Screen.textbox_object.rectangleArray.get(i).y;
+            int w = Screen.textbox_object.rectangleArray.get(i).width;
+            int h = Screen.textbox_object.rectangleArray.get(i).height;
             int r = 255;
             int g = 255;
             int b = 255;

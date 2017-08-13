@@ -7,8 +7,8 @@ public class modify_text {
     int selected_rect=10000;
     public void modify_selected_rect(MouseEvent e) throws NoninvertibleTransformException{
         boolean outside_click = true;
-        for(int i = 0; i< Screen.textbox_object.Rect_array.size(); i++){
-            if(Screen.textbox_object.Rect_array.get(i).contains(Screen.a1.getOriginalZoomedCoordinate(e))){
+        for(int i = 0; i< Screen.textbox_object.rectangleArray.size(); i++){
+            if(Screen.textbox_object.rectangleArray.get(i).contains(Screen.a1.getOriginalZoomedCoordinate(e))){
                 outside_click = false;
                 if(selected_rect==i){
                     //selected_rect=10000;

@@ -61,11 +61,11 @@ public class page4_maths_parameter extends JPanel{
     }
     
     public void go_back() throws IOException{
-        Screen.line_object = new get_lines();
-        System.out.println("lines : "+ Screen.line_object.Lines.size());
+        Screen.line_object = new GetLines();
+        System.out.println("lines : "+ Screen.line_object.lines.size());
     	Screen.circle_object = new GetCircles();
     	Screen.region_object = new GetRegions();
-    	Screen.polygon_object = new get_polygon();
+    	Screen.polygon_object = new GetPolygon();
         Screen.arc_object = new GetArc();
         Screen.a16 = new GetPaths();
         Screen.a22=new page3_auto_maths_science();

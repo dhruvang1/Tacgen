@@ -21,10 +21,10 @@ public class maths_science_exe {
         File outputfile1 = new File(h4);
         
         // clear all data structures related to maths
-        Screen.line_object = new get_lines();
+        Screen.line_object = new GetLines();
     	Screen.circle_object = new GetCircles();
     	Screen.region_object = new GetRegions();
-    	Screen.polygon_object = new get_polygon();
+    	Screen.polygon_object = new GetPolygon();
         Screen.arc_object = new GetArc();
         Screen.a16 = new GetPaths();
         
@@ -111,8 +111,8 @@ public class maths_science_exe {
                 h11 = Integer.valueOf(gt[2]);h12=Integer.valueOf(gt[3]);
                 Pair<Integer,Integer> temp_pair_2 = new Pair <> (h11,h12);
                 boolean match = false;
-                for(int i = 0; i< Screen.line_object.Lines.size()-1; i+=2){
-                    if(Screen.line_object.Lines.get(i).equals(temp_pair)&& Screen.line_object.Lines.get(i+1).equals(temp_pair_2)){
+                for(int i = 0; i< Screen.line_object.lines.size()-1; i+=2){
+                    if(Screen.line_object.lines.get(i).equals(temp_pair)&& Screen.line_object.lines.get(i+1).equals(temp_pair_2)){
                         match = true;
                         //System.out.println(match);
                         break;
@@ -120,10 +120,10 @@ public class maths_science_exe {
                 }
                 if(!match){
                     //System.out.println("added a line");
-                    Screen.line_object.Lines.add(temp_pair);
-                    Screen.line_object.color_array.add(Screen.current_color);
-                    Screen.line_object.Lines.add(temp_pair_2);
-                    Screen.line_object.color_array.add(Screen.current_color);
+                    Screen.line_object.lines.add(temp_pair);
+                    Screen.line_object.colorArray.add(Screen.current_color);
+                    Screen.line_object.lines.add(temp_pair_2);
+                    Screen.line_object.colorArray.add(Screen.current_color);
                 }
             }
             if(s1.contains("c-")){

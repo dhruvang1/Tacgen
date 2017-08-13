@@ -60,8 +60,8 @@ public class page5_color_mapping extends JPanel{
     }
         
     public void go_back() throws IOException{
-        for(int i = 0; i< Screen.line_object.color_array.size(); i++){
-            Screen.line_object.color_array.set(i, Color.black);
+        for(int i = 0; i< Screen.line_object.colorArray.size(); i++){
+            Screen.line_object.colorArray.set(i, Color.black);
         }
         for(int i = 0; i< Screen.circle_object.colorArray.size(); i++){
             Screen.circle_object.colorArray.set(i, Color.black);
@@ -71,9 +71,9 @@ public class page5_color_mapping extends JPanel{
             Screen.region_object.colorArray.set(i, Color.black);
             Screen.region_object.fillArray.set(i, 0);
         }
-        for(int i = 0; i< Screen.polygon_object.color_array.size(); i++){
-            Screen.polygon_object.color_array.set(i, Color.black);
-            Screen.polygon_object.fill_or_not.set(i, 0);
+        for(int i = 0; i< Screen.polygon_object.colorArray.size(); i++){
+            Screen.polygon_object.colorArray.set(i, Color.black);
+            Screen.polygon_object.fillOrNot.set(i, 0);
         }
         for(int i = 0; i< Screen.arc_object.colorArray.size(); i++){
             Screen.arc_object.colorArray.set(i, Color.black);
