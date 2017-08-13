@@ -36,27 +36,27 @@ public class GetLines {
         Pair<Integer,Integer> point = new Pair<>(x, y);
         if (!firstPointCaptured)
         {
-            startPoint = Screen.a1.getOriginalZoomedCoordinate(e);
+            startPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             firstPointCaptured = true;
             point.setL(startPoint.x);
             point.setR(startPoint.y);
             endPoint = null;
             System.out.println("lines size : "+ lines.size());
             lines.add(point);
-            colorArray.add(Screen.current_color);
+            colorArray.add(Screen.currentColor);
         }
         else
         {
-            endPoint = Screen.a1.getOriginalZoomedCoordinate(e);
+            endPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             if(getDistance(endPoint.x, endPoint.y, lines.get(lines.size()-1).getL() , lines.get(lines.size()-1).getR())>5){
                 point.setL(endPoint.x);
                 point.setR(endPoint.y);
                 lines.add(point);
                 firstPointCaptured = false;
-                colorArray.add(Screen.current_color);
+                colorArray.add(Screen.currentColor);
             }
-            screen.repaint(Screen.screen, Screen.a2.screenCopy);
-            Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+            screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+            Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
         }
     }
 
@@ -75,8 +75,8 @@ public class GetLines {
             int y1 = lines.get(i).getR();
             int x2 = lines.get(i+1).getL();
             int y2 = lines.get(i+1).getR();
-            int p1 = Screen.a1.getOriginalZoomedCoordinate(e).x;
-            int p2 = Screen.a1.getOriginalZoomedCoordinate(e).y;
+            int p1 = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e).x;
+            int p2 = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e).y;
             double d1 =Math.pow( Math.pow(x1-p1, 2)+Math.pow(y1-p2, 2) , 0.5);
             double d2 =Math.pow( Math.pow(x2-p1, 2)+Math.pow(y2-p2, 2) , 0.5);
             double d3 =Math.pow( Math.pow(x1-x2, 2)+Math.pow(y1-y2, 2) , 0.5);
@@ -103,8 +103,8 @@ public class GetLines {
             int y1 = lines.get(i).getR();
             int x2 = lines.get(i+1).getL();
             int y2 = lines.get(i+1).getR();
-            int p1 = Screen.a1.getOriginalZoomedCoordinate(e).x;
-            int p2 = Screen.a1.getOriginalZoomedCoordinate(e).y;
+            int p1 = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e).x;
+            int p2 = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e).y;
             double d1 =Math.pow( Math.pow(x1-p1, 2)+Math.pow(y1-p2, 2) , 0.5);
             double d2 =Math.pow( Math.pow(x2-p1, 2)+Math.pow(y2-p2, 2) , 0.5);
             double d3 =Math.pow( Math.pow(x1-x2, 2)+Math.pow(y1-y2, 2) , 0.5);
@@ -112,8 +112,8 @@ public class GetLines {
             double area = Math.pow(s*(s-d1)*(s-d2)*(s-d3),0.5);
             double h = (2.0*area)/d3;
             if(h<4 && d1<d3 && d2<d3){
-                colorArray.set(i, Screen.current_color);
-                colorArray.set(i+1, Screen.current_color);
+                colorArray.set(i, Screen.currentColor);
+                colorArray.set(i+1, Screen.currentColor);
             }
             i = i+1;
         }

@@ -17,10 +17,10 @@ public class color extends JPanel
         Color newColor = JColorChooser.showDialog(
                                        color.this,
                                        "Choose Region Color",
-                                       Screen.a1.jSelectedColor.getBackground());
+                                       Screen.allControlsAndListeners.jSelectedColor.getBackground());
         if (newColor != null) {
-                Screen.a1.jSelectedColor.setBackground(newColor);
-                Screen.current_color = newColor;
+                Screen.allControlsAndListeners.jSelectedColor.setBackground(newColor);
+                Screen.currentColor = newColor;
         }
     }
 

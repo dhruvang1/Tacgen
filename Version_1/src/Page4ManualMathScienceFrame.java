@@ -8,12 +8,12 @@
  *
  * @author Pkp
  */
-public class page4_manual_maths_science_frame extends javax.swing.JFrame {
+public class Page4ManualMathScienceFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form page4_frame
      */
-    public page4_manual_maths_science_frame() {
+    public Page4ManualMathScienceFrame() {
         initComponents();
     }
 
@@ -224,13 +224,13 @@ public class page4_manual_maths_science_frame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(page4_manual_maths_science_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page4ManualMathScienceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(page4_manual_maths_science_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page4ManualMathScienceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(page4_manual_maths_science_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page4ManualMathScienceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(page4_manual_maths_science_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page4ManualMathScienceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -240,7 +240,7 @@ public class page4_manual_maths_science_frame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new page4_manual_maths_science_frame().setVisible(true);
+                new Page4ManualMathScienceFrame().setVisible(true);
             }
         });
     }

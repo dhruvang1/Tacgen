@@ -5,24 +5,21 @@ import javax.swing.text.Document;
 public class PlaceholderTextField extends JTextField {
 
     public static void main(final String[] args) {
-        final PlaceholderTextField tf = new PlaceholderTextField("");
-        tf.setColumns(20);
-        tf.setPlaceholder("All your base are belong to us!");
-        final Font f = tf.getFont();
-        tf.setFont(new Font(f.getName(), f.getStyle(), 30));
-        JOptionPane.showMessageDialog(null, tf);
+        final PlaceholderTextField placeholderTextField = new PlaceholderTextField("");
+        placeholderTextField.setColumns(20);
+        placeholderTextField.setPlaceholder("All your base are belong to us!");
+        final Font font = placeholderTextField.getFont();
+        placeholderTextField.setFont(new Font(font.getName(), font.getStyle(), 30));
+        JOptionPane.showMessageDialog(null, placeholderTextField);
     }
 
     private String placeholder;
 
-    public PlaceholderTextField() {
-    }
+    public PlaceholderTextField() {}
 
-    public PlaceholderTextField(
-        final Document pDoc,
-        final String pText,
-        final int pColumns)
-    {
+    public PlaceholderTextField(final Document pDoc,
+                                final String pText,
+                                final int pColumns){
         super(pDoc, pText, pColumns);
     }
 
@@ -50,12 +47,12 @@ public class PlaceholderTextField extends JTextField {
             return;
         }
 
-        final Graphics2D g = (Graphics2D) pG;
-        g.setRenderingHint(
+        final Graphics2D graphics2D = (Graphics2D) pG;
+        graphics2D.setRenderingHint(
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setColor(getDisabledTextColor());
-        g.drawString(placeholder, getInsets().left, pG.getFontMetrics()
+        graphics2D.setColor(getDisabledTextColor());
+        graphics2D.drawString(placeholder, getInsets().left, pG.getFontMetrics()
             .getMaxAscent() + getInsets().top);
     }
 

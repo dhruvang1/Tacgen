@@ -114,19 +114,19 @@ public final class AllControlsAndListeners extends JFrame {
     javax.swing.JButton jSaveButton;
 
     public void deselectRadioButtons() {
-        Screen.a1.polygonStart.setSelected(false);
-        Screen.a1.polygonEnd.setSelected(false);
-        Screen.a1.polygonStart.setEnabled(false);
-        Screen.a1.polygonEnd.setEnabled(false);
+        Screen.allControlsAndListeners.polygonStart.setSelected(false);
+        Screen.allControlsAndListeners.polygonEnd.setSelected(false);
+        Screen.allControlsAndListeners.polygonStart.setEnabled(false);
+        Screen.allControlsAndListeners.polygonEnd.setEnabled(false);
     }
 
     public void deleteAllTemp() {
-        Screen.line_object.deleteTemp();
-        Screen.circle_object.deleteTemp();
-        Screen.arc_object.deleteTemp();
-        Screen.polygon_object.deleteTemp();
-        screen.repaint(Screen.screen, Screen.a2.screenCopy);
-        Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);
+        Screen.linesObject.deleteTemp();
+        Screen.circlesObject.deleteTemp();
+        Screen.arcObject.deleteTemp();
+        Screen.polygonObject.deleteTemp();
+        screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+        Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
     }
     
     public Hashtable getLabelTable(int minLabel, int maxLabel, int increment) {
@@ -139,7 +139,7 @@ public final class AllControlsAndListeners extends JFrame {
     }
     public Point getOriginalZoomedCoordinate(MouseEvent e) throws NoninvertibleTransformException{
         Point p = e.getPoint();
-        Screen.zoom_affine_transform.inverseTransform(p, p);
+        Screen.zoomAffineTransform.inverseTransform(p, p);
         return p;
     }
     
@@ -194,39 +194,39 @@ public final class AllControlsAndListeners extends JFrame {
     }
 
     public void initializeListeners() {
-        Screen.main_frame.addWindowListener(new WindowAdapter() {
+        Screen.mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
-                if (!Screen.current_file.getName().contentEquals("tacgen.jpg")) {
+                if (!Screen.currentFile.getName().contentEquals("tacgen.jpg")) {
                     String optionButtons[] = {"Yes", "No", "Cancel"};
                     int promptResult = JOptionPane.showOptionDialog(null, "Do you want to save any unsaved work?", "Tactile Tool", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, optionButtons, optionButtons[0]);
                     if (promptResult == JOptionPane.YES_OPTION) {
                         try {
-                            Screen.a13.svg_file();
-                            String currentFilePath = Screen.current_file.getAbsolutePath();
-                            String currentFileName = String.valueOf(Screen.current_file.getName());
+                            Screen.svgGenerateObject.svgFile();
+                            String currentFilePath = Screen.currentFile.getAbsolutePath();
+                            String currentFileName = String.valueOf(Screen.currentFile.getName());
                             String newFileName = currentFileName.substring(0, currentFileName.lastIndexOf(".")) + "_1" + currentFileName.substring(currentFileName.lastIndexOf("."));
                             int index = currentFilePath.lastIndexOf("\\");
                             String newFilePath = currentFilePath.substring(0, index + 1) + newFileName;
                             File outputFile1 = new File(newFilePath);
                             outputFile1.delete();
-                            File textFile = new File(Screen.current_file.getAbsolutePath() + ".txt");
+                            File textFile = new File(Screen.currentFile.getAbsolutePath() + ".txt");
                             textFile.delete();
                             System.exit(0);
                         } catch (IOException | ScriptException | NoSuchMethodException ex) {
                             Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     } else if (promptResult == JOptionPane.NO_OPTION) {
-                        String currentFilePath = Screen.current_file.getAbsolutePath();
-                        String currentFileName = String.valueOf(Screen.current_file.getName());
+                        String currentFilePath = Screen.currentFile.getAbsolutePath();
+                        String currentFileName = String.valueOf(Screen.currentFile.getName());
                         String newFileName = currentFileName.substring(0, currentFileName.lastIndexOf(".")) + "_1" + currentFileName.substring(currentFileName.lastIndexOf("."));
                         int index = currentFilePath.lastIndexOf("\\");
                         String newFilePath = currentFilePath.substring(0, index + 1) + newFileName;
                         File outputFile1 = new File(newFilePath);
                         outputFile1.delete();
-                        File textFile = new File(Screen.current_file.getAbsolutePath() + ".txt");
+                        File textFile = new File(Screen.currentFile.getAbsolutePath() + ".txt");
                         textFile.delete();
-                        File svgFile = new File(Screen.current_file.getAbsolutePath() + ".html");
+                        File svgFile = new File(Screen.currentFile.getAbsolutePath() + ".html");
                         svgFile.delete();
                         System.exit(0);
                     }
@@ -235,10 +235,10 @@ public final class AllControlsAndListeners extends JFrame {
                 }
             }
         });
-        Screen.preview_frame.addWindowListener(new WindowAdapter() {
+        Screen.previewFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
-                Screen.a1.jPreviewButton.setEnabled(true);
+                Screen.allControlsAndListeners.jPreviewButton.setEnabled(true);
             }
         });
         jOpenFileItem.addActionListener(new ActionListener() {
@@ -253,43 +253,43 @@ public final class AllControlsAndListeners extends JFrame {
                 jFileChooser.setFileFilter(imageFilter);
                 File workingDirectory = new File(System.getProperty("user.dir"));
                 jFileChooser.setCurrentDirectory(workingDirectory);
-                int returnValue = jFileChooser.showOpenDialog(Screen.main_frame);
+                int returnValue = jFileChooser.showOpenDialog(Screen.mainFrame);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     try {
                         File currentFile = jFileChooser.getSelectedFile();
-                        Screen.current_file = currentFile;
-                        Screen.current_file_name = String.valueOf(Screen.current_file.getName());
-                        Screen.screen = ImageIO.read(currentFile);
-                        Screen.a2.screenCopy = new BufferedImage(
-                                (int)(Screen.zoom_scale* Screen.screen.getWidth()),
-                                (int)(Screen.zoom_scale* Screen.screen.getHeight()),
-                                Screen.screen.getType());
-                        Screen.a2.screenLabel = new JLabel(new ImageIcon(Screen.a2.screenCopy));
-                        Screen.a2.screenLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-                        Screen.a2.screenLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                        Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);
+                        Screen.currentFile = currentFile;
+                        Screen.currentFileName = String.valueOf(Screen.currentFile.getName());
+                        Screen.bufferedImageScreen = ImageIO.read(currentFile);
+                        Screen.initialFrameSetup.screenCopy = new BufferedImage(
+                                (int)(Screen.zoomScale * Screen.bufferedImageScreen.getWidth()),
+                                (int)(Screen.zoomScale * Screen.bufferedImageScreen.getHeight()),
+                                Screen.bufferedImageScreen.getType());
+                        Screen.initialFrameSetup.screenLabel = new JLabel(new ImageIcon(Screen.initialFrameSetup.screenCopy));
+                        Screen.initialFrameSetup.screenLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+                        Screen.initialFrameSetup.screenLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                        Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
 
-                        Screen.main_frame.validate();
-                        Screen.main_frame.repaint();
-                        screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                        Screen.main_frame.setVisible(true);
-                        Screen.refresh_all.refresh();
-                        File svgFile = new File(Screen.current_file.getAbsolutePath() + ".html");
+                        Screen.mainFrame.validate();
+                        Screen.mainFrame.repaint();
+                        screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                        Screen.mainFrame.setVisible(true);
+                        Screen.allObjectReinitializer.refresh();
+                        File svgFile = new File(Screen.currentFile.getAbsolutePath() + ".html");
                         if (svgFile.exists()) {
                             String optionButtons[] = {"Yes", "No"};
                             int promptResult = JOptionPane.showOptionDialog(null, "You already have saved SVG for this file. Do you want to restore it?", "Restore", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, optionButtons, optionButtons[0]);
                             if (promptResult == JOptionPane.YES_OPTION) {
-                                Screen.restore_svg.restore();
+                                Screen.restoreSVG.restore();
                             } else {
                                 svgFile.delete();
                             }
                         }
-                        Screen.a20 = new page1_auto_text();
-                        Screen.main_frame.validate();
-                        Screen.main_frame.repaint();
-                        screen.repaint(Screen.screen, Screen.a2.screenCopy);
+                        Screen.page1AutoText = new Page1AutoText();
+                        Screen.mainFrame.validate();
+                        Screen.mainFrame.repaint();
+                        screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
                         //Screen.a2.screenLabel.repaint();
-                        Screen.main_frame.setVisible(true);
+                        Screen.mainFrame.setVisible(true);
                     } catch (IOException ex) {
                         Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (SAXException ex) {
@@ -324,10 +324,10 @@ public final class AllControlsAndListeners extends JFrame {
         jClearSvg.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Screen.refresh_all.refresh();
-                    Screen.a13.svg_file();
-                    screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                    Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.allObjectReinitializer.refresh();
+                    Screen.svgGenerateObject.svgFile();
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
 
                 } catch (IOException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
@@ -342,24 +342,24 @@ public final class AllControlsAndListeners extends JFrame {
         jZoomSlider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 int value = jZoomSlider.getValue();
-                Screen.zoom_scale = (value+4)/20.0;
-                Screen.a2.screenCopy = new BufferedImage(
-                        (int)(Screen.zoom_scale* Screen.screen.getWidth()),
-                        (int)(Screen.zoom_scale* Screen.screen.getHeight()),
-                        (int)(Screen.zoom_scale* Screen.screen.getType()));
-                Screen.a2.screenLabel = new JLabel(new ImageIcon(Screen.a2.screenCopy));
-                Screen.a2.screenLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-                Screen.a2.screenLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);
-                Screen.image_area_listeners.add();
+                Screen.zoomScale = (value+4)/20.0;
+                Screen.initialFrameSetup.screenCopy = new BufferedImage(
+                        (int)(Screen.zoomScale * Screen.bufferedImageScreen.getWidth()),
+                        (int)(Screen.zoomScale * Screen.bufferedImageScreen.getHeight()),
+                        (int)(Screen.zoomScale * Screen.bufferedImageScreen.getType()));
+                Screen.initialFrameSetup.screenLabel = new JLabel(new ImageIcon(Screen.initialFrameSetup.screenCopy));
+                Screen.initialFrameSetup.screenLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+                Screen.initialFrameSetup.screenLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
+                Screen.imageAreaListeners.add();
                 //System.out.println("scale - "+Screen.zoom_scale);
-                Screen.main_frame.validate();
-                Screen.main_frame.repaint();
-                screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
-                Screen.main_frame.setVisible(true);
-                screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+                Screen.mainFrame.validate();
+                Screen.mainFrame.repaint();
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                Screen.mainFrame.setVisible(true);
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
             }
         });
     }
@@ -373,7 +373,7 @@ public final class AllControlsAndListeners extends JFrame {
         //page-0
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Screen.a20 = new page1_auto_text();
+                Screen.page1AutoText = new Page1AutoText();
             }
         });
 
@@ -405,23 +405,23 @@ public final class AllControlsAndListeners extends JFrame {
                 String lang = (String) jComboPage1.getSelectedItem();
                 switch (lang) {
                     case "Hindi":
-                        Screen.text_exe.language = "hin";
+                        Screen.textExeObject.language = "hin";
                         //Screen.a1.Label.setFont(hin_font);
                         break;
                     case "English":
-                        Screen.text_exe.language = "eng";
+                        Screen.textExeObject.language = "eng";
                         //Screen.a1.Label.setFont(eng_font);
                         break;
                     case "Bengali":
-                        Screen.text_exe.language = "ben";
+                        Screen.textExeObject.language = "ben";
                         //Screen.a1.Label.setFont(eng_font);
                         break;
                     case "Language":
-                        Screen.text_exe.language = "eng";
+                        Screen.textExeObject.language = "eng";
                         //Screen.a1.Label.setFont(eng_font);
                         break;
                     default:
-                        Screen.text_exe.language = "eng";
+                        Screen.textExeObject.language = "eng";
                         //Screen.a1.Label.setFont(eng_font);
                         break;
                 }
@@ -431,8 +431,8 @@ public final class AllControlsAndListeners extends JFrame {
         jDetectText.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Screen.text_exe.load();
-                    Screen.a21 = new page2_manual_text();
+                    Screen.textExeObject.load();
+                    Screen.page2ManualText = new Page2ManualText();
                 } catch (IOException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InterruptedException ex) {
@@ -447,7 +447,7 @@ public final class AllControlsAndListeners extends JFrame {
 
         jSkipPage1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Screen.a21 = new page2_manual_text();
+                Screen.page2ManualText = new Page2ManualText();
             }
         });
     }
@@ -511,12 +511,12 @@ public final class AllControlsAndListeners extends JFrame {
                 if (e.getStateChange() == 1) {
                     jSelectText.setSelected(false);
                     jEdit.setSelected(false);
-                    if (Screen.a9.selected_rect != 10000) {
+                    if (Screen.modifyTextObject.selectedRectangle != 10000) {
                         jLabel.setEditable(true);
-                        if (Screen.textbox_object.label.get(Screen.a9.selected_rect).getR().contains("label -")) {
+                        if (Screen.textboxObject.label.get(Screen.modifyTextObject.selectedRectangle).getR().contains("label -")) {
                             jLabel.setText("");
                         } else {
-                            jLabel.setText(Screen.textbox_object.label.get(Screen.a9.selected_rect).getR());
+                            jLabel.setText(Screen.textboxObject.label.get(Screen.modifyTextObject.selectedRectangle).getR());
                         }
                     }
                 } else {
@@ -539,56 +539,56 @@ public final class AllControlsAndListeners extends JFrame {
 
         jDeletePage2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Screen.textbox_object.deleteIndices();
-                screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+                Screen.textboxObject.deleteIndices();
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
             }
         });
 
         jLabel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String th = Screen.textbox_object.label.get(Screen.a9.selected_rect).getL();
+                String th = Screen.textboxObject.label.get(Screen.modifyTextObject.selectedRectangle).getL();
                 Pair<String, String> tempPair;
                 if (jLabel.getText().length() == 0) {
                     Screen.label_counts++;
                     tempPair = new Pair<>(th, "label - " + Screen.label_counts);
-                    Screen.textbox_object.label.set(Screen.a9.selected_rect, tempPair);
+                    Screen.textboxObject.label.set(Screen.modifyTextObject.selectedRectangle, tempPair);
                 } else {
                     tempPair = new Pair<>(th, jLabel.getText());
-                    Screen.textbox_object.label.set(Screen.a9.selected_rect, tempPair);
+                    Screen.textboxObject.label.set(Screen.modifyTextObject.selectedRectangle, tempPair);
                 }
-                screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
             }
         });
         jSavePage2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String th = Screen.textbox_object.label.get(Screen.a9.selected_rect).getL();
+                String th = Screen.textboxObject.label.get(Screen.modifyTextObject.selectedRectangle).getL();
                 Pair<String, String> tempPair;
                 if (jLabel.getText().length() == 0) {
                     Screen.label_counts++;
                     tempPair = new Pair<>(th, "label - " + Screen.label_counts);
-                    Screen.textbox_object.label.set(Screen.a9.selected_rect, tempPair);
+                    Screen.textboxObject.label.set(Screen.modifyTextObject.selectedRectangle, tempPair);
                 } else {
                     tempPair = new Pair<>(th, jLabel.getText());
-                    Screen.textbox_object.label.set(Screen.a9.selected_rect, tempPair);
+                    Screen.textboxObject.label.set(Screen.modifyTextObject.selectedRectangle, tempPair);
                 }
-                screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
             }
         });
 
         jGoBackPage2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Screen.a21.go_back();
+                Screen.page2ManualText.goBack();
             }
         });
 
         jNextPage2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Screen.text_exe.store();
+                    Screen.textExeObject.store();
                 } catch (IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ScriptException ex) {
@@ -596,7 +596,7 @@ public final class AllControlsAndListeners extends JFrame {
                 } catch (NoSuchMethodException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Screen.a22 = new page3_auto_maths_science();
+                Screen.page3AutoMathScience = new Page3AutoMathScience();
             }
         });
     }
@@ -623,14 +623,14 @@ public final class AllControlsAndListeners extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Screen.maths_science_exe.load();
-                    Screen.a23_maths = new page4_maths_parameter();
-                    Screen.main_frame.validate();
-                    Screen.main_frame.repaint();
-                    screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                    Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
-                    Screen.main_frame.setVisible(true);
-                    screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                    Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.page4MathParameter = new Page4MathParameter();
+                    Screen.mainFrame.validate();
+                    Screen.mainFrame.repaint();
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.mainFrame.setVisible(true);
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
                 } catch (IOException | InterruptedException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -641,14 +641,14 @@ public final class AllControlsAndListeners extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Screen.maths_science_exe.load_science();
-                    Screen.a23 = new page4_manual_maths_science();
-                    Screen.main_frame.validate();
-                    Screen.main_frame.repaint();
-                    screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                    Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
-                    Screen.main_frame.setVisible(true);
-                    screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                    Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.page4ManualMathScience = new Page4ManualMathScience();
+                    Screen.mainFrame.validate();
+                    Screen.mainFrame.repaint();
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.mainFrame.setVisible(true);
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
                 } catch (IOException | InterruptedException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -658,7 +658,7 @@ public final class AllControlsAndListeners extends JFrame {
         jGoBackPage3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Screen.a22.go_back();
+                    Screen.page3AutoMathScience.goBack();
                 } catch (IOException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -667,7 +667,7 @@ public final class AllControlsAndListeners extends JFrame {
 
         jSkipPage3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Screen.a23 = new page4_manual_maths_science();
+                Screen.page4ManualMathScience = new Page4ManualMathScience();
             }
         });
     }
@@ -785,7 +785,7 @@ public final class AllControlsAndListeners extends JFrame {
             public void itemStateChanged(ItemEvent e) {
                 try {
                     MouseEvent m = null;
-                    Screen.polygon_object.getPolygons(m);
+                    Screen.polygonObject.getPolygons(m);
                 } catch (NoninvertibleTransformException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -838,21 +838,21 @@ public final class AllControlsAndListeners extends JFrame {
 
         jDeleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Screen.circle_object.deleteIndices();
-                Screen.line_object.deleteLineIndices();
-                Screen.arc_object.deleteIndices();
-                Screen.polygon_object.deleteIndices();
-                Screen.region_object.deleteIndices();
-                Screen.a16.deleteIndices();
-                screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+                Screen.circlesObject.deleteIndices();
+                Screen.linesObject.deleteLineIndices();
+                Screen.arcObject.deleteIndices();
+                Screen.polygonObject.deleteIndices();
+                Screen.regionsObject.deleteIndices();
+                Screen.pathsObject.deleteIndices();
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
             }
         });
 
         jGoBackPage4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Screen.a23.go_back();
+                    Screen.page4ManualMathScience.goBack();
                 } catch (IOException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -861,7 +861,7 @@ public final class AllControlsAndListeners extends JFrame {
 
         jNextPage4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Screen.a24 = new page5_color_mapping();
+                Screen.page5ColorMapping = new Page5ColorMapping();
             }
         });
 
@@ -934,13 +934,13 @@ public final class AllControlsAndListeners extends JFrame {
                 if (!duplicateLineDetectionByDistance.getValueIsAdjusting()) {
                     try {
                         Screen.maths_science_exe.load();
-                        Screen.main_frame.validate();
-                        Screen.main_frame.repaint();
-                        screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                        Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
-                        Screen.main_frame.setVisible(true);
-                        screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                        Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+                        Screen.mainFrame.validate();
+                        Screen.mainFrame.repaint();
+                        screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                        Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                        Screen.mainFrame.setVisible(true);
+                        screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                        Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
                     } catch (IOException ex) {
                         Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (InterruptedException ex) {
@@ -966,13 +966,13 @@ public final class AllControlsAndListeners extends JFrame {
             if (!duplicateLineDetectionByAngle.getValueIsAdjusting()) {
                 try {
                     Screen.maths_science_exe.load();
-                    Screen.main_frame.validate();
-                    Screen.main_frame.repaint();
-                    screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                    Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
-                    Screen.main_frame.setVisible(true);
-                    screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                    Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.mainFrame.validate();
+                    Screen.mainFrame.repaint();
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.mainFrame.setVisible(true);
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
                 } catch (IOException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InterruptedException ex) {
@@ -986,7 +986,7 @@ public final class AllControlsAndListeners extends JFrame {
         jMathGoBackPage4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Screen.a23_maths.go_back();
+                    Screen.page4MathParameter.goBack();
                 } catch (IOException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -995,14 +995,14 @@ public final class AllControlsAndListeners extends JFrame {
 
         jMathNextPage4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Screen.a23 = new page4_manual_maths_science();
-                Screen.main_frame.validate();
-                Screen.main_frame.repaint();
-                screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
-                Screen.main_frame.setVisible(true);
-                screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);
+                Screen.page4ManualMathScience = new Page4ManualMathScience();
+                Screen.mainFrame.validate();
+                Screen.mainFrame.repaint();
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                Screen.mainFrame.setVisible(true);
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
             }
         });
     }
@@ -1029,14 +1029,14 @@ public final class AllControlsAndListeners extends JFrame {
         jSelectedColor.setToolTipText("Current Colour");
         jSelectedColor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Screen.color_obj.actionPerformed(e);
+                Screen.colorObject.actionPerformed(e);
             }
         });
 
         jGoBackPage5.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Screen.a24.go_back();
+                    Screen.page5ColorMapping.goBack();
                 } catch (IOException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -1046,21 +1046,21 @@ public final class AllControlsAndListeners extends JFrame {
         jSaveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Screen.a13.svg_file();
-                    String currentFilePath = screen.current_file.getAbsolutePath();
-                    String currentFileName = String.valueOf(screen.current_file.getName());
+                    Screen.svgGenerateObject.svgFile();
+                    String currentFilePath = screen.currentFile.getAbsolutePath();
+                    String currentFileName = String.valueOf(screen.currentFile.getName());
                     String newFileName = currentFileName.substring(0, currentFileName.lastIndexOf(".")) + "_1" + currentFileName.substring(currentFileName.lastIndexOf("."));
                     int index = currentFilePath.lastIndexOf("\\");
                     String newFilePath = currentFilePath.substring(0, index + 1) + newFileName;
                     File ouputFile = new File(newFilePath);
                     ouputFile.delete();
-                    File textFile = new File(Screen.current_file.getAbsolutePath() + ".txt");
+                    File textFile = new File(Screen.currentFile.getAbsolutePath() + ".txt");
                     textFile.delete();
-                    File htmlFile = new File(Screen.current_file.getAbsolutePath() + ".html");
+                    File htmlFile = new File(Screen.currentFile.getAbsolutePath() + ".html");
                     Desktop.getDesktop().browse(htmlFile.toURI());
-                    Screen.zoom_scale = 1;
-                    Screen.a1.jZoomSlider.setValue(16);
-                    Screen.page_0 = new page0_open_image();
+                    Screen.zoomScale = 1;
+                    Screen.allControlsAndListeners.jZoomSlider.setValue(16);
+                    Screen.page0OpenImage = new Page0OpenImage();
                 } catch (IOException ex) {
                     Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ScriptException ex) {

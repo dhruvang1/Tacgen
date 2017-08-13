@@ -12,8 +12,8 @@ public class maths_science_exe {
     int r =0;
     Screen t1 = new Screen(r);
     public void load() throws FileNotFoundException, IOException, InterruptedException{
-        String h1 = t1.current_file.getAbsolutePath();
-        String h2 = String.valueOf(t1.current_file.getName());
+        String h1 = t1.currentFile.getAbsolutePath();
+        String h2 = String.valueOf(t1.currentFile.getName());
         String ty = h2.substring(0,h2.lastIndexOf("."))+"_1"+h2.substring(h2.lastIndexOf("."));
         String h4 = h1;
         int index=h4.lastIndexOf("\\");
@@ -21,12 +21,12 @@ public class maths_science_exe {
         File outputfile1 = new File(h4);
         
         // clear all data structures related to maths
-        Screen.line_object = new GetLines();
-    	Screen.circle_object = new GetCircles();
-    	Screen.region_object = new GetRegions();
-    	Screen.polygon_object = new GetPolygon();
-        Screen.arc_object = new GetArc();
-        Screen.a16 = new GetPaths();
+        Screen.linesObject = new GetLines();
+    	Screen.circlesObject = new GetCircles();
+    	Screen.regionsObject = new GetRegions();
+    	Screen.polygonObject = new GetPolygon();
+        Screen.arcObject = new GetArc();
+        Screen.pathsObject = new GetPaths();
         
         
 //        BufferedImage temp = ImageIO.read(outputfile1);
@@ -78,8 +78,8 @@ public class maths_science_exe {
         // Lines with less than this number of points are disregarded - CV_HL
         int thresh_min_line_gap = 50; // The maximum gap between two points to be considered in the same line - CV_HL
     
-        min_dist = Screen.a1.duplicateLineDetectionByDistance.getValue();
-        angle_s = Screen.a1.duplicateLineDetectionByAngle.getValue();
+        min_dist = Screen.allControlsAndListeners.duplicateLineDetectionByDistance.getValue();
+        angle_s = Screen.allControlsAndListeners.duplicateLineDetectionByAngle.getValue();
         Process pr = rt.exec("\""+ Screen.config.get("maths.exe")+"\""+" "
                 +"\""+outputfile1.getAbsolutePath()+"\""+" "
                 +angle_s+" "
@@ -111,8 +111,8 @@ public class maths_science_exe {
                 h11 = Integer.valueOf(gt[2]);h12=Integer.valueOf(gt[3]);
                 Pair<Integer,Integer> temp_pair_2 = new Pair <> (h11,h12);
                 boolean match = false;
-                for(int i = 0; i< Screen.line_object.lines.size()-1; i+=2){
-                    if(Screen.line_object.lines.get(i).equals(temp_pair)&& Screen.line_object.lines.get(i+1).equals(temp_pair_2)){
+                for(int i = 0; i< Screen.linesObject.lines.size()-1; i+=2){
+                    if(Screen.linesObject.lines.get(i).equals(temp_pair)&& Screen.linesObject.lines.get(i+1).equals(temp_pair_2)){
                         match = true;
                         //System.out.println(match);
                         break;
@@ -120,10 +120,10 @@ public class maths_science_exe {
                 }
                 if(!match){
                     //System.out.println("added a line");
-                    Screen.line_object.lines.add(temp_pair);
-                    Screen.line_object.colorArray.add(Screen.current_color);
-                    Screen.line_object.lines.add(temp_pair_2);
-                    Screen.line_object.colorArray.add(Screen.current_color);
+                    Screen.linesObject.lines.add(temp_pair);
+                    Screen.linesObject.colorArray.add(Screen.currentColor);
+                    Screen.linesObject.lines.add(temp_pair_2);
+                    Screen.linesObject.colorArray.add(Screen.currentColor);
                 }
             }
             if(s1.contains("c-")){
@@ -134,19 +134,19 @@ public class maths_science_exe {
                 float f3 = Float.valueOf(gt[2]);
                 Pair<Float,Float> temp_pair = new Pair <> (f1,f2);
                 boolean match = false;
-                for(int i = 0; i< Screen.circle_object.centers.size(); i++){
-                    if(Screen.circle_object.centers.get(i).equals_float(temp_pair)){
-                        if (Math.abs(Screen.circle_object.radii.get(i)-f3)<=3) {
+                for(int i = 0; i< Screen.circlesObject.centers.size(); i++){
+                    if(Screen.circlesObject.centers.get(i).equals_float(temp_pair)){
+                        if (Math.abs(Screen.circlesObject.radii.get(i)-f3)<=3) {
                             match = true;
                             break;
                         }
                     }
                 }
                 if(!match){
-                    Screen.circle_object.centers.add(temp_pair);
-                    Screen.circle_object.radii.add(f3);
-                    Screen.circle_object.colorArray.add(Screen.current_color);
-                    Screen.circle_object.fillArray.add(0);
+                    Screen.circlesObject.centers.add(temp_pair);
+                    Screen.circlesObject.radii.add(f3);
+                    Screen.circlesObject.colorArray.add(Screen.currentColor);
+                    Screen.circlesObject.fillArray.add(0);
                 }
             }
             s1 = br.readLine();
@@ -155,8 +155,8 @@ public class maths_science_exe {
         f.delete();
     }
     public void load_science() throws FileNotFoundException, IOException, InterruptedException{
-        String h1 = t1.current_file.getAbsolutePath();
-        String h2 = String.valueOf(t1.current_file.getName());
+        String h1 = t1.currentFile.getAbsolutePath();
+        String h2 = String.valueOf(t1.currentFile.getName());
         String ty = h2.substring(0,h2.lastIndexOf("."))+"_1"+h2.substring(h2.lastIndexOf("."));
         String h4 = h1;
         int index=h4.lastIndexOf("\\");
@@ -187,7 +187,7 @@ public class maths_science_exe {
             temp_Points_regions.add(temp_pair);
             boolean match = false;
             int temp_index;
-            for (ArrayList<Pair<Integer, Integer>> Region : Screen.a16.regions) {
+            for (ArrayList<Pair<Integer, Integer>> Region : Screen.pathsObject.regions) {
                 temp_index = Region.size() - 2;
                 //if (Region.size() == temp_Points_regions.size() && Region.get(0).equals(temp_Points_regions.get(0)) && Region.get(temp_index).equals(temp_Points_regions.get(temp_index))) {
                 if (Region.size() == temp_Points_regions.size()&&Region.get(0).equals(temp_Points_regions.get(0)) && Region.get(temp_index).equals(temp_Points_regions.get(temp_index))) {
@@ -196,10 +196,10 @@ public class maths_science_exe {
                 }
             }
             if(!match){
-                Screen.a16.regions.add(temp_Points_regions);
+                Screen.pathsObject.regions.add(temp_Points_regions);
                 Random rand = new Random();
                 Color randomColor = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat());
-                Screen.a16.colorArray.add(randomColor);
+                Screen.pathsObject.colorArray.add(randomColor);
             }
             s1 = br.readLine();
         }

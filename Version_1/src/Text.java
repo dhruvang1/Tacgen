@@ -6,25 +6,25 @@ import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
 import java.text.CharacterIterator;
 
-public class text {
+public class Text {
    private Frame mainFrame;
    private Label headerLabel;
    private Label statusLabel;
    private Panel controlPanel;
    private TextField tf;
 
-   public text(){
+   public Text(){
       prepareGUI();
    }
    
 private static String getLabelText(AttributedString attributedLabel) {
     AttributedCharacterIterator.Attribute[] attributes= new AttributedCharacterIterator.Attribute[1];
     attributes[0] = TextAttribute.FONT;
-    CharacterIterator iterator = attributedLabel.getIterator(attributes);
-    int length = iterator.getEndIndex();
+    CharacterIterator characterIterator = attributedLabel.getIterator(attributes);
+    int length = characterIterator.getEndIndex();
     StringBuilder builder = new StringBuilder(length);
     for (int i = 0; i < length; i++) {
-        builder.append(iterator.setIndex(i));
+        builder.append(characterIterator.setIndex(i));
     }
 
     return builder.toString();
@@ -62,25 +62,25 @@ private static String getLabelText(AttributedString attributedLabel) {
       mainFrame.setVisible(true);  
    }
 
-   public void showTextListenerDemo(final TextField tf){
+   public void showTextListenerDemo(final TextField textField){
       headerLabel.setText("Listener in action: TextListener");      
 
-//      tf  = new TextField(10);
+//      textField  = new TextField(10);
 
-      tf.addTextListener(new CustomTextListener());
+      textField.addTextListener(new CustomTextListener());
       Button okButton = new Button("OK");
       okButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
             statusLabel.setText("Entered text: " 
-            + tf.getText()); 
+            + textField.getText());
             
          }
       });
 
-      controlPanel.add(tf);
+      controlPanel.add(textField);
       controlPanel.add(okButton);    
       mainFrame.setVisible(true);
-//      return tf.getText();
+//      return textField.getText();
    }
 
    class CustomTextListener implements TextListener {

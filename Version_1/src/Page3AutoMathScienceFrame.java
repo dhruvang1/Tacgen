@@ -8,12 +8,12 @@
  *
  * @author Pkp
  */
-public class page5_color_mapping_frame extends javax.swing.JFrame {
+public class Page3AutoMathScienceFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form page5_frame
+     * Creates new form NewJFrame
      */
-    public page5_color_mapping_frame() {
+    public Page3AutoMathScienceFrame() {
         initComponents();
     }
 
@@ -26,12 +26,12 @@ public class page5_color_mapping_frame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jColorChooser1 = new javax.swing.JColorChooser();
-        SCRkucha1kuchGo_back_page5 = new javax.swing.JButton();
-        SCRkucha1kuchSelected_color = new javax.swing.JButton();
         SCRkucha2kuchjScrollPane1 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
-        SCRkucha1kuchSave = new javax.swing.JButton();
+        SCRkucha1kuchMath_diagram = new javax.swing.JButton();
+        SCRkucha1kuchScience_diagram = new javax.swing.JButton();
+        SCRkucha1kuchGo_back_page3 = new javax.swing.JButton();
+        SCRkucha1kuchskip_page3 = new javax.swing.JButton();
         SCRkucha1kuchpreview_button = new javax.swing.JLabel();
         SCRkucha1kuchzoom_slider = new javax.swing.JSlider();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -40,14 +40,19 @@ public class page5_color_mapping_frame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        SCRkucha1kuchGo_back_page5.setText("Go Back");
-        SCRkucha1kuchGo_back_page5.setToolTipText("Revert to previous stage");
-
-        SCRkucha1kuchSelected_color.setToolTipText("Current Colour");
-
         SCRkucha2kuchjScrollPane1.setViewportView(jLabel1);
 
-        SCRkucha1kuchSave.setText("Save");
+        SCRkucha1kuchMath_diagram.setText("Maths");
+        SCRkucha1kuchMath_diagram.setToolTipText("Detect mathmatical figures in image for maths images");
+
+        SCRkucha1kuchScience_diagram.setText("Science");
+        SCRkucha1kuchScience_diagram.setToolTipText("Detect different regions in image for science diagrams");
+
+        SCRkucha1kuchGo_back_page3.setText("Go Back");
+        SCRkucha1kuchGo_back_page3.setToolTipText("Revert to previous stage");
+
+        SCRkucha1kuchskip_page3.setText("Next");
+        SCRkucha1kuchskip_page3.setToolTipText("Go to next stage");
 
         SCRkucha1kuchpreview_button.setIcon(new javax.swing.ImageIcon("E:\\Acads\\CSD750\\BANA_28_05\\resources\\Images\\preview.png")); // NOI18N
 
@@ -66,36 +71,41 @@ public class page5_color_mapping_frame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(SCRkucha1kuchSelected_color, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SCRkucha1kuchGo_back_page5))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(SCRkucha1kuchMath_diagram, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SCRkucha1kuchScience_diagram, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SCRkucha1kuchGo_back_page3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SCRkucha2kuchjScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addComponent(SCRkucha2kuchjScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(SCRkucha1kuchSave, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                    .addComponent(SCRkucha1kuchpreview_button)
-                    .addComponent(SCRkucha1kuchzoom_slider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(SCRkucha1kuchskip_page3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SCRkucha1kuchpreview_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SCRkucha1kuchzoom_slider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SCRkucha2kuchjScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(SCRkucha1kuchGo_back_page5)
-                        .addGap(35, 35, 35)
-                        .addComponent(SCRkucha1kuchSelected_color, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(SCRkucha1kuchGo_back_page3)
                         .addGap(29, 29, 29)
-                        .addComponent(SCRkucha1kuchSave)
-                        .addGap(49, 49, 49)
+                        .addComponent(SCRkucha1kuchMath_diagram)
+                        .addGap(39, 39, 39)
+                        .addComponent(SCRkucha1kuchScience_diagram))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(SCRkucha1kuchskip_page3)
+                        .addGap(36, 36, 36)
                         .addComponent(SCRkucha1kuchpreview_button)))
-                .addGap(104, 104, 104)
+                .addGap(89, 89, 89)
                 .addComponent(SCRkucha1kuchzoom_slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(SCRkucha2kuchjScrollPane1)
         );
 
         pack();
@@ -118,14 +128,18 @@ public class page5_color_mapping_frame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(page5_color_mapping_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page3AutoMathScienceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(page5_color_mapping_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page3AutoMathScienceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(page5_color_mapping_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page3AutoMathScienceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(page5_color_mapping_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page3AutoMathScienceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -134,19 +148,19 @@ public class page5_color_mapping_frame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new page5_color_mapping_frame().setVisible(true);
+                new Page3AutoMathScienceFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton SCRkucha1kuchGo_back_page5;
-    private javax.swing.JButton SCRkucha1kuchSave;
-    private javax.swing.JButton SCRkucha1kuchSelected_color;
+    private javax.swing.JButton SCRkucha1kuchGo_back_page3;
+    private javax.swing.JButton SCRkucha1kuchMath_diagram;
+    private javax.swing.JButton SCRkucha1kuchScience_diagram;
     private javax.swing.JLabel SCRkucha1kuchpreview_button;
+    private javax.swing.JButton SCRkucha1kuchskip_page3;
     private javax.swing.JSlider SCRkucha1kuchzoom_slider;
     private javax.swing.JScrollPane SCRkucha2kuchjScrollPane1;
-    private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

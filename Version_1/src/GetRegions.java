@@ -15,11 +15,11 @@ public class GetRegions {
     
     public void getRegion(MouseEvent e) throws NoninvertibleTransformException
     {
-        Pair<Integer,Integer> temp = new Pair<>(Screen.a1.getOriginalZoomedCoordinate(e).x, Screen.a1.getOriginalZoomedCoordinate(e).y);
+        Pair<Integer,Integer> temp = new Pair<>(Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e).x, Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e).y);
         regionPoints.add(temp);
   //      System.out.println(Screen.a1.getOriginalZoomedCoordinate(e).x+","+Screen.a1.getOriginalZoomedCoordinate(e).y);
-        screen.repaint(Screen.screen, Screen.a2.screenCopy);
-        Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+        screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+        Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
     }
     public void updateRegions(){
         if(regionPoints.size()>5){
@@ -35,19 +35,19 @@ public class GetRegions {
             Pair<Integer,Integer> temp_pair = new Pair<>(y1,y2);
             tempPointsRegions.add(temp_pair);
             regions.add(tempPointsRegions);
-            colorArray.add(Screen.current_color);
+            colorArray.add(Screen.currentColor);
             fillArray.add(0);
             regionPoints.clear();
-            screen.repaint(Screen.screen, Screen.a2.screenCopy);
-            Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+            screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+            Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
         }
         regionPoints.clear();
-        screen.repaint(Screen.screen, Screen.a2.screenCopy);
-        Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+        screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+        Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
     }
     
       public void addIndices(MouseEvent e) throws NoninvertibleTransformException{
-            Point originalZoomedCoordinate = Screen.a1.getOriginalZoomedCoordinate(e);
+            Point originalZoomedCoordinate = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             int regionsMaxSize = 50000;
         //    originalZoomedCoordinate.y=-1*originalZoomedCoordinate.y;
             for(int i = 0; i< regions.size(); i++){
@@ -59,7 +59,7 @@ public class GetRegions {
                             points[y] = new Point(regions.get(i).get(y).getL(), regions.get(i).get(y).getR());
                         }
                     }
-                    if(Screen.a10.isInside(points, points.length, originalZoomedCoordinate)){
+                    if(Screen.whichPolygonObject.isInside(points, points.length, originalZoomedCoordinate)){
                         if(regionIndices.contains(i)){
                             regionIndices.remove((Integer)i);
                         }
@@ -87,7 +87,7 @@ public class GetRegions {
                 //    System.out.println(hg);
                     int index = regions.get(i).size()-2;
                     points[regionsMaxSize]=new Point(regions.get(i).get(index).getL(), regions.get(i).get(index).getR());
-                    if(Screen.a10.isInside(points, points.length, originalZoomedCoordinate)){
+                    if(Screen.whichPolygonObject.isInside(points, points.length, originalZoomedCoordinate)){
                         if(regionIndices.contains(i)){
                             regionIndices.remove((Integer)i);
                         }
@@ -102,7 +102,7 @@ public class GetRegions {
       
       
       public void addColorIndices(MouseEvent e) throws NoninvertibleTransformException{
-            Point originalZoomedCoordinate = Screen.a1.getOriginalZoomedCoordinate(e);
+            Point originalZoomedCoordinate = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             int regionsMaxSize = 50000;
         //    originalZoomedCoordinate.y=-1*originalZoomedCoordinate.y;
             for(int i = 0; i< regions.size(); i++){
@@ -114,13 +114,13 @@ public class GetRegions {
                             points[y] = new Point(regions.get(i).get(y).getL(), regions.get(i).get(y).getR());
                         }
                     }
-                    if(Screen.a10.isInside(points, points.length, originalZoomedCoordinate)){
-                        if(fillArray.get(i)==1&& colorArray.get(i)!= Screen.current_color){
-                            colorArray.set(i, Screen.current_color);
+                    if(Screen.whichPolygonObject.isInside(points, points.length, originalZoomedCoordinate)){
+                        if(fillArray.get(i)==1&& colorArray.get(i)!= Screen.currentColor){
+                            colorArray.set(i, Screen.currentColor);
                             fillArray.set(i,1);
                         }
                         else{
-                            colorArray.set(i, Screen.current_color);
+                            colorArray.set(i, Screen.currentColor);
                             fillArray.set(i,(fillArray.get(i)+1)%2);
                         }
                     }
@@ -144,13 +144,13 @@ public class GetRegions {
                 //    System.out.println(hg);
                     int index = regions.get(i).size()-2;
                     points[regionsMaxSize]=new Point(regions.get(i).get(index).getL(), regions.get(i).get(index).getR());
-                    if(Screen.a10.isInside(points, points.length, originalZoomedCoordinate)){
-                        if(fillArray.get(i)==1&& colorArray.get(i)!= Screen.current_color){
-                            colorArray.set(i, Screen.current_color);
+                    if(Screen.whichPolygonObject.isInside(points, points.length, originalZoomedCoordinate)){
+                        if(fillArray.get(i)==1&& colorArray.get(i)!= Screen.currentColor){
+                            colorArray.set(i, Screen.currentColor);
                             fillArray.set(i,1);
                         }
                         else{
-                            colorArray.set(i, Screen.current_color);
+                            colorArray.set(i, Screen.currentColor);
                             fillArray.set(i,(fillArray.get(i)+1)%2);
                         }
                     }

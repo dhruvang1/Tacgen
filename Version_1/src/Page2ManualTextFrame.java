@@ -8,12 +8,12 @@
  *
  * @author Pkp
  */
-public class page2_manual_text_frame extends javax.swing.JFrame {
+public class Page2ManualTextFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form page1_frame
      */
-    public page2_manual_text_frame() {
+    public Page2ManualTextFrame() {
         initComponents();
     }
 
@@ -161,13 +161,13 @@ public class page2_manual_text_frame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(page2_manual_text_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page2ManualTextFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(page2_manual_text_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page2ManualTextFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(page2_manual_text_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page2ManualTextFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(page2_manual_text_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page2ManualTextFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -189,7 +189,7 @@ public class page2_manual_text_frame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new page2_manual_text_frame().setVisible(true);
+                new Page2ManualTextFrame().setVisible(true);
             }
         });
     }

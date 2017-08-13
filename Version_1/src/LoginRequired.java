@@ -18,42 +18,36 @@ import javax.swing.event.AncestorListener;
 public class LoginRequired {
 
     LoginRequired() {
-        JFrame f = new JFrame("Login Required");
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JFrame jFrame = new JFrame("Login Required");
+        jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        f.setSize(400, 300);
-        f.setResizable(false);
-        f.setLocationByPlatform(true);
-        f.setVisible(true);
+        jFrame.setSize(400, 300);
+        jFrame.setResizable(false);
+        jFrame.setLocationByPlatform(true);
+        jFrame.setVisible(true);
 
-        showLogin(f);
+        showLogin(jFrame);
     }
 
     private void showLogin(JFrame frame) {
-        JPanel p = new JPanel(new BorderLayout(5,5));
+        JPanel jPanel = new JPanel(new BorderLayout(5,5));
+        JPanel labelsPanel = new JPanel(new GridLayout(0,1,2,2));
+        labelsPanel.add(new JLabel("User Name", SwingConstants.RIGHT));
+        labelsPanel.add(new JLabel("Password", SwingConstants.RIGHT));
+        jPanel.add(labelsPanel, BorderLayout.WEST);
 
-        JPanel labels = new JPanel(new GridLayout(0,1,2,2));
-        labels.add(new JLabel("User Name", SwingConstants.RIGHT));
-        labels.add(new JLabel("Password", SwingConstants.RIGHT));
-        p.add(labels, BorderLayout.WEST);
-
-        JPanel controls = new JPanel(new GridLayout(0,1,2,2));
+        JPanel controlsPanel = new JPanel(new GridLayout(0,1,2,2));
         JTextField username = new JTextField("Joe Blogs");
-        controls.add(username);
+        controlsPanel.add(username);
         JPasswordField password = new JPasswordField();
         password.addAncestorListener(new RequestFocusListener(false));
-        controls.add(password);
-        p.add(controls, BorderLayout.CENTER);
+        controlsPanel.add(password);
+        jPanel.add(controlsPanel, BorderLayout.CENTER);
 
-        //LayoutManager l = new GroupLayout(p);
-        //p.setLayout(l);
         JOptionPane.showMessageDialog(
-            frame, p, "Log In", JOptionPane.YES_NO_CANCEL_OPTION);
+            frame, jPanel, "Log In", JOptionPane.YES_NO_CANCEL_OPTION);
     }
 
-    /**
-     * @param args  none
-     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable(){
             @Override

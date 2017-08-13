@@ -26,9 +26,9 @@ public class GetPolygon {
     public void getPolygons(MouseEvent e) throws NoninvertibleTransformException
     {
         Pair<Integer,Integer> temp = new Pair<>(x, y);
-        if (Screen.a1.polygonStart.isSelected()&&!firstPointCaptured)
+        if (Screen.allControlsAndListeners.polygonStart.isSelected()&&!firstPointCaptured)
         {
-            startPoint = Screen.a1.getOriginalZoomedCoordinate(e);
+            startPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             firstPointCaptured = true;
             temp.setL(startPoint.x);
             temp.setR(startPoint.y);
@@ -36,13 +36,13 @@ public class GetPolygon {
             points = new ArrayList<>();
             points.add(temp);
             startPointPair =temp;
-            Screen.a1.polygonStart.setSelected(false);
-            Screen.a1.polygonStart.setEnabled(false);
-            Screen.a1.polygonEnd.setEnabled(true);
+            Screen.allControlsAndListeners.polygonStart.setSelected(false);
+            Screen.allControlsAndListeners.polygonStart.setEnabled(false);
+            Screen.allControlsAndListeners.polygonEnd.setEnabled(true);
         }
         else
         {
-            if(Screen.a1.polygonEnd.isSelected()){
+            if(Screen.allControlsAndListeners.polygonEnd.isSelected()){
                 firstPointCaptured = false;
                 if(points.size()>2){
                     points.add(startPointPair);
@@ -54,24 +54,24 @@ public class GetPolygon {
                     }
                     polygons.add(tempPoints);
                     fillOrNot.add(0);
-                    colorArray.add(Screen.current_color);
+                    colorArray.add(Screen.currentColor);
                 }
                 points = null;
-                screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
-                Screen.a1.polygonEnd.setSelected(false);
-                Screen.a1.polygonEnd.setEnabled(false);
-                Screen.a1.polygonStart.setEnabled(true);
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                Screen.allControlsAndListeners.polygonEnd.setSelected(false);
+                Screen.allControlsAndListeners.polygonEnd.setEnabled(false);
+                Screen.allControlsAndListeners.polygonStart.setEnabled(true);
                 //Points.clear();
                 //	System.out.println("size == "+Polygons.get(0).size());
             }
             if(firstPointCaptured){
-                nextPoint = Screen.a1.getOriginalZoomedCoordinate(e);
+                nextPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
                 temp.setL(nextPoint.x);
                 temp.setR(nextPoint.y);
                 points.add(temp);
-                screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
             }
         }
     }
@@ -79,18 +79,18 @@ public class GetPolygon {
     public void deleteTemp(){
         firstPointCaptured = false;
         points = null;
-        Screen.a1.deselectRadioButtons();
+        Screen.allControlsAndListeners.deselectRadioButtons();
     }
 
     public void addIndices(MouseEvent e) throws NoninvertibleTransformException{
-        Point p= Screen.a1.getOriginalZoomedCoordinate(e);
+        Point p= Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
         //    p.y=-1*p.y;
         for(int i = 0; i< polygons.size(); i++){
             Point [] p1 = new Point[polygons.get(i).size()-1];
             for(int y=0;y<p1.length;y++){
                 p1[y] = new Point(polygons.get(i).get(y).getL(), polygons.get(i).get(y).getR());
             }
-            if(Screen.a10.isInside(p1, p1.length, p)){
+            if(Screen.whichPolygonObject.isInside(p1, p1.length, p)){
                 if(polygonIndices.contains(i)){
                     polygonIndices.remove((Integer)i);
                 }
@@ -102,20 +102,20 @@ public class GetPolygon {
     }
 
     public void addColorIndices(MouseEvent e) throws NoninvertibleTransformException{
-        Point p= Screen.a1.getOriginalZoomedCoordinate(e);
+        Point p= Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
         //    p.y=-1*p.y;
         for(int i = 0; i< polygons.size(); i++){
             Point [] p1 = new Point[polygons.get(i).size()-1];
             for(int y=0;y<p1.length;y++){
                 p1[y] = new Point(polygons.get(i).get(y).getL(), polygons.get(i).get(y).getR());
             }
-            if(Screen.a10.isInside(p1, p1.length, p)){
-                if(fillOrNot.get(i)==1&& colorArray.get(i)!= Screen.current_color){
-                    colorArray.set(i, Screen.current_color);
+            if(Screen.whichPolygonObject.isInside(p1, p1.length, p)){
+                if(fillOrNot.get(i)==1&& colorArray.get(i)!= Screen.currentColor){
+                    colorArray.set(i, Screen.currentColor);
                     fillOrNot.set(i,1);
                 }
                 else{
-                    colorArray.set(i, Screen.current_color);
+                    colorArray.set(i, Screen.currentColor);
                     fillOrNot.set(i,(fillOrNot.get(i)+1)%2);
                 }
             }

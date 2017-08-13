@@ -35,7 +35,7 @@ public class GetArc {
         Pair<Integer,Integer> temp_angle = new Pair<>(xw,xy);
 
         if (!firstPointCaptured){
-            selectedPoint1 = Screen.a1.getOriginalZoomedCoordinate(e);
+            selectedPoint1 = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             firstPointCaptured = true;
             temp1.setL((float) selectedPoint1.x); temp1.setR((float) selectedPoint1.y);
             selectedPoint2 = null;
@@ -44,8 +44,8 @@ public class GetArc {
             arcA=temp1;
         }
         else if(!secondPointCaptured){
-            selectedPoint2 = Screen.a1.getOriginalZoomedCoordinate(e);
-            if(Screen.line_object.getDistance(selectedPoint2.x,selectedPoint2.y,selectedPoint1.x,selectedPoint1.y)>5){
+            selectedPoint2 = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
+            if(Screen.linesObject.getDistance(selectedPoint2.x,selectedPoint2.y,selectedPoint1.x,selectedPoint1.y)>5){
                 temp2.setL((float) selectedPoint2.x);temp2.setR((float) selectedPoint2.y);
                 circles.add(temp2);
                 secondPointCaptured = true;
@@ -53,30 +53,30 @@ public class GetArc {
             }
         }
         else{
-            selectedPoint3 = Screen.a1.getOriginalZoomedCoordinate(e);
-            if((Screen.line_object.getDistance(selectedPoint2.x,selectedPoint2.y,selectedPoint3.x,selectedPoint3.y)>5)&&(Screen.line_object.getDistance(selectedPoint3.x,selectedPoint3.y,selectedPoint1.x,selectedPoint1.y)>5)
-                    &&!Screen.line_object.isCollinear(selectedPoint1.x,selectedPoint1.y,selectedPoint2.x,selectedPoint2.y,selectedPoint3.x,selectedPoint3.y)){
+            selectedPoint3 = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
+            if((Screen.linesObject.getDistance(selectedPoint2.x,selectedPoint2.y,selectedPoint3.x,selectedPoint3.y)>5)&&(Screen.linesObject.getDistance(selectedPoint3.x,selectedPoint3.y,selectedPoint1.x,selectedPoint1.y)>5)
+                    &&!Screen.linesObject.isCollinear(selectedPoint1.x,selectedPoint1.y,selectedPoint2.x,selectedPoint2.y,selectedPoint3.x,selectedPoint3.y)){
                 temp3.setL((float) selectedPoint3.x);temp3.setR((float) selectedPoint3.y);
                 circles.add(temp3);
                 firstPointCaptured=secondPointCaptured = false;
                 arcC=temp3;
                 Circle a= new Circle();
-                int [] b = a.calc((int)(float)arcA.getL(),(int)(float) arcA.getR(),(int)(float) arcB.getL(),(int)(float) arcB.getR(),(int)(float) arcC.getL(),(int)(float) arcC.getR());
+                int [] b = a.getCenter((int)(float)arcA.getL(),(int)(float) arcA.getR(),(int)(float) arcB.getL(),(int)(float) arcB.getR(),(int)(float) arcC.getL(),(int)(float) arcC.getR());
                 center.setL((float)(int)b[0]);
                 center.setR((float)(int)b[1]);
                 centers.add(center);
-                radius = a.get_radius(center, arcC);
+                radius = a.getRadius(center, arcC);
                 radii.add(radius);
-                int [] b1 = a.calc_angles((int)(float)arcA.getL(),(int)(float) arcA.getR(),(int)(float) arcB.getL(),(int)(float) arcB.getR(),(int)(float) arcC.getL(),(int)(float) arcC.getR());
+                int [] b1 = a.getArcAngles((int)(float)arcA.getL(),(int)(float) arcA.getR(),(int)(float) arcB.getL(),(int)(float) arcB.getR(),(int)(float) arcC.getL(),(int)(float) arcC.getR());
                 temp_angle.setL(b1[0]);
                 temp_angle.setR(b1[1]);
                 arcAngles.add(temp_angle);
                 fillArray.add(0);
-                colorArray.add(Screen.current_color);
+                colorArray.add(Screen.currentColor);
                 circles.clear();
             }
-            screen.repaint(Screen.screen, Screen.a2.screenCopy);
-            Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+            screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+            Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
         }
 
 }
@@ -119,7 +119,7 @@ public class GetArc {
     }
         
     public void addIndices(MouseEvent e) throws NoninvertibleTransformException{
-        Point originalZoomedCoordinate = Screen.a1.getOriginalZoomedCoordinate(e);
+        Point originalZoomedCoordinate = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
         for(int i = 0; i< centers.size(); i++){
             float distance =(float)(Math.pow((originalZoomedCoordinate.x- centers.get(i).getL()),2)+Math.pow((originalZoomedCoordinate.y- centers.get(i).getR()),2));
             int a1 = originalZoomedCoordinate.x-(int) (double) centers.get(i).getL();
@@ -149,7 +149,7 @@ public class GetArc {
     }
     
     public void addColorIndices(MouseEvent e) throws NoninvertibleTransformException{
-        Point originalZoomedCoordinate = Screen.a1.getOriginalZoomedCoordinate(e);
+        Point originalZoomedCoordinate = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
         for(int i = 0; i< centers.size(); i++){
             float distance =(float)(Math.pow((originalZoomedCoordinate.x- centers.get(i).getL()),2)+Math.pow((originalZoomedCoordinate.y- centers.get(i).getR()),2));
             int a1 = originalZoomedCoordinate.x-(int) (double) centers.get(i).getL();
@@ -168,12 +168,12 @@ public class GetArc {
             
             if(distance <Math.pow(radii.get(i), 2)&& checkInside(a1, a2,a3,a4,a5,a6,a7,a8)){
 
-                if(fillArray.get(i)==1&& colorArray.get(i)!= Screen.current_color){
-                            colorArray.set(i, Screen.current_color);
+                if(fillArray.get(i)==1&& colorArray.get(i)!= Screen.currentColor){
+                            colorArray.set(i, Screen.currentColor);
                             fillArray.set(i,1);
                 }
                 else{
-                    colorArray.set(i, Screen.current_color);
+                    colorArray.set(i, Screen.currentColor);
                     fillArray.set(i,(fillArray.get(i)+1)%2);
                 }
             }

@@ -15,410 +15,375 @@ import java.text.AttributedString;
 import java.util.Hashtable;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 public class Screen {
     static int label_counts=0;
-    int startX = -1, startY = -1;
-    static int edit_counter = 0;
-    static JFrame main_frame=null;
-    static JFrame preview_frame=null;
+//    int startX = -1, startY = -1;
+//    static int edit_counter = 0;
+    static JFrame mainFrame =null;
+    static JFrame previewFrame =null;
     static Hashtable<String,String> config;
-    static AllControlsAndListeners a1 = null;
-    static initial_setup_of_frames a2=null;
-    static GetLines line_object = null;
-    static GetCircles circle_object = null;
-    static BufferedImage screen = null;
-    static BufferedImage white = null;
-    static BufferedImage screen1 = null;
-    static GetRegions region_object = null;
-    static GetTextbox textbox_object = null;
-    static GetPolygon polygon_object = null;
-    static GetArc arc_object = null;
-    static modify_text a9 = null;
-    static which_polygon a10 = null;
-    static text_exe text_exe = null;
+    static AllControlsAndListeners allControlsAndListeners = null;
+    static InitialFrameSetup initialFrameSetup =null;
+    static GetLines linesObject = null;
+    static GetCircles circlesObject = null;
+    static BufferedImage bufferedImageScreen = null;
+    static BufferedImage bufferedImageWhite = null;
+//    static BufferedImage screen1 = null;
+    static GetRegions regionsObject = null;
+    static GetTextbox textboxObject = null;
+    static GetPolygon polygonObject = null;
+    static GetArc arcObject = null;
+    static ModifyText modifyTextObject = null;
+    static whichPolygon whichPolygonObject = null;
+    static text_exe textExeObject = null;
     static maths_science_exe maths_science_exe = null;
-    static svg_generate a13 = null;
-    static Image_Area_Listeners image_area_listeners = null;
-    static refresh_all refresh_all = null;
-    static GetPaths a16 = null;
-    static restore_svg restore_svg = null;
-    static color color_obj = null;
+    static GenerateSVG svgGenerateObject = null;
+    static ImageAreaListeners imageAreaListeners = null;
+    static AllObjectReinitializer allObjectReinitializer = null;
+    static GetPaths pathsObject = null;
+    static RestoreSVG restoreSVG = null;
+    static color colorObject = null;
     
-    static page0_open_image page_0=null;
-    static page1_auto_text a20=null;
-    static page2_manual_text a21=null;
-    static page3_auto_maths_science a22=null;
-    static page4_manual_maths_science a23=null;
-    static page4_maths_parameter a23_maths = null;
-    static page5_color_mapping a24=null;
+    static Page0OpenImage page0OpenImage =null;
+    static Page1AutoText page1AutoText =null;
+    static Page2ManualText page2ManualText =null;
+    static Page3AutoMathScience page3AutoMathScience =null;
+    static Page4ManualMathScience page4ManualMathScience =null;
+    static Page4MathParameter page4MathParameter = null;
+    static Page5ColorMapping page5ColorMapping =null;
     
     static Point start = new Point();
-    static Point rectangle_translate_start = new Point();
-    static File current_file;
-    static String current_file_name;
-    static Color current_color = Color.BLACK;
+    static Point rectangleTranslateStart = new Point();
+    static File currentFile;
+    static String currentFileName;
+    static Color currentColor = Color.BLACK;
     
-    static double zoom_scale = 1.0;
-    static AffineTransform zoom_affine_transform;
+    static double zoomScale = 1.0;
+    static AffineTransform zoomAffineTransform;
     
-    boolean checked = false;
-    Point startPoint;
-    Point endPoint;
-    int i=0,j=0;
+//    boolean checked = false;
+//    Point startPoint;
+//    Point endPoint;
+    int i=0;//,j=0;
     Screen(int r){};
-    String label;
+//    String label;
     Screen() throws IOException{
-        repaint(screen,a2.screenCopy);
-        a2.screenLabel.repaint();        
+        repaint(bufferedImageScreen, initialFrameSetup.screenCopy);
+        initialFrameSetup.screenLabel.repaint();
     }
-    public boolean rect_draw_required(){
-        if(preview_frame.isVisible()
-                || Screen.a1.jSkipPage3.isDisplayable()
-                || Screen.a1.jDeleteButton.isDisplayable()
-                || Screen.a1.jSaveButton.isDisplayable()
-                || Screen.a1.duplicateLineDetectionByDistance.isDisplayable()
+    public boolean rectangleDrawRequired(){
+        if(previewFrame.isVisible()
+                || Screen.allControlsAndListeners.jSkipPage3.isDisplayable()
+                || Screen.allControlsAndListeners.jDeleteButton.isDisplayable()
+                || Screen.allControlsAndListeners.jSaveButton.isDisplayable()
+                || Screen.allControlsAndListeners.duplicateLineDetectionByDistance.isDisplayable()
                 ){
             return false;
         }
         return true;
     }
-    public boolean text_shift_required(){
-        if(preview_frame.isVisible()
-                || Screen.a1.jSelectText.isDisplayable()
-                || Screen.a1.jSkipPage3.isDisplayable()
-                || Screen.a1.jDeleteButton.isDisplayable()
-                || Screen.a1.jSaveButton.isDisplayable()
-                || Screen.a1.duplicateLineDetectionByDistance.isDisplayable()
+    public boolean textShiftRequired(){
+        if(previewFrame.isVisible()
+                || Screen.allControlsAndListeners.jSelectText.isDisplayable()
+                || Screen.allControlsAndListeners.jSkipPage3.isDisplayable()
+                || Screen.allControlsAndListeners.jDeleteButton.isDisplayable()
+                || Screen.allControlsAndListeners.jSaveButton.isDisplayable()
+                || Screen.allControlsAndListeners.duplicateLineDetectionByDistance.isDisplayable()
                 ){
             return false;
         }
         return true;
     }
-    
-//    public void mydrawLine(Graphics2D g,int x1, int y1, int x2, int y2) throws NoninvertibleTransformException{
-//        Point p1 = new Point(x1,y1);
-//        p1 = Screen.a1.get_zoomed_point_coordinate(p1);
-//        Point p2 = new Point(x2,y2);
-//        p2 = Screen.a1.get_zoomed_point_coordinate(p2);
-//        g.drawLine(p1.x,p1.y, p2.x,p2.y);        
-//    }
     
     public void repaint(BufferedImage orig, BufferedImage copy){
-//    	Screen.a2.screenCopy = new BufferedImage(
-//                                    (int)(Screen.screen.getWidth()*zoom_scale),
-//                                    (int)(Screen.screen.getHeight()*zoom_scale),
-//                                    Screen.screen.getType());
-//        Screen.a2.screenLabel = new JLabel(new ImageIcon(Screen.a2.screenCopy));
-//        Screen.a2.screenLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-//        Screen.a2.screenLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-//        Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);
-//        Screen.main_frame.validate();
-//        Screen.main_frame.repaint();
-//        Graphics2D g = Screen.a2.screenCopy.createGraphics();
-
-        Graphics2D g = copy.createGraphics();
+        Graphics2D graphics2D = copy.createGraphics();
         try {
-            zoom_affine_transform = g.getTransform(); //clones current graphics2D transform
-            zoom_affine_transform.invert(); //sets affine transorm to its own inverse, matrix inversion
-            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+            zoomAffineTransform = graphics2D.getTransform(); //clones current graphics2D transform
+            zoomAffineTransform.invert(); //sets affine transorm to its own inverse, matrix inversion
+            graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
-//            int w = Screen.a2.screenLabel.getWidth(); //panel width
-//            int h = Screen.a2.screenLabel.getHeight();// panel height
-//            double x = (w - zoom_scale * orig.getWidth())/2;
-//            double y = (h - zoom_scale * orig.getHeight())/2;
-//            System.out.println("x,y: "+x+" "+y);
-            //x,y changes only due to scale
-            //each graphics2D component has its own transform
-            //g.translate(x,y); // this sets origin for the graphics2D component at (x,y)
-            g.scale(zoom_scale, zoom_scale); //scales xfrm 
-            // g.transform(xfrm); //let current transform of g be C, then this line does C = C(xfrm), basically composition of transforms
-            zoom_affine_transform.concatenate(g.getTransform()); // zoom_affine_transform = inverse(initial g transform) * Current g transform
-            g.drawImage(orig,0,0,null); //renders image
-            //none of the above operation change the image variable
+            graphics2D.scale(zoomScale, zoomScale); //scales xfrm
+            zoomAffineTransform.concatenate(graphics2D.getTransform()); // zoom_affine_transform = inverse(initial graphics2D transform) * Current graphics2D transform
+            graphics2D.drawImage(orig,0,0,null); //renders image
         } catch (NoninvertibleTransformException ex) {
         }
-        //g.drawImage(orig,0,0, null);
-    	
+
         
-        g.setColor(Color.blue);
+        graphics2D.setColor(Color.blue);
         if(copy.getWidth()==1340){
-            System.out.println("drawing points : "+line_object.lines.size());
+            System.out.println("drawing points : "+ linesObject.lines.size());
         }
-    	for(int k = 0; k<line_object.lines.size(); k++){
-            g.setColor(current_color);
+    	for(int k = 0; k< linesObject.lines.size(); k++){
+            graphics2D.setColor(currentColor);
             
-            g.fillRect(line_object.lines.get(k).getL(), line_object.lines.get(k).getR(), 2,2);
+            graphics2D.fillRect(linesObject.lines.get(k).getL(), linesObject.lines.get(k).getR(), 2,2);
     	}
-    	for(int k = 0; k<line_object.lines.size()-1; k++){
-            g.setColor(line_object.colorArray.get(k));
-            if(line_object.lineIndices.contains(k)){
-                g.setStroke(new BasicStroke(3.0f));
-                g.drawLine(line_object.lines.get(k).getL(), line_object.lines.get(k).getR(), line_object.lines.get(k+1).getL(), line_object.lines.get(k+1).getR());
-                g.setStroke(new BasicStroke(1.0f));
+    	for(int k = 0; k< linesObject.lines.size()-1; k++){
+            graphics2D.setColor(linesObject.colorArray.get(k));
+            if(linesObject.lineIndices.contains(k)){
+                graphics2D.setStroke(new BasicStroke(3.0f));
+                graphics2D.drawLine(linesObject.lines.get(k).getL(), linesObject.lines.get(k).getR(), linesObject.lines.get(k+1).getL(), linesObject.lines.get(k+1).getR());
+                graphics2D.setStroke(new BasicStroke(1.0f));
             }
             else{
-                g.drawLine(line_object.lines.get(k).getL(), line_object.lines.get(k).getR(), line_object.lines.get(k+1).getL(), line_object.lines.get(k+1).getR());
+                graphics2D.drawLine(linesObject.lines.get(k).getL(), linesObject.lines.get(k).getR(), linesObject.lines.get(k+1).getL(), linesObject.lines.get(k+1).getR());
             }
-            g.setColor(current_color);
+            graphics2D.setColor(currentColor);
             k++;
     	}
-        if(polygon_object.points !=null){
-            g.setColor(current_color);
-            for(int h = 0; h<polygon_object.points.size(); h++){
-                g.fillRect(polygon_object.points.get(h).getL(),polygon_object.points.get(h).getR(), 2,2);
+        if(polygonObject.points !=null){
+            graphics2D.setColor(currentColor);
+            for(int h = 0; h< polygonObject.points.size(); h++){
+                graphics2D.fillRect(polygonObject.points.get(h).getL(), polygonObject.points.get(h).getR(), 2,2);
             }
-            for(int k = 0; k<polygon_object.points.size()-1; k++){
-                g.drawLine(polygon_object.points.get(k).getL(), polygon_object.points.get(k).getR(), polygon_object.points.get(k+1).getL(), polygon_object.points.get(k+1).getR());
+            for(int k = 0; k< polygonObject.points.size()-1; k++){
+                graphics2D.drawLine(polygonObject.points.get(k).getL(), polygonObject.points.get(k).getR(), polygonObject.points.get(k+1).getL(), polygonObject.points.get(k+1).getR());
             }
             
         }
         
-        if(region_object.regionPoints.size()>0){
-            g.setColor(current_color);
-            for(int h = 0; h<region_object.regionPoints.size(); h++){
-                g.fillRect(region_object.regionPoints.get(h).getL(),region_object.regionPoints.get(h).getR(), 2,2);
+        if(regionsObject.regionPoints.size()>0){
+            graphics2D.setColor(currentColor);
+            for(int h = 0; h< regionsObject.regionPoints.size(); h++){
+                graphics2D.fillRect(regionsObject.regionPoints.get(h).getL(), regionsObject.regionPoints.get(h).getR(), 2,2);
             }
-            for(int k = 0; k<region_object.regionPoints.size()-1; k++){
-                g.drawLine(region_object.regionPoints.get(k).getL(), region_object.regionPoints.get(k).getR(), region_object.regionPoints.get(k+1).getL(), region_object.regionPoints.get(k+1).getR());
+            for(int k = 0; k< regionsObject.regionPoints.size()-1; k++){
+                graphics2D.drawLine(regionsObject.regionPoints.get(k).getL(), regionsObject.regionPoints.get(k).getR(), regionsObject.regionPoints.get(k+1).getL(), regionsObject.regionPoints.get(k+1).getR());
             }
         }
         
-    	for(int k = 0; k<polygon_object.polygons.size(); k++){
-            g.setColor(polygon_object.colorArray.get(k));
-            if(polygon_object.polygonIndices.contains(k)){
-                g.setStroke(new BasicStroke(3.0f));
-                for(int h = 0; h<polygon_object.polygons.get(k).size()-1; h++){
-                    g.drawLine(polygon_object.polygons.get(k).get(h).getL(),polygon_object.polygons.get(k).get(h).getR(), polygon_object.polygons.get(k).get(h+1).getL(),polygon_object.polygons.get(k).get(h+1).getR());
+    	for(int k = 0; k< polygonObject.polygons.size(); k++){
+            graphics2D.setColor(polygonObject.colorArray.get(k));
+            if(polygonObject.polygonIndices.contains(k)){
+                graphics2D.setStroke(new BasicStroke(3.0f));
+                for(int h = 0; h< polygonObject.polygons.get(k).size()-1; h++){
+                    graphics2D.drawLine(polygonObject.polygons.get(k).get(h).getL(), polygonObject.polygons.get(k).get(h).getR(), polygonObject.polygons.get(k).get(h+1).getL(), polygonObject.polygons.get(k).get(h+1).getR());
                 }
-                g.setStroke(new BasicStroke(1.0f));
+                graphics2D.setStroke(new BasicStroke(1.0f));
             }
             else{
-                for(int h = 0; h<polygon_object.polygons.get(k).size()-1; h++){
-                    g.drawLine(polygon_object.polygons.get(k).get(h).getL(),polygon_object.polygons.get(k).get(h).getR(), polygon_object.polygons.get(k).get(h+1).getL(),polygon_object.polygons.get(k).get(h+1).getR());
+                for(int h = 0; h< polygonObject.polygons.get(k).size()-1; h++){
+                    graphics2D.drawLine(polygonObject.polygons.get(k).get(h).getL(), polygonObject.polygons.get(k).get(h).getR(), polygonObject.polygons.get(k).get(h+1).getL(), polygonObject.polygons.get(k).get(h+1).getR());
                 }
             }
-            if(polygon_object.fillOrNot.get(k)==1){
-                Polygon p = new Polygon();
-                for(int h = 0; h<polygon_object.polygons.get(k).size()-1; h++){
-                    p.addPoint(polygon_object.polygons.get(k).get(h).getL(), polygon_object.polygons.get(k).get(h).getR());
+            if(polygonObject.fillOrNot.get(k)==1){
+                Polygon polygon = new Polygon();
+                for(int h = 0; h< polygonObject.polygons.get(k).size()-1; h++){
+                    polygon.addPoint(polygonObject.polygons.get(k).get(h).getL(), polygonObject.polygons.get(k).get(h).getR());
                 }
-                g.fillPolygon(p);
+                graphics2D.fillPolygon(polygon);
             }
-            g.setColor(current_color);
+            graphics2D.setColor(currentColor);
     	}
         
-    	for(int k = 0; k<region_object.regions.size(); k++){
-            g.setColor(region_object.colorArray.get(k));
-            if(region_object.regionIndices.contains(k)){
-                g.setStroke(new BasicStroke(3.0f));
-                for(int h = 0; h<region_object.regions.get(k).size()-1; h++){
-                    g.drawLine(region_object.regions.get(k).get(h).getL(),region_object.regions.get(k).get(h).getR(), region_object.regions.get(k).get(h+1).getL(),region_object.regions.get(k).get(h+1).getR());
+    	for(int k = 0; k< regionsObject.regions.size(); k++){
+            graphics2D.setColor(regionsObject.colorArray.get(k));
+            if(regionsObject.regionIndices.contains(k)){
+                graphics2D.setStroke(new BasicStroke(3.0f));
+                for(int h = 0; h< regionsObject.regions.get(k).size()-1; h++){
+                    graphics2D.drawLine(regionsObject.regions.get(k).get(h).getL(), regionsObject.regions.get(k).get(h).getR(), regionsObject.regions.get(k).get(h+1).getL(), regionsObject.regions.get(k).get(h+1).getR());
                 }
-                g.setStroke(new BasicStroke(1.0f));
+                graphics2D.setStroke(new BasicStroke(1.0f));
             }
             else{
-                for(int h = 0; h<region_object.regions.get(k).size()-1; h++){
-                    g.drawLine(region_object.regions.get(k).get(h).getL(),region_object.regions.get(k).get(h).getR(), region_object.regions.get(k).get(h+1).getL(),region_object.regions.get(k).get(h+1).getR());
+                for(int h = 0; h< regionsObject.regions.get(k).size()-1; h++){
+                    graphics2D.drawLine(regionsObject.regions.get(k).get(h).getL(), regionsObject.regions.get(k).get(h).getR(), regionsObject.regions.get(k).get(h+1).getL(), regionsObject.regions.get(k).get(h+1).getR());
                 }
             }
-            if(region_object.fillArray.get(k)==1){
-                Polygon p = new Polygon();
-                for(int h = 0; h<region_object.regions.get(k).size()-1; h++){
-                    p.addPoint(region_object.regions.get(k).get(h).getL(), region_object.regions.get(k).get(h).getR());
+            if(regionsObject.fillArray.get(k)==1){
+                Polygon polygon = new Polygon();
+                for(int h = 0; h< regionsObject.regions.get(k).size()-1; h++){
+                    polygon.addPoint(regionsObject.regions.get(k).get(h).getL(), regionsObject.regions.get(k).get(h).getR());
                 }
-                g.fillPolygon(p);
+                graphics2D.fillPolygon(polygon);
             }
-            g.setColor(current_color);
+            graphics2D.setColor(currentColor);
     	}        
     	
-    	for(int k = 0; k<circle_object.circles.size(); k++){
-            g.setColor(current_color);
-            int r1 = (int)(float)circle_object.circles.get(k).getL();
-            int r2 = (int)(float)circle_object.circles.get(k).getR();
-            g.fillRect(r1,r2,2,2);
+    	for(int k = 0; k< circlesObject.circles.size(); k++){
+            graphics2D.setColor(currentColor);
+            int x = (int)(float) circlesObject.circles.get(k).getL();
+            int y = (int)(float) circlesObject.circles.get(k).getR();
+            graphics2D.fillRect(x, y,2,2);
     	}
         
         
-        for(int k = 0; k<arc_object.circles.size(); k++){
-            g.setColor(current_color);
-            int r1 = (int)(float)arc_object.circles.get(k).getL();
-            int r2 = (int)(float)arc_object.circles.get(k).getR();
-            g.fillRect(r1,r2,2,2);
+        for(int k = 0; k< arcObject.circles.size(); k++){
+            graphics2D.setColor(currentColor);
+            int x = (int)(float) arcObject.circles.get(k).getL();
+            int y = (int)(float) arcObject.circles.get(k).getR();
+            graphics2D.fillRect(x, y,2,2);
     	}
 
-    	for(int k = 0; k<circle_object.centers.size(); k++){
-            int r1 = (int)(float)circle_object.centers.get(k).getL();
-            int r2 = (int)(float)circle_object.centers.get(k).getR();
-            int r3 = (int)(float)circle_object.radii.get(k);
-            g.setColor(circle_object.colorArray.get(k));
-            if(circle_object.circleIndices.contains(k)){
-                g.setStroke(new BasicStroke(3.0f));
-                g.drawArc(r1-r3,r2-r3,2*r3,2*r3, 0, 360);
-                g.setStroke(new BasicStroke(1.0f));
+    	for(int k = 0; k< circlesObject.centers.size(); k++){
+            int x = (int)(float) circlesObject.centers.get(k).getL();
+            int y = (int)(float) circlesObject.centers.get(k).getR();
+            int radius = (int)(float) circlesObject.radii.get(k);
+            graphics2D.setColor(circlesObject.colorArray.get(k));
+            if(circlesObject.circleIndices.contains(k)){
+                graphics2D.setStroke(new BasicStroke(3.0f));
+                graphics2D.drawArc(x - radius, y - radius,2* radius,2* radius, 0, 360);
+                graphics2D.setStroke(new BasicStroke(1.0f));
             }
             else{
-                g.drawArc(r1-r3,r2-r3,2*r3,2*r3, 0, 360); 
+                graphics2D.drawArc(x - radius, y - radius,2* radius,2* radius, 0, 360);
             }
-            //System.out.println(g.getColor());
-            if(circle_object.fillArray.get(k)==1){
-                g.fillArc(r1-r3,r2-r3,2*r3,2*r3, 0, 360);
+            //System.out.println(graphics2D.getColor());
+            if(circlesObject.fillArray.get(k)==1){
+                graphics2D.fillArc(x - radius, y - radius,2* radius,2* radius, 0, 360);
             }
-            g.setColor(current_color);
+            graphics2D.setColor(currentColor);
     	}
         
-        for(int k = 0; k<arc_object.centers.size(); k++){
-            int r1 = (int)(float)arc_object.centers.get(k).getL();
-            int r2 = (int)(float)arc_object.centers.get(k).getR();
-            int r3 = (int)(float)arc_object.radii.get(k);
-            int r4 = arc_object.arcAngles.get(k).getL();
-            int r5 = arc_object.arcAngles.get(k).getR();
-            g.setColor(arc_object.colorArray.get(k));
-            if(arc_object.circleIndices.contains(k)){
-               g.setStroke(new BasicStroke(3.0f));
-               g.drawArc(r1-r3,r2-r3,2*r3,2*r3, r4, r5);
-               g.setStroke(new BasicStroke(1.0f));
+        for(int k = 0; k< arcObject.centers.size(); k++){
+            int x = (int)(float) arcObject.centers.get(k).getL();
+            int y = (int)(float) arcObject.centers.get(k).getR();
+            int radius = (int)(float) arcObject.radii.get(k);
+            int u = arcObject.arcAngles.get(k).getL();
+            int v = arcObject.arcAngles.get(k).getR();
+            graphics2D.setColor(arcObject.colorArray.get(k));
+            if(arcObject.circleIndices.contains(k)){
+               graphics2D.setStroke(new BasicStroke(3.0f));
+               graphics2D.drawArc(x - radius, y - radius,2* radius,2* radius, u, v);
+               graphics2D.setStroke(new BasicStroke(1.0f));
             }
             else{
-                g.drawArc(r1-r3,r2-r3,2*r3,2*r3, r4,r5); 
+                graphics2D.drawArc(x - radius, y - radius,2* radius,2* radius, u, v);
             }
-            if(arc_object.fillArray.get(k)==1){
-                g.fillArc(r1-r3,r2-r3,2*r3,2*r3, r4,r5);
+            if(arcObject.fillArray.get(k)==1){
+                graphics2D.fillArc(x - radius, y - radius,2* radius,2* radius, u, v);
             }
-            g.setColor(current_color);
+            graphics2D.setColor(currentColor);
     	}
         
-        if(a16.regionPoints.size()>0){
-            g.setColor(current_color);
-            for(int h = 0; h<a16.regionPoints.size(); h++){
-                g.fillRect(a16.regionPoints.get(h).getL(),a16.regionPoints.get(h).getR(), 2,2);
+        if(pathsObject.regionPoints.size()>0){
+            graphics2D.setColor(currentColor);
+            for(int h = 0; h< pathsObject.regionPoints.size(); h++){
+                graphics2D.fillRect(pathsObject.regionPoints.get(h).getL(), pathsObject.regionPoints.get(h).getR(), 2,2);
             }
-            for(int k = 0; k<a16.regionPoints.size()-1; k++){
-                g.drawLine(a16.regionPoints.get(k).getL(), a16.regionPoints.get(k).getR(), a16.regionPoints.get(k+1).getL(), a16.regionPoints.get(k+1).getR());
+            for(int k = 0; k< pathsObject.regionPoints.size()-1; k++){
+                graphics2D.drawLine(pathsObject.regionPoints.get(k).getL(), pathsObject.regionPoints.get(k).getR(), pathsObject.regionPoints.get(k+1).getL(), pathsObject.regionPoints.get(k+1).getR());
             }
         }
         
-    	for(int k = 0; k<a16.regions.size(); k++){
-            g.setColor(a16.colorArray.get(k));
-            if(a16.regionIndices.contains(k)){
-                g.setStroke(new BasicStroke(3.0f));
-                for(int h = 0; h<a16.regions.get(k).size()-2; h++){
-                    g.drawLine(a16.regions.get(k).get(h).getL(),a16.regions.get(k).get(h).getR(), a16.regions.get(k).get(h+1).getL(),a16.regions.get(k).get(h+1).getR());
+    	for(int k = 0; k< pathsObject.regions.size(); k++){
+            graphics2D.setColor(pathsObject.colorArray.get(k));
+            if(pathsObject.regionIndices.contains(k)){
+                graphics2D.setStroke(new BasicStroke(3.0f));
+                for(int h = 0; h< pathsObject.regions.get(k).size()-2; h++){
+                    graphics2D.drawLine(pathsObject.regions.get(k).get(h).getL(), pathsObject.regions.get(k).get(h).getR(), pathsObject.regions.get(k).get(h+1).getL(), pathsObject.regions.get(k).get(h+1).getR());
                 }
-                g.setStroke(new BasicStroke(1.0f));
+                graphics2D.setStroke(new BasicStroke(1.0f));
             }
             else{
-                for(int h = 0; h<a16.regions.get(k).size()-2; h++){
-                    g.drawLine(a16.regions.get(k).get(h).getL(),a16.regions.get(k).get(h).getR(), a16.regions.get(k).get(h+1).getL(),a16.regions.get(k).get(h+1).getR());
+                for(int h = 0; h< pathsObject.regions.get(k).size()-2; h++){
+                    graphics2D.drawLine(pathsObject.regions.get(k).get(h).getL(), pathsObject.regions.get(k).get(h).getR(), pathsObject.regions.get(k).get(h+1).getL(), pathsObject.regions.get(k).get(h+1).getR());
                 }	    
             }
-            g.setColor(current_color);
+            graphics2D.setColor(currentColor);
     	}
-        //System.out.println(a1.Label.getFont());
-        for(int k = 0; k<textbox_object.rectangleArray.size(); k++){
-            g.setColor(Color.black);
-            AttributedString at = new AttributedString(textbox_object.label.get(k).getR());
+        for(int k = 0; k< textboxObject.rectangleArray.size(); k++){
+            graphics2D.setColor(Color.black);
+            AttributedString attributedString = new AttributedString(textboxObject.label.get(k).getR());
             
-            switch (textbox_object.languageArray.get(k)) {
+            switch (textboxObject.languageArray.get(k)) {
                 case "hin":
-                    //System.out.println("setting hindi font");
-                    g.setFont(Screen.a1.hindiFont);
-                    at.addAttribute(TextAttribute.FONT, Screen.a1.hindiFont);
+                    graphics2D.setFont(Screen.allControlsAndListeners.hindiFont);
+                    attributedString.addAttribute(TextAttribute.FONT, Screen.allControlsAndListeners.hindiFont);
                     break;
                 case "eng":
-                    g.setFont(Screen.a1.englishFont);
-                    at.addAttribute(TextAttribute.FONT, Screen.a1.englishFont);
-                    //System.out.println("setting english font");
+                    graphics2D.setFont(Screen.allControlsAndListeners.englishFont);
+                    attributedString.addAttribute(TextAttribute.FONT, Screen.allControlsAndListeners.englishFont);
                     break;
                 case "ben":
-                    g.setFont(Screen.a1.bengaliFont);
-                    at.addAttribute(TextAttribute.FONT, Screen.a1.bengaliFont);
+                    graphics2D.setFont(Screen.allControlsAndListeners.bengaliFont);
+                    attributedString.addAttribute(TextAttribute.FONT, Screen.allControlsAndListeners.bengaliFont);
                     break;
-            //System.out.println("setting something else");
                 default:
                     break;
             }
-            if(textbox_object.rectangleIndices.contains(k)){
-    		if(!textbox_object.label.get(k).getR().contains("label -")){
-                    if(text_shift_required()){
-                        g.drawString(at.getIterator(),textbox_object.rectangleArray.get(k).x, textbox_object.rectangleArray.get(k).y-4);
+            if(textboxObject.rectangleIndices.contains(k)){
+    		if(!textboxObject.label.get(k).getR().contains("label -")){
+                    if(textShiftRequired()){
+                        graphics2D.drawString(attributedString.getIterator(), textboxObject.rectangleArray.get(k).x, textboxObject.rectangleArray.get(k).y-4);
                     }
                     else{
-                        g.drawString(at.getIterator(),
-                                textbox_object.rectangleArray.get(k).x,
-                                textbox_object.rectangleArray.get(k).y+textbox_object.rectangleArray.get(k).height);
+                        graphics2D.drawString(attributedString.getIterator(),
+                                textboxObject.rectangleArray.get(k).x,
+                                textboxObject.rectangleArray.get(k).y+ textboxObject.rectangleArray.get(k).height);
                     }
                 }
                 
-                g.setStroke(new BasicStroke(3.0f));
-                if(rect_draw_required()){
-                    g.drawRect(textbox_object.rectangleArray.get(k).x, textbox_object.rectangleArray.get(k).y,
-                            textbox_object.rectangleArray.get(k).width,textbox_object.rectangleArray.get(k).height);
+                graphics2D.setStroke(new BasicStroke(3.0f));
+                if(rectangleDrawRequired()){
+                    graphics2D.drawRect(textboxObject.rectangleArray.get(k).x, textboxObject.rectangleArray.get(k).y,
+                            textboxObject.rectangleArray.get(k).width, textboxObject.rectangleArray.get(k).height);
                 }
-                g.setStroke(new BasicStroke(1.0f));
+                graphics2D.setStroke(new BasicStroke(1.0f));
             }
             else{
-                if(!textbox_object.label.get(k).getR().contains("label -")){
-                    if(text_shift_required()){
-                        g.drawString(at.getIterator(),textbox_object.rectangleArray.get(k).x, textbox_object.rectangleArray.get(k).y-4);
+                if(!textboxObject.label.get(k).getR().contains("label -")){
+                    if(textShiftRequired()){
+                        graphics2D.drawString(attributedString.getIterator(), textboxObject.rectangleArray.get(k).x, textboxObject.rectangleArray.get(k).y-4);
                     }
                     else{
-                        g.drawString(at.getIterator(),
-                                textbox_object.rectangleArray.get(k).x,
-                                textbox_object.rectangleArray.get(k).y+textbox_object.rectangleArray.get(k).height);
+                        graphics2D.drawString(attributedString.getIterator(),
+                                textboxObject.rectangleArray.get(k).x,
+                                textboxObject.rectangleArray.get(k).y+ textboxObject.rectangleArray.get(k).height);
                     }
                 }
-                if(rect_draw_required()){
-                    g.drawRect(textbox_object.rectangleArray.get(k).x, textbox_object.rectangleArray.get(k).y, textbox_object.rectangleArray.get(k).width,textbox_object.rectangleArray.get(k).height);
+                if(rectangleDrawRequired()){
+                    graphics2D.drawRect(textboxObject.rectangleArray.get(k).x, textboxObject.rectangleArray.get(k).y, textboxObject.rectangleArray.get(k).width, textboxObject.rectangleArray.get(k).height);
                 }
             }
-            if(a9.selected_rect==k){
-                g.setColor(Color.RED);
-                if(!textbox_object.label.get(k).getR().contains("label -")){
-                    if(text_shift_required()){
-                        g.drawString(at.getIterator(),textbox_object.rectangleArray.get(k).x, textbox_object.rectangleArray.get(k).y-4);
+            if(modifyTextObject.selectedRectangle ==k){
+                graphics2D.setColor(Color.RED);
+                if(!textboxObject.label.get(k).getR().contains("label -")){
+                    if(textShiftRequired()){
+                        graphics2D.drawString(attributedString.getIterator(), textboxObject.rectangleArray.get(k).x, textboxObject.rectangleArray.get(k).y-4);
                     }
                     else{
-                        g.drawString(at.getIterator(),
-                                textbox_object.rectangleArray.get(k).x,
-                                textbox_object.rectangleArray.get(k).y+textbox_object.rectangleArray.get(k).height);
+                        graphics2D.drawString(attributedString.getIterator(),
+                                textboxObject.rectangleArray.get(k).x,
+                                textboxObject.rectangleArray.get(k).y+ textboxObject.rectangleArray.get(k).height);
                     }
                 }
-                if(rect_draw_required()){
-                    g.drawRect(textbox_object.rectangleArray.get(k).x+2, textbox_object.rectangleArray.get(k).y+2, textbox_object.rectangleArray.get(k).width-4,textbox_object.rectangleArray.get(k).height-4);
+                if(rectangleDrawRequired()){
+                    graphics2D.drawRect(textboxObject.rectangleArray.get(k).x+2, textboxObject.rectangleArray.get(k).y+2, textboxObject.rectangleArray.get(k).width-4, textboxObject.rectangleArray.get(k).height-4);
                 }
-                g.setColor(current_color);
+                graphics2D.setColor(currentColor);
             }
-            g.setColor(current_color);
+            graphics2D.setColor(currentColor);
         }
         
-    	if(textbox_object.captureRectangle != null){
-            g.setColor(Color.black);
-            g.drawRect(textbox_object.captureRectangle.x, textbox_object.captureRectangle.y, textbox_object.captureRectangle.width, textbox_object.captureRectangle.height);
-            g.setColor(current_color);
+    	if(textboxObject.captureRectangle != null){
+            graphics2D.setColor(Color.black);
+            graphics2D.drawRect(textboxObject.captureRectangle.x, textboxObject.captureRectangle.y, textboxObject.captureRectangle.width, textboxObject.captureRectangle.height);
+            graphics2D.setColor(currentColor);
         }
-    	g.dispose();
+    	graphics2D.dispose();
     }
     
-    public void fill_config() throws FileNotFoundException, IOException{
-        File f = new File(System.getProperty("user.dir")+"\\resources\\config");
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
-            String s1 = br.readLine();
-            while(s1!=null){
-                String[] arr= s1.split("##");
+    public void fillConfig() throws FileNotFoundException, IOException{
+        File file = new File(System.getProperty("user.dir")+"\\resources\\config");
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+            String line = bufferedReader.readLine();
+            while(line!=null){
+                String[] arr= line.split("##");
                 config.put(arr[0], System.getProperty("user.dir")+arr[1]);
-                s1 = br.readLine();
+                line = bufferedReader.readLine();
             }
         }
     }
     
     public static void main(String[] args) throws Exception {
-        Screen t1= new Screen(0);
+        Screen screen= new Screen(0);
         config = new Hashtable<>();
-        t1.fill_config();
-//        System.setProperty("file.encoding","UTF-8");
-        PrintWriter error = new PrintWriter(new FileOutputStream(new File(config.get("error_log")),false));
-        error.write("TacGen started\n");
+        screen.fillConfig();
+        PrintWriter printWriter = new PrintWriter(new FileOutputStream(new File(config.get("error_log")),false));
+        printWriter.write("TacGen started\n");
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows Classic".equals(info.getName())) {
@@ -427,45 +392,45 @@ public class Screen {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            error.write("Frame Style(Look and Feel) could not be set to windows classic\n");
+            printWriter.write("Frame Style(Look and Feel) could not be set to windows classic\n");
         }
         
-        main_frame= new JFrame("TacGen : Tool For Interactive Tactile Generation ");
-        preview_frame = new JFrame("Preview : See the progress so Far ");
+        mainFrame = new JFrame("TacGen : Tool For Interactive Tactile Generation ");
+        previewFrame = new JFrame("Preview : See the progress so Far ");
         
-        main_frame.setIconImage(ImageIO.read(new File(Screen.config.get("Frame_Icon"))));
-    	main_frame.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        main_frame.setSize(800,600);
-        main_frame.setExtendedState(main_frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        a1 = new AllControlsAndListeners();
-    	a2 = new initial_setup_of_frames();
-    	line_object = new GetLines();
-    	circle_object = new GetCircles();
-    	region_object = new GetRegions();
-    	textbox_object = new GetTextbox();
-    	polygon_object = new GetPolygon();
-        arc_object = new GetArc();
-        a9 = new modify_text();
-        a10 = new which_polygon();
-        a16 = new GetPaths();
-        text_exe = new text_exe();
+        mainFrame.setIconImage(ImageIO.read(new File(Screen.config.get("Frame_Icon"))));
+    	mainFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        mainFrame.setSize(800,600);
+        mainFrame.setExtendedState(mainFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        allControlsAndListeners = new AllControlsAndListeners();
+    	initialFrameSetup = new InitialFrameSetup();
+    	linesObject = new GetLines();
+    	circlesObject = new GetCircles();
+    	regionsObject = new GetRegions();
+    	textboxObject = new GetTextbox();
+    	polygonObject = new GetPolygon();
+        arcObject = new GetArc();
+        modifyTextObject = new ModifyText();
+        whichPolygonObject = new whichPolygon();
+        pathsObject = new GetPaths();
+        textExeObject = new text_exe();
         maths_science_exe = new maths_science_exe();
-        a13 = new svg_generate();
-        image_area_listeners = new Image_Area_Listeners();
-        refresh_all = new refresh_all();
-        restore_svg = new restore_svg();
-        color_obj = new color();
-        page_0=new page0_open_image();
+        svgGenerateObject = new GenerateSVG();
+        imageAreaListeners = new ImageAreaListeners();
+        allObjectReinitializer = new AllObjectReinitializer();
+        restoreSVG = new RestoreSVG();
+        colorObject = new color();
+        page0OpenImage =new Page0OpenImage();
 
     	SwingUtilities.invokeLater(() -> {
             try {
                 Screen main = new Screen();
             } catch (IOException ex) {
-                error.write("Invoke later method shows error\n");
+                printWriter.write("Invoke later method shows printWriter\n");
             }
-            main_frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            main_frame.setVisible(true);
+            mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            mainFrame.setVisible(true);
         });
-        error.close();
+        printWriter.close();
     }
 }		

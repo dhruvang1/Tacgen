@@ -34,7 +34,7 @@ public class GetCircles {
         Pair<Float, Float> center = new Pair<>(x, y);
 
         if (!firstPointCaptured) {
-            selectedPoint1 = Screen.a1.getOriginalZoomedCoordinate(e);
+            selectedPoint1 = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             firstPointCaptured = true;
             temp1.setL((float) selectedPoint1.x);
             temp1.setR((float) selectedPoint1.y);
@@ -44,8 +44,8 @@ public class GetCircles {
             circleA = temp1;
 
         } else if (!secondPointCaptured) {
-            selectedPoint2 = Screen.a1.getOriginalZoomedCoordinate(e);
-            if (Screen.line_object.getDistance(selectedPoint2.x, selectedPoint2.y, selectedPoint1.x, selectedPoint1.y) > 5) {
+            selectedPoint2 = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
+            if (Screen.linesObject.getDistance(selectedPoint2.x, selectedPoint2.y, selectedPoint1.x, selectedPoint1.y) > 5) {
                 temp2.setL((float) selectedPoint2.x);
                 temp2.setR((float) selectedPoint2.y);
                 circles.add(temp2);
@@ -53,28 +53,28 @@ public class GetCircles {
                 circleB = temp2;
             }
         } else {
-            selectedPoint3 = Screen.a1.getOriginalZoomedCoordinate(e);
-            if ((Screen.line_object.getDistance(selectedPoint2.x, selectedPoint2.y, selectedPoint3.x, selectedPoint3.y) > 5) && (Screen.line_object.getDistance(selectedPoint3.x, selectedPoint3.y, selectedPoint1.x, selectedPoint1.y) > 5)
-                    && !Screen.line_object.isCollinear(selectedPoint1.x, selectedPoint1.y, selectedPoint2.x, selectedPoint2.y, selectedPoint3.x, selectedPoint3.y)) {
+            selectedPoint3 = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
+            if ((Screen.linesObject.getDistance(selectedPoint2.x, selectedPoint2.y, selectedPoint3.x, selectedPoint3.y) > 5) && (Screen.linesObject.getDistance(selectedPoint3.x, selectedPoint3.y, selectedPoint1.x, selectedPoint1.y) > 5)
+                    && !Screen.linesObject.isCollinear(selectedPoint1.x, selectedPoint1.y, selectedPoint2.x, selectedPoint2.y, selectedPoint3.x, selectedPoint3.y)) {
                 temp3.setL((float) selectedPoint3.x);
                 temp3.setR((float) selectedPoint3.y);
                 circles.add(temp3);
                 firstPointCaptured = secondPointCaptured = false;
                 circleC = temp3;
                 Circle a = new Circle();
-                int[] b = a.calc((int) (float) circleA.getL(), (int) (float) circleA.getR(), (int) (float) circleB.getL(), (int) (float) circleB.getR(), (int) (float) circleC.getL(), (int) (float) circleC.getR());
+                int[] b = a.getCenter((int) (float) circleA.getL(), (int) (float) circleA.getR(), (int) (float) circleB.getL(), (int) (float) circleB.getR(), (int) (float) circleC.getL(), (int) (float) circleC.getR());
                 center.setL((float) (int) b[0]);
                 center.setR((float) (int) b[1]);
                 centers.add(center);
-                radius = a.get_radius(center, circleC);
+                radius = a.getRadius(center, circleC);
                 radii.add(radius);
-                colorArray.add(Screen.current_color);
+                colorArray.add(Screen.currentColor);
                 fillArray.add(0);
                 //System.out.println(radius);
                 circles.clear();
             }
-            screen.repaint(Screen.screen, Screen.a2.screenCopy);
-            Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+            screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+            Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
         }
 
     }
@@ -86,7 +86,7 @@ public class GetCircles {
     }
 
     public void addIndices(MouseEvent e) throws NoninvertibleTransformException {
-        Point point = Screen.a1.getOriginalZoomedCoordinate(e);
+        Point point = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
         for (int i = 0; i < centers.size(); i++) {
             float dist = (float) (Math.pow((point.x - centers.get(i).getL()), 2) + Math.pow((point.y - centers.get(i).getR()), 2));
             if (dist < Math.pow(radii.get(i), 2)) {
@@ -100,15 +100,15 @@ public class GetCircles {
     }
 
     public void addColorIndices(MouseEvent e) throws NoninvertibleTransformException {
-        Point point = Screen.a1.getOriginalZoomedCoordinate(e);
+        Point point = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
         for (int i = 0; i < centers.size(); i++) {
             float dist = (float) (Math.pow((point.x - centers.get(i).getL()), 2) + Math.pow((point.y - centers.get(i).getR()), 2));
             if (dist < Math.pow(radii.get(i), 2)) {
-                if (fillArray.get(i) == 1 && colorArray.get(i) != Screen.current_color) {
-                    colorArray.set(i, Screen.current_color);
+                if (fillArray.get(i) == 1 && colorArray.get(i) != Screen.currentColor) {
+                    colorArray.set(i, Screen.currentColor);
                     fillArray.set(i, 1);
                 } else {
-                    colorArray.set(i, Screen.current_color);
+                    colorArray.set(i, Screen.currentColor);
                     fillArray.set(i, (fillArray.get(i) + 1) % 2);
                 }
             }

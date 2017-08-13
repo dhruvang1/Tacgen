@@ -15,64 +15,64 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-public class hindi extends javax.swing.JFrame {
-    String th;
+public class Hindi extends javax.swing.JFrame {
+    String tempString;
     BufferedImage screen;
     BufferedImage screenCopy;
     Font current_font;
-    Font eng_font;
-    Font hin_font;
+    Font englishFont;
+    Font hindiFont;
     String[] languages;
-    JComboBox jComboBox1;
-    public hindi() throws FontFormatException, IOException {
+    JComboBox jComboBox;
+    public Hindi() throws FontFormatException, IOException {
         initComponents();
-        th = "";
+        tempString = "";
         languages = new String[]{"Language","English","Hindi"};
-        jComboBox1 = new JComboBox(languages);
-        jComboBox1.setMaximumSize(new java.awt.Dimension(80, 25));
-        jToolBar1.setRollover(true);
-        jToolBar1.add(jComboBox1);
-        eng_font = new java.awt.Font("sansserif", 0, 24);
-        hin_font = Font.createFont(Font.PLAIN, new File("E:\\Acads\\CSD750\\BANA_28_05\\resources\\Font\\Kruti_Dev_010.ttf")).deriveFont(Font.BOLD, 24f);
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        ge.registerFont(hin_font);
+        jComboBox = new JComboBox(languages);
+        jComboBox.setMaximumSize(new java.awt.Dimension(80, 25));
+        jToolBar.setRollover(true);
+        jToolBar.add(jComboBox);
+        englishFont = new java.awt.Font("sansserif", 0, 24);
+        hindiFont = Font.createFont(Font.PLAIN, new File("E:\\Acads\\CSD750\\BANA_28_05\\resources\\Font\\Kruti_Dev_010.ttf")).deriveFont(Font.BOLD, 24f);
+        GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        graphicsEnvironment.registerFont(hindiFont);
         //System.out.println(jTextField1.getFont());
         jTextField1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                 th = jTextField1.getText();
+                 tempString = jTextField1.getText();
                  repaint(screen,screenCopy);
-                jScrollPane1.setViewportView(jLabel1); 
+                jScrollPane1.setViewportView(jLabel);
             }
         });
-        jComboBox1.addActionListener(new ActionListener(){
+        jComboBox.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                String lang=(String)jComboBox1.getSelectedItem();
+                String lang=(String) jComboBox.getSelectedItem();
                 switch(lang){
                     case "Hindi":
-                        jTextField1.setFont(hin_font); break;
+                        jTextField1.setFont(hindiFont); break;
                     case "English":
-                        jTextField1.setFont(eng_font); break;
+                        jTextField1.setFont(englishFont); break;
                     case "Language":
-                        jTextField1.setFont(eng_font); break;
+                        jTextField1.setFont(englishFont); break;
                    default:
-                        jTextField1.setFont(eng_font); break;
+                        jTextField1.setFont(englishFont); break;
                 }
             }
         });
-        File f = new File("E:\\Acads\\CSD750\\BANA_28_05\\resources\\Images\\tactile_tool.jpg");
-        screen = ImageIO.read(f);
+        File file = new File("E:\\Acads\\CSD750\\BANA_28_05\\resources\\Images\\tactile_tool.jpg");
+        screen = ImageIO.read(file);
         screenCopy = new BufferedImage(
                                     screen.getWidth(),
                                     screen.getHeight(),
                                     screen.getType());
-        jLabel1 = new JLabel(new ImageIcon(screenCopy));
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jScrollPane1.setViewportView(jLabel1);
+        jLabel = new JLabel(new ImageIcon(screenCopy));
+        jLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jScrollPane1.setViewportView(jLabel);
         repaint(screen,screenCopy);
-        jScrollPane1.setViewportView(jLabel1); 
+        jScrollPane1.setViewportView(jLabel);
         
     }
     
@@ -82,14 +82,14 @@ public class hindi extends javax.swing.JFrame {
 
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jLabel1 = new javax.swing.JLabel();
-        jToolBar1 = new javax.swing.JToolBar();
+        jLabel = new javax.swing.JLabel();
+        jToolBar = new javax.swing.JToolBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jScrollPane1.setViewportView(jLabel1);
+        jScrollPane1.setViewportView(jLabel);
 
-        jToolBar1.setRollover(true);
+        jToolBar.setRollover(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,13 +99,13 @@ public class hindi extends javax.swing.JFrame {
                 .addGap(88, 88, 88)
                 .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                 .addGap(147, 147, 147))
-            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -117,11 +117,11 @@ public class hindi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void repaint(BufferedImage orig, BufferedImage copy){
-    	Graphics2D g = copy.createGraphics();
-    	g.drawImage(orig,0,0, null);
-    	g.setColor(Color.blue);
-        g.setFont(jTextField1.getFont());
-        g.drawString(th,100, 98);
+    	Graphics2D graphics2D = copy.createGraphics();
+    	graphics2D.drawImage(orig,0,0, null);
+    	graphics2D.setColor(Color.blue);
+        graphics2D.setFont(jTextField1.getFont());
+        graphics2D.drawString(tempString,100, 98);
     }
     
     public static void main(String args[]) {
@@ -138,13 +138,13 @@ public class hindi extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(hindi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Hindi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(hindi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Hindi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(hindi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Hindi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(hindi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Hindi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -152,11 +152,11 @@ public class hindi extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new hindi().setVisible(true);
+                    new Hindi().setVisible(true);
                 } catch (FontFormatException ex) {
-                    Logger.getLogger(hindi.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Hindi.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(hindi.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Hindi.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -165,9 +165,9 @@ public class hindi extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar;
     // End of variables declaration//GEN-END:variables
 }

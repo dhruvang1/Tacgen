@@ -14,11 +14,11 @@ public class GetPaths {
     
     public void getRegion(MouseEvent e) throws NoninvertibleTransformException
     {
-        Pair<Integer,Integer> temp = new Pair<>(Screen.a1.getOriginalZoomedCoordinate(e).x, Screen.a1.getOriginalZoomedCoordinate(e).y);
+        Pair<Integer,Integer> temp = new Pair<>(Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e).x, Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e).y);
         regionPoints.add(temp);
   //      System.out.println(Screen.a1.getOriginalZoomedCoordinate(e).x+","+Screen.a1.getOriginalZoomedCoordinate(e).y);
-        screen.repaint(Screen.screen, Screen.a2.screenCopy);
-        Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+        screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+        Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
     }
 
     public void updateRegions(){ //try removing tempRegionPoints
@@ -35,14 +35,14 @@ public class GetPaths {
             Pair<Integer,Integer> temp_pair = new Pair<>(y1,y2);
             tempRegionPoints.add(temp_pair);
             regions.add(tempRegionPoints);
-            colorArray.add(Screen.current_color);
+            colorArray.add(Screen.currentColor);
 //            regionPoints.clear();
         }
         regionPoints.clear();
     }
     
       public void addIndices(MouseEvent e) throws NoninvertibleTransformException{
-            Point originalZoomedCoordinate = Screen.a1.getOriginalZoomedCoordinate(e);
+            Point originalZoomedCoordinate = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             int regionsMaxSize = 50000;
         //    originalZoomedCoordinate.y=-1*originalZoomedCoordinate.y;
             for(int i = 0; i< regions.size(); i++){
@@ -54,7 +54,7 @@ public class GetPaths {
                             points[y] = new Point(regions.get(i).get(y).getL(), regions.get(i).get(y).getR());
                         }
                     }
-                    if(Screen.a10.isInside(points, points.length, originalZoomedCoordinate)){
+                    if(Screen.whichPolygonObject.isInside(points, points.length, originalZoomedCoordinate)){
                         if(regionIndices.contains(i)){
                             regionIndices.remove((Integer)i);
                         }
@@ -82,7 +82,7 @@ public class GetPaths {
                 //    System.out.println(hg);
                     int index = regions.get(i).size()-2;
                     points[regionsMaxSize]=new Point(regions.get(i).get(index).getL(), regions.get(i).get(index).getR());
-                    if(Screen.a10.isInside(points, points.length, originalZoomedCoordinate)){
+                    if(Screen.whichPolygonObject.isInside(points, points.length, originalZoomedCoordinate)){
                         if(regionIndices.contains(i)){
                             regionIndices.remove((Integer)i);
                         }
@@ -97,7 +97,7 @@ public class GetPaths {
       
       
       public void addColorIndices(MouseEvent e) throws NoninvertibleTransformException{
-            Point originalZoomedCoordinate = Screen.a1.getOriginalZoomedCoordinate(e);
+            Point originalZoomedCoordinate = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             int regionMaxSize = 50000;
         //    originalZoomedCoordinate.y=-1*originalZoomedCoordinate.y;
             for(int i = 0; i< regions.size(); i++){
@@ -109,8 +109,8 @@ public class GetPaths {
                             points[y] = new Point(regions.get(i).get(y).getL(), regions.get(i).get(y).getR());
                         }
                     }
-                    if(Screen.a10.isInside(points, points.length, originalZoomedCoordinate)){
-                        colorArray.set(i, Screen.current_color);
+                    if(Screen.whichPolygonObject.isInside(points, points.length, originalZoomedCoordinate)){
+                        colorArray.set(i, Screen.currentColor);
                     }
                 }
                 else{
@@ -131,8 +131,8 @@ public class GetPaths {
                     }
                     int index = regions.get(i).size()-2;
                     points[regionMaxSize] = new Point(regions.get(i).get(index).getL(), regions.get(i).get(index).getR());
-                    if(Screen.a10.isInside(points, points.length, originalZoomedCoordinate)){
-                        colorArray.set(i, Screen.current_color);
+                    if(Screen.whichPolygonObject.isInside(points, points.length, originalZoomedCoordinate)){
+                        colorArray.set(i, Screen.currentColor);
                     }
                 }
             }

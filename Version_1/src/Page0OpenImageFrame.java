@@ -8,12 +8,12 @@
  *
  * @author Pkp
  */
-public class page0_open_image_frame extends javax.swing.JFrame {
+public class Page0OpenImageFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form page0_frame
      */
-    public page0_open_image_frame() {
+    public Page0OpenImageFrame() {
         initComponents();
     }
 
@@ -105,13 +105,13 @@ public class page0_open_image_frame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(page0_open_image_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page0OpenImageFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(page0_open_image_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page0OpenImageFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(page0_open_image_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page0OpenImageFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(page0_open_image_frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Page0OpenImageFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -121,7 +121,7 @@ public class page0_open_image_frame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new page0_open_image_frame().setVisible(true);
+                new Page0OpenImageFrame().setVisible(true);
             }
         });
     }

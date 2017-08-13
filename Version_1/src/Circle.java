@@ -2,13 +2,13 @@
 
 public class Circle {
 
-    public float get_radius(Pair<Float,Float> A, Pair<Float,Float> B){
+    public float getRadius(Pair<Float,Float> A, Pair<Float,Float> B){
         float rad;
         rad = (float) Math.pow(Math.pow((A.getL()-B.getL()), 2) + Math.pow((A.getR()-B.getR()), 2),0.5);
 
         return rad;
     }
-    public  int calc_an(int a1,int a2){
+    public  int getAnglesFromSides(int a1, int a2){
         int an=0;
         an = (int) ( (double)(180.0/Math.PI) * Math.acos(a1/Math.pow((Math.pow(a1,2)+Math.pow(a2,2)),0.5))  );
         if(a2>0){
@@ -17,17 +17,17 @@ public class Circle {
         return an;
     }
 
-    public int[] calc_angles(int a1,int a2,int b1,int b2,int c1,int c2){
-        int [] p = calc(a1,a2,b1,b2,c1,c2);
+    public int[] getArcAngles(int a1, int a2, int b1, int b2, int c1, int c2){
+        int [] p = getCenter(a1,a2,b1,b2,c1,c2);
         int c_x = p[0];
         int c_y = p[1];
         int [] s1 = new int[3];
         int [] arc_angles = new int[2];
 
-        s1[0] = calc_an(a1-c_x,a2-c_y);
+        s1[0] = getAnglesFromSides(a1-c_x,a2-c_y);
 
-        s1[1] = calc_an(b1-c_x,b2-c_y);
-        s1[2] = calc_an(c1-c_x,c2-c_y);
+        s1[1] = getAnglesFromSides(b1-c_x,b2-c_y);
+        s1[2] = getAnglesFromSides(c1-c_x,c2-c_y);
         //System.out.println(s1[0]+","+s1[1]+","+s1[2]);
         if(s1[0]<s1[2]){
 
@@ -53,7 +53,7 @@ public class Circle {
         }
         return arc_angles;
     }
-    public int[] calc(int a1,int a2,int b1,int b2,int c1,int c2){
+    public int[] getCenter(int a1, int a2, int b1, int b2, int c1, int c2){
         int m1,m2;
         int n1,n2;
         m1=(a1+b1)/2;
@@ -128,112 +128,97 @@ public class Circle {
         return ret;
     }
 
-    public float dist(float mid_x, float mid_y, float radius, float s1, float s2){
+    public float getDistance(float mid_x, float mid_y, float radius, float s1, float s2){
         float d= (float) Math.sqrt(Math.pow(s1-mid_x, 2)+Math.pow(s2-mid_y, 2));
         return (float) Math.sqrt(Math.pow(radius, 2)-Math.pow(d, 2));
     }
 
-    public float[] potential_centers(float s1,float s2,float e1,float e2,float radius, int lsa){
+    public float[] potentialCenters(float s1, float s2, float e1, float e2, float radius, int lsa){
         float slope;
-        float mid_x;
-        float mid_y;
-        float d;
-        float[] cent= new float[4];  // x1,y1,    x2,y2
+        float midX;
+        float midY;
+        float distance;
+        float[] center = new float[4];  // x1,y1,    x2,y2
         if(s1==e1){
-            mid_x = s1;
-            mid_y= (s2+e2)/2f;
-            d= dist(mid_x,mid_y,radius,s1,s2);
-            cent[0]=mid_x+d;
-            cent[1]= mid_y;
-            cent[2]=mid_x-d;
-            cent[3]= mid_y;
+            midX = s1;
+            midY= (s2+e2)/2f;
+            distance = getDistance(midX,midY,radius,s1,s2);
+            center[0]=midX+ distance;
+            center[1]= midY;
+            center[2]=midX- distance;
+            center[3]= midY;
         }
         else if(s2==e2){
-            mid_x =(s1+e1)/2f;
-            mid_y = s2;
-            d= dist(mid_x,mid_y,radius,s1,s2);
-            cent[0]=mid_x;
-            cent[1]= mid_y+d;
-            cent[2]=mid_x;
-            cent[3]= mid_y-d;
+            midX =(s1+e1)/2f;
+            midY = s2;
+            distance = getDistance(midX,midY,radius,s1,s2);
+            center[0]=midX;
+            center[1]= midY+ distance;
+            center[2]=midX;
+            center[3]= midY- distance;
         }
         else{
-            mid_x =(s1+e1)/2f;
-            mid_y = (s2+e2)/2f;
-            //    System.out.println("mid x "+mid_x+"mid y "+mid_y);
-            d= dist(mid_x,mid_y,radius,s1,s2);
-            //    System.out.println("d "+d);
+            midX =(s1+e1)/2f;
+            midY = (s2+e2)/2f;
+            distance = getDistance(midX,midY,radius,s1,s2);
             slope= (s1-e1)/(s2-e2);
             double theta= Math.atan(slope);
-            //    System.out.println("theta "+Math.toDegrees(theta));
-            cent[0]=(float) (mid_x+d*Math.cos(theta));
-            cent[1]=(float) (mid_y-d*Math.sin(theta));
-            cent[2]=(float) (mid_x-d*Math.cos(theta));
-            cent[3]=(float) (mid_y+d*Math.sin(theta));
+            center[0]=(float) (midX+ distance *Math.cos(theta));
+            center[1]=(float) (midY- distance *Math.sin(theta));
+            center[2]=(float) (midX- distance *Math.cos(theta));
+            center[3]=(float) (midY+ distance *Math.sin(theta));
         }
-//        System.out.println("1 x "+cent[0]+" 1 y "+cent[1]);
-//        System.out.println("2 x "+cent[2]+" 2 y "+cent[3]);
         float fx= e1-s1;
         float fy= e2-s2;
-        float p1x=cent[0]-s1;
-        float p1y=cent[1]-s2;
-        float p2x=cent[2]-s1;
-        float p2y=cent[3]-s2;
+        float point1x= center[0]-s1;
+        float point1y= center[1]-s2;
+        float point2x= center[2]-s1;
+        float point2y= center[3]-s2;
 
-        float f_cross_p1= fx*p1y-fy*p1x;
-        float f_cross_p2= fx*p2y-fy*p2x;
-        float[] final_cent=new float[2];
+        float fCrossP1= fx*point1y-fy*point1x;
+        float f_cross_p2= fx*point2y-fy*point2x;
+        float[] finalCenter=new float[2];
         if(lsa==0){
-            if(f_cross_p1<0){
-                final_cent[0]=cent[0];
-                final_cent[1]=cent[1];
+            if(fCrossP1<0){
+                finalCenter[0]= center[0];
+                finalCenter[1]= center[1];
             }
             else{
-                final_cent[0]=cent[2];
-                final_cent[1]=cent[3];
+                finalCenter[0]= center[2];
+                finalCenter[1]= center[3];
             }
         }
         else{
-            if(f_cross_p1<0){
-                final_cent[0]=cent[2];
-                final_cent[1]=cent[3];
+            if(fCrossP1<0){
+                finalCenter[0]= center[2];
+                finalCenter[1]= center[3];
             }
             else{
-                final_cent[0]=cent[0];
-                final_cent[1]=cent[1];
+                finalCenter[0]= center[0];
+                finalCenter[1]= center[1];
             }
         }
-//        System.out.println("final cent 0 "+final_cent[0]);
-//        System.out.println("final cent 1 "+final_cent[1]);
 
-        int[] arc_angles=new int[2];
-//        System.out.println("calc_an for s "+(int)(s1-final_cent[0])+" , "+(int)(s2-final_cent[1]));
-//        System.out.println("calc_an for e "+(int)(e1-final_cent[0])+" , "+(int)(e2-final_cent[1]));
-        int s= calc_an((int)(s1-final_cent[0]),(int)(s2-final_cent[1]));
-        int e= calc_an((int)(e1-final_cent[0]),(int)(e2-final_cent[1]));
-//        System.out.println("s angle "+s);
-//        System.out.println("e angle "+e);
-        arc_angles[0]=s;
+        int[] arcAngles=new int[2];
+        int s= getAnglesFromSides((int)(s1-finalCenter[0]),(int)(s2-finalCenter[1]));
+        int e= getAnglesFromSides((int)(e1-finalCenter[0]),(int)(e2-finalCenter[1]));
+        arcAngles[0]=s;
         if(e<s){
-            arc_angles[1]=360-(s-e);
+            arcAngles[1]=360-(s-e);
         }
         else{
-            arc_angles[1]=e-s;
+            arcAngles[1]=e-s;
         }
-//        System.out.println("arc angle 0 "+arc_angles[0]);
-//        System.out.println("arc angle 1 "+arc_angles[1]);
         float[] ret = new float[4]; // cx,cy, arc_angle0, arc_angle1(converted to float)
-        ret[0]=final_cent[0];
-        ret[1]=final_cent[1];
-        ret[2]=arc_angles[0];
-        ret[3]=arc_angles[1];
+        ret[0]=finalCenter[0];
+        ret[1]=finalCenter[1];
+        ret[2]=arcAngles[0];
+        ret[3]=arcAngles[1];
         return ret;
     }
 
 
 
     public static void main(String[] args){
-//        int [] s = calc_angles(50,0,0,50,100,50);
-//        System.out.println(s[0]+","+s[1]);
     }
 }
