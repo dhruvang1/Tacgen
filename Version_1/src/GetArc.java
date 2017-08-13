@@ -26,59 +26,58 @@ public class GetArc {
 
     public void getCircle(MouseEvent e) throws NoninvertibleTransformException
     {
-            float x=(float) 0.0; float y=(float) 0.0;
-            int xw = 1;int xy = 1;
-            Pair<Float,Float> center = new Pair<>(x, y);
-            Pair<Integer,Integer> temp_angle = new Pair<>(xw,xy);
+        float x=(float) 0.0;float y=(float) 0.0;
+        int xw = 1;int xy = 1;
+        Pair<Float,Float> temp1 = new Pair<>(x, y);
+        Pair<Float,Float> temp2 = new Pair<>(x, y);
+        Pair<Float,Float> temp3 = new Pair<>(x, y);
+        Pair<Float,Float> center = new Pair<>(x, y);
+        Pair<Integer,Integer> temp_angle = new Pair<>(xw,xy);
 
-            if (!firstPointCaptured){
-                selectedPoint1 = Screen.a1.getOriginalZoomedCoordinate(e);
-                firstPointCaptured = true;
-                arcA.setL((float) selectedPoint1.x); arcA.setR((float) selectedPoint1.y);
-                selectedPoint2 = null;
-                selectedPoint3 =null;
-                circles.add(arcA);
+        if (!firstPointCaptured){
+            selectedPoint1 = Screen.a1.getOriginalZoomedCoordinate(e);
+            firstPointCaptured = true;
+            temp1.setL((float) selectedPoint1.x); temp1.setR((float) selectedPoint1.y);
+            selectedPoint2 = null;
+            selectedPoint3=null;
+            circles.add(temp1);
+            arcA=temp1;
+        }
+        else if(!secondPointCaptured){
+            selectedPoint2 = Screen.a1.getOriginalZoomedCoordinate(e);
+            if(Screen.line_object.getDistance(selectedPoint2.x,selectedPoint2.y,selectedPoint1.x,selectedPoint1.y)>5){
+                temp2.setL((float) selectedPoint2.x);temp2.setR((float) selectedPoint2.y);
+                circles.add(temp2);
+                secondPointCaptured = true;
+                arcB=temp2;
             }
-            else if(!secondPointCaptured){
-                selectedPoint2 = Screen.a1.getOriginalZoomedCoordinate(e);
-                if(Screen.line_object.getDistance(selectedPoint2.x, selectedPoint2.y, selectedPoint1.x, selectedPoint1.y)>5){
-                    arcB.setL((float) selectedPoint2.x);arcB.setR((float) selectedPoint2.y);
-                    circles.add(arcB);
-                    secondPointCaptured = true;
-                }
+        }
+        else{
+            selectedPoint3 = Screen.a1.getOriginalZoomedCoordinate(e);
+            if((Screen.line_object.getDistance(selectedPoint2.x,selectedPoint2.y,selectedPoint3.x,selectedPoint3.y)>5)&&(Screen.line_object.getDistance(selectedPoint3.x,selectedPoint3.y,selectedPoint1.x,selectedPoint1.y)>5)
+                    &&!Screen.line_object.isCollinear(selectedPoint1.x,selectedPoint1.y,selectedPoint2.x,selectedPoint2.y,selectedPoint3.x,selectedPoint3.y)){
+                temp3.setL((float) selectedPoint3.x);temp3.setR((float) selectedPoint3.y);
+                circles.add(temp3);
+                firstPointCaptured=secondPointCaptured = false;
+                arcC=temp3;
+                Circle a= new Circle();
+                int [] b = a.calc((int)(float)arcA.getL(),(int)(float) arcA.getR(),(int)(float) arcB.getL(),(int)(float) arcB.getR(),(int)(float) arcC.getL(),(int)(float) arcC.getR());
+                center.setL((float)(int)b[0]);
+                center.setR((float)(int)b[1]);
+                centers.add(center);
+                radius = a.get_radius(center, arcC);
+                radii.add(radius);
+                int [] b1 = a.calc_angles((int)(float)arcA.getL(),(int)(float) arcA.getR(),(int)(float) arcB.getL(),(int)(float) arcB.getR(),(int)(float) arcC.getL(),(int)(float) arcC.getR());
+                temp_angle.setL(b1[0]);
+                temp_angle.setR(b1[1]);
+                arcAngles.add(temp_angle);
+                fillArray.add(0);
+                colorArray.add(Screen.current_color);
+                circles.clear();
             }
-            else{
-                selectedPoint3 = Screen.a1.getOriginalZoomedCoordinate(e);
-                if((Screen.line_object.getDistance(selectedPoint2.x, selectedPoint2.y, selectedPoint3.x, selectedPoint3.y)>5)&&(Screen.line_object.getDistance(selectedPoint3.x, selectedPoint3.y, selectedPoint1.x, selectedPoint1.y)>5)
-                            &&!Screen.line_object.isCollinear(selectedPoint1.x, selectedPoint1.y, selectedPoint2.x, selectedPoint2.y, selectedPoint3.x, selectedPoint3.y)){
-                    arcC.setL((float) selectedPoint3.x);arcC.setR((float) selectedPoint3.y);
-                    circles.add(arcC);
-                    firstPointCaptured = secondPointCaptured = false;
-    //			System.out.println("The Three points are :- "+"[" +"("+Circles.get(j).getL()+","+Circles.get(j).getR()+")"+
-    //					" "+"("+Circles.get(j+1).getL()+","+Circles.get(j+1).getR()+")"+" "+"("+Circles.get(j+2).getL()+","+Circles.get(j+2).getR()+")"+"]");
-    //			j=j+3;
-                    Circle circle = new Circle();
-                    int [] b = circle.getCenter((int)(float) arcA.getL(),(int)(float) arcA.getR(),(int)(float) arcB.getL(),(int)(float) arcB.getR(),(int)(float) arcC.getL(),(int)(float) arcC.getR());
-                    center.setL((float)(int)b[0]);
-                    center.setR((float)(int)b[1]);
-                    centers.add(center);
-                    radius = circle.getRadius(center, arcC);
-                    radii.add(radius);
-                    b = circle.getArcAngles((int)(float) arcA.getL(),(int)(float) arcA.getR(),(int)(float) arcB.getL(),(int)(float) arcB.getR(),(int)(float) arcC.getL(),(int)(float) arcC.getR());
-                    temp_angle.setL(b[0]);
-                    temp_angle.setR(b[1]);
-          //          System.out.println("angles : "+b1[0]+","+b1[1]);
-                    arcAngles.add(temp_angle);
-                    fillArray.add(0);
-                    colorArray.add(Screen.current_color);
-                    circles.clear();
-                    
-              ///      System.out.println("radius = "+radius);
-                 //   System.out.println("The center is :- ("+center.getL()+","+center.getR()+")");
-                }
-                screen.repaint(Screen.screen, Screen.a2.screenCopy);
-                Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
-            }
+            screen.repaint(Screen.screen, Screen.a2.screenCopy);
+            Screen.a2.jScrollPane1.setViewportView(Screen.a2.screenLabel);  //Screen.a2.screenLabel.repaint();
+        }
 
 }
 
@@ -92,24 +91,24 @@ public class GetArc {
 
     public boolean checkInside(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8){
         int s0 = calc_an(a1,a2);
-        int [] s1 = new int[3];
-        s1[0] = calc_an(a3,a4);
-        s1[1] = calc_an(a5,a6);
-        s1[2] = calc_an(a7,a8);
-        if(s1[0]<s1[2]){
-            if(s1[1]>s1[0]&&s1[1]<s1[2]){
-                return s0>s1[0]&&s0<s1[2];
+        int [] selectedPoint1 = new int[3];
+        selectedPoint1[0] = calc_an(a3,a4);
+        selectedPoint1[1] = calc_an(a5,a6);
+        selectedPoint1[2] = calc_an(a7,a8);
+        if(selectedPoint1[0]<selectedPoint1[2]){
+            if(selectedPoint1[1]>selectedPoint1[0]&&selectedPoint1[1]<selectedPoint1[2]){
+                return s0>selectedPoint1[0]&&s0<selectedPoint1[2];
             }
             else{
-                return !(s0>s1[0]&&s0<s1[2]);
+                return !(s0>selectedPoint1[0]&&s0<selectedPoint1[2]);
             }
         }
         else{
-            if(s1[1]<s1[2]||s1[0]<s1[1]){
-                return s0<s1[2]||s1[0]<s0;
+            if(selectedPoint1[1]<selectedPoint1[2]||selectedPoint1[0]<selectedPoint1[1]){
+                return s0<selectedPoint1[2]||selectedPoint1[0]<s0;
             }
             else{
-                return !(s0<s1[2]||s1[0]<s0);
+                return !(s0<selectedPoint1[2]||selectedPoint1[0]<s0);
             }
         }
     }
@@ -183,10 +182,6 @@ public class GetArc {
     }
     
     public void deleteIndices(){
-//       ArrayList<Pair<Float,Float>> temp_Circles=new ArrayList<Pair<Float,Float>>();
-//       ArrayList<Pair<Float,Float>> temp_Centers=new ArrayList<Pair<Float,Float>>();
-//       ArrayList<Float> temp_Radius=new ArrayList<Float>();
-//       ArrayList<Pair<Integer,Integer>> temp_arc_angles=new ArrayList<Pair<Integer,Integer>>();
         circleIndices.sort(null);
         for(int i = circleIndices.size()-1; i>=0; i--){
             centers.remove((int) circleIndices.get(i));
@@ -195,10 +190,6 @@ public class GetArc {
             colorArray.remove((int) circleIndices.get(i));
             fillArray.remove((int) circleIndices.get(i));
         }
-//        Circles.removeAll(temp_Circles);
-//        Centers.removeAll(temp_Centers);
-//        Radius.removeAll(temp_Radius);
-//        arc_angles.removeAll(temp_arc_angles);
         circleIndices.clear();
     }
 }
