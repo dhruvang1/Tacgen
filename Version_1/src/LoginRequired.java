@@ -1,5 +1,3 @@
-
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
@@ -15,6 +13,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
+/**
+ * Class to create user login, not being used
+ */
 public class LoginRequired {
 
     LoginRequired() {

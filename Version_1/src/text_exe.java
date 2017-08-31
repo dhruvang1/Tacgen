@@ -20,6 +20,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import org.xml.sax.SAXException;
 
+/**
+ * Class to extract text
+ */
 public class text_exe {
     Screen screen = new Screen(0);
     String language="eng";

@@ -1,7 +1,9 @@
-
 import java.awt.event.MouseEvent;
 import java.awt.geom.NoninvertibleTransformException;
 
+/**
+ * Class to modify output of text extraction
+ */
 public class ModifyText {
     
     public int selectedRectangle =10000;

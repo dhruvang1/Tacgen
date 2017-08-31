@@ -1,9 +1,10 @@
-
 import java.awt.Point;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
 
-
+/**
+ * Helper class for polygons
+ */
 public class whichPolygon {
     private boolean isOnSegment(Point p, Point q, Point r){
         return q.x <= max(p.x, r.x) && q.x >= min(p.x, r.x) && q.y <= max(p.y, r.y) && q.y >= min(p.y, r.y);

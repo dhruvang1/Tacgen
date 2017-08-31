@@ -5,7 +5,10 @@ import java.io.*;
 import javax.swing.*;
 import javax.swing.filechooser.*;
 import javax.swing.filechooser.FileFilter;
- 
+
+/**
+ * Class to select file choosing dialog
+ */
 public class FileChooserTest
 {
    public static void main(String[] args)

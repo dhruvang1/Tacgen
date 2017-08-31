@@ -4,6 +4,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 
+/**
+ * Class to create lines
+ */
 public class GetLines {
     public ArrayList<Pair<Integer,Integer>> lines;
     public ArrayList<Integer> lineIndices;

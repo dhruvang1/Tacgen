@@ -4,7 +4,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 
-
+/**
+ * Class to create polygons
+ */
 public class GetPolygon {
     private int x =0; private int y=0;
     public ArrayList<ArrayList<Pair<Integer,Integer>>> polygons = new ArrayList<>();

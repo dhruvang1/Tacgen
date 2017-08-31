@@ -1,4 +1,3 @@
-
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
@@ -6,6 +5,9 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class to setup image area listeners
+ */
 public class ImageAreaListeners {
 
     private Screen screen = new Screen(0);

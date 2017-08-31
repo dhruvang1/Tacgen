@@ -15,6 +15,9 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import sun.security.pkcs11.wrapper.Constants;
 
+/**
+ * Class to create SVG downloadable file
+ */
 public class GenerateSVG {
     private Screen screen = new Screen(0);
     private boolean isSVGBlank;

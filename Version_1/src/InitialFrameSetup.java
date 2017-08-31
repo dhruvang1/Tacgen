@@ -11,6 +11,9 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 
+/**
+ * Class to set up initial frame
+ */
 public class InitialFrameSetup {
     private static final long serialVersionUID = 1L;
     public javax.swing.JScrollPane jScrollPane1;

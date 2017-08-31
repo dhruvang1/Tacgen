@@ -21,6 +21,9 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * Class to restore edited images from SVG files
+ */
 public class RestoreSVG {
     private Screen screen = new Screen(0);
     public void restore() throws SAXException, ParserConfigurationException, IOException, XPathExpressionException, ScriptException, NoSuchMethodException{

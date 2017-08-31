@@ -16,63 +16,62 @@ import java.util.Hashtable;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/**Main class for the tool. Spawns all other classes.*/
 public class Screen {
-    static int label_counts=0;
-//    int startX = -1, startY = -1;
-//    static int edit_counter = 0;
-    static JFrame mainFrame =null;
-    static JFrame previewFrame =null;
-    static Hashtable<String,String> config;
-    static AllControlsAndListeners allControlsAndListeners = null;
-    static InitialFrameSetup initialFrameSetup =null;
-    static GetLines linesObject = null;
-    static GetCircles circlesObject = null;
-    static BufferedImage bufferedImageScreen = null;
-    static BufferedImage bufferedImageWhite = null;
-//    static BufferedImage screen1 = null;
-    static GetRegions regionsObject = null;
-    static GetTextbox textboxObject = null;
-    static GetPolygon polygonObject = null;
-    static GetArc arcObject = null;
-    static ModifyText modifyTextObject = null;
-    static whichPolygon whichPolygonObject = null;
-    static text_exe textExeObject = null;
-    static maths_science_exe maths_science_exe = null;
-    static GenerateSVG svgGenerateObject = null;
-    static ImageAreaListeners imageAreaListeners = null;
-    static AllObjectReinitializer allObjectReinitializer = null;
-    static GetPaths pathsObject = null;
-    static RestoreSVG restoreSVG = null;
-    static Colors colorObject = null;
+    public static int label_counts=0;
+    public static JFrame mainFrame =null;
+    public static JFrame previewFrame =null;
+    public static Hashtable<String,String> config;
+    public static AllControlsAndListeners allControlsAndListeners = null;
+    public static InitialFrameSetup initialFrameSetup =null;
+    public static GetLines linesObject = null;
+    public static GetCircles circlesObject = null;
+    public static BufferedImage bufferedImageScreen = null;
+    public static BufferedImage bufferedImageWhite = null;
+//    public static BufferedImage screen1 = null;
+    public static GetRegions regionsObject = null;
+    public static GetTextbox textboxObject = null;
+    public static GetPolygon polygonObject = null;
+    public static GetArc arcObject = null;
+    public static ModifyText modifyTextObject = null;
+    public static whichPolygon whichPolygonObject = null;
+    public static text_exe textExeObject = null;
+    public static maths_science_exe maths_science_exe = null;
+    public static GenerateSVG svgGenerateObject = null;
+    public static ImageAreaListeners imageAreaListeners = null;
+    public static AllObjectReinitializer allObjectReinitializer = null;
+    public static GetPaths pathsObject = null;
+    public static RestoreSVG restoreSVG = null;
+    public static Colors colorObject = null;
 
-    static Page0OpenImage page0OpenImage =null;
-    static Page1AutoText page1AutoText =null;
-    static Page2ManualText page2ManualText =null;
-    static Page3AutoMathScience page3AutoMathScience =null;
-    static Page4ManualMathScience page4ManualMathScience =null;
-    static Page4MathParameter page4MathParameter = null;
-    static Page5ColorMapping page5ColorMapping =null;
+    public static Page0OpenImage page0OpenImage =null;
+    public static Page1AutoText page1AutoText =null;
+    public static Page2ManualText page2ManualText =null;
+    public static Page3AutoMathScience page3AutoMathScience =null;
+    public static Page4ManualMathScience page4ManualMathScience =null;
+    public static Page4MathParameter page4MathParameter = null;
+    public static Page5ColorMapping page5ColorMapping =null;
     
-    static Point start = new Point();
-    static Point rectangleTranslateStart = new Point();
-    static File currentFile;
-    static String currentFileName;
-    static Color currentColor = Color.BLACK;
+    public static Point start = new Point();
+    public static Point rectangleTranslateStart = new Point();
+    public static File currentFile;
+    public static String currentFileName;
+    public static Color currentColor = Color.BLACK;
     
-    static double zoomScale = 1.0;
-    static AffineTransform zoomAffineTransform;
+    public static double zoomScale = 1.0;
+    public static AffineTransform zoomAffineTransform;
     
-//    boolean checked = false;
-//    Point startPoint;
-//    Point endPoint;
-    int i=0;//,j=0;
-    Screen(int r){};
-//    String label;
-    Screen() throws IOException{
+    public Screen(int r){};
+    public Screen() throws IOException{
         repaint(bufferedImageScreen, initialFrameSetup.screenCopy);
         initialFrameSetup.screenLabel.repaint();
     }
-    public boolean rectangleDrawRequired(){
+
+    /**
+     * function to check if a page needs to be drawn
+     * @return true/false
+     */
+    private boolean rectangleDrawRequired(){
         if(previewFrame.isVisible()
                 || Screen.allControlsAndListeners.jSkipPage3.isDisplayable()
                 || Screen.allControlsAndListeners.jDeleteButton.isDisplayable()
@@ -83,7 +82,8 @@ public class Screen {
         }
         return true;
     }
-    public boolean textShiftRequired(){
+
+    private boolean textShiftRequired(){
         if(previewFrame.isVisible()
                 || Screen.allControlsAndListeners.jSelectText.isDisplayable()
                 || Screen.allControlsAndListeners.jSkipPage3.isDisplayable()
@@ -95,8 +95,13 @@ public class Screen {
         }
         return true;
     }
-    
-    public void repaint(BufferedImage orig, BufferedImage copy){
+
+    /**
+     * Repaints after changes on screen.
+     * @param original original image
+     * @param copy copy
+     */
+    public void repaint(BufferedImage original, BufferedImage copy){
         Graphics2D graphics2D = copy.createGraphics();
         try {
             zoomAffineTransform = graphics2D.getTransform(); //clones current graphics2D transform
@@ -106,7 +111,7 @@ public class Screen {
 
             graphics2D.scale(zoomScale, zoomScale); //scales xfrm
             zoomAffineTransform.concatenate(graphics2D.getTransform()); // zoom_affine_transform = inverse(initial graphics2D transform) * Current graphics2D transform
-            graphics2D.drawImage(orig,0,0,null); //renders image
+            graphics2D.drawImage(original,0,0,null); //renders image
         } catch (NoninvertibleTransformException ex) {
         }
 
@@ -365,7 +370,12 @@ public class Screen {
         }
     	graphics2D.dispose();
     }
-    
+
+    /**
+     * Creates a map using the config file in libraries
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public void fillConfig() throws FileNotFoundException, IOException{
         File file = new File(System.getProperty("user.dir")+"\\resources\\config");
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {

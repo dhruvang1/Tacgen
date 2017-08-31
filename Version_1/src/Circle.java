@@ -1,5 +1,6 @@
-
-
+/**
+ * Class to help GetCircles class
+ */
 public class Circle {
 
     public float getRadius(Pair<Float,Float> A, Pair<Float,Float> B){

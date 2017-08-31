@@ -1,10 +1,12 @@
-
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 
+/**
+ * Class to create circles
+ */
 public class GetCircles {
 
     private boolean firstPointCaptured = false;

@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
- 
+
+/**
+ *
+ */
 public class TextComponentNavigation extends JPanel
 {
     private JTextArea textArea;

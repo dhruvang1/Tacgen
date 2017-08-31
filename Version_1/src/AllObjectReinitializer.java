@@ -1,4 +1,6 @@
-
+/**
+ * Class to reinitialize all other class objects.
+ */
 public class AllObjectReinitializer {
     public void refresh(){
         Screen.label_counts = 0;

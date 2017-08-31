@@ -6,6 +6,9 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * Class to select region color
+ */
 public class Colors extends JPanel
                                implements ActionListener,
                                           ChangeListener {

@@ -6,6 +6,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 
+/**
+ * Class to make editable text boxes during text extraction
+ */
 public class GetTextbox {
     private int currentX, currentY;
     private Screen screen = new Screen(0);

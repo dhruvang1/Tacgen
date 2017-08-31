@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -39,8 +38,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public final class AllControlsAndListeners extends JFrame {
 
-    int r = 0;
-    Screen screen;
+    private Screen screen;
     public javax.swing.JMenuBar jMenuBar;
     public javax.swing.JSlider jZoomSlider;
     public javax.swing.JLabel jPreviewButton;
@@ -48,6 +46,8 @@ public final class AllControlsAndListeners extends JFrame {
     private javax.swing.JMenuItem jOpenFileItem;
     private javax.swing.JMenuItem jTutorialHelpItem;
     private JButton jClearSvg;
+
+    /*variable declaration, page wise*/
 
     //page-0
     private JButton start;
@@ -111,6 +111,9 @@ public final class AllControlsAndListeners extends JFrame {
     public javax.swing.JButton jGoBackPage5;
     public javax.swing.JButton jSaveButton;
 
+    /**
+     * deselects all polygon start end radio buttons
+     */
     public void deselectRadioButtons() {
         Screen.allControlsAndListeners.polygonStart.setSelected(false);
         Screen.allControlsAndListeners.polygonEnd.setSelected(false);
@@ -118,6 +121,9 @@ public final class AllControlsAndListeners extends JFrame {
         Screen.allControlsAndListeners.polygonEnd.setEnabled(false);
     }
 
+    /**
+     * clear temp arrays. calls deleteTemp functions for each math object
+     */
     public void deleteAllTemp() {
         Screen.linesObject.deleteTemp();
         Screen.circlesObject.deleteTemp();
@@ -126,23 +132,39 @@ public final class AllControlsAndListeners extends JFrame {
         screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
         Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
     }
-    
+
+    /**
+     * gets the labels for zoom index (0.25 - 2)
+     * @param minLabel lowest label is (minlabel+1)/20
+     * @param maxLabel max label is (maxlabel+1)/20
+     * @param increment gap between two labels is increment/20
+     * @return integer-> jlabel mapping
+     */
     private Hashtable getLabelTable(int minLabel, int maxLabel, int increment) {
-        Hashtable<Integer,JLabel> table = new Hashtable<Integer,JLabel>();
+        Hashtable<Integer,JLabel> table = new Hashtable<>();
         for(int j = minLabel; j <= maxLabel; j += increment) {
             String labels = String.format("%.2f", (j+4)/20.0);
-            table.put(Integer.valueOf(j), new JLabel(labels));
+            table.put(j, new JLabel(labels));
         }
         return table;
     }
 
+    /**
+     * fetches pixels of the point clicked wrt the unzoomed screen
+     * @param e mouse coordinates
+     * @return mouse coordinates
+     * @throws NoninvertibleTransformException
+     */
     public Point getOriginalZoomedCoordinate(MouseEvent e) throws NoninvertibleTransformException{
         Point p = e.getPoint();
         Screen.zoomAffineTransform.inverseTransform(p, p);
         return p;
     }
-    
-    private void intializeMembers() {
+
+    /**
+     * initialize class variables that do not belong to any page
+     */
+    private void initializeMembers() {
         javax.swing.JMenu jFileMenu = new javax.swing.JMenu("File");
         javax.swing.JMenu jHelpMenu = new javax.swing.JMenu("Help");;
 
@@ -188,6 +210,9 @@ public final class AllControlsAndListeners extends JFrame {
         jZoomSlider.setValue(16);
     }
 
+    /**
+     * initialize listeners for {@link #initializeMembers()}
+     */
     private void initializeListeners() {
         Screen.mainFrame.addWindowListener(new WindowAdapter() {
             @Override
@@ -359,11 +384,17 @@ public final class AllControlsAndListeners extends JFrame {
         });
     }
 
+    /**
+     * initialize class variables corresponding to Page 0
+     */
     private void initializePage0Members() {
         //page-0
         start = new JButton("Start!");
     }
 
+    /**
+     * initialize listeners for {@link #initializePage0Members()}
+     */
     private void initializePage0Listeners() {
         //page-0
         start.addActionListener(new ActionListener() {
@@ -374,6 +405,9 @@ public final class AllControlsAndListeners extends JFrame {
 
     }
 
+    /**
+     * initialize class variables corresponding to Page 1
+     */
     private void initializePage1Members() {
         //page-1
         jDetectText = new javax.swing.JButton(new javax.swing.ImageIcon(Screen.config.get("detect_text")));
@@ -393,6 +427,9 @@ public final class AllControlsAndListeners extends JFrame {
 
     }
 
+    /**
+     * initialize listeners for {@link #initializePage1Members()}
+     */
     private void initializePage1Listeners() {
         jComboPage1.addActionListener(new ActionListener() {
             @Override
@@ -447,6 +484,9 @@ public final class AllControlsAndListeners extends JFrame {
         });
     }
 
+    /**
+     * initialize class variables corresponding to Page 2
+     */
     private void initializePage2Members() throws FontFormatException, IOException {
         //page-2
         jSelectText = new javax.swing.JToggleButton("Select Text");
@@ -489,6 +529,9 @@ public final class AllControlsAndListeners extends JFrame {
         jLabel.setToolTipText("Modify labels here");
     }
 
+    /**
+     * initialize listeners for {@link #initializePage2Members()}
+     */
     private void initializePage2Listeners() {
         jSelectText.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -596,6 +639,9 @@ public final class AllControlsAndListeners extends JFrame {
         });
     }
 
+    /**
+     * initialize class variables corresponding to Page 3
+     */
     private void initializePage3Members() {
         //page-3
         jComboPage3 = new javax.swing.JComboBox();
@@ -613,6 +659,9 @@ public final class AllControlsAndListeners extends JFrame {
         jSkipPage3.setToolTipText("Go to next stage");
     }
 
+    /**
+     * initialize listeners for {@link #initializePage3Members()}
+     */
     private void initializePage3Listeners() {
         jMathButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -667,6 +716,9 @@ public final class AllControlsAndListeners extends JFrame {
         });
     }
 
+    /**
+     * initialize class variables corresponding to Page 4
+     */
     private void initializePage4Members() {
         //page-4
         drawLine = new javax.swing.JToggleButton("Line");
@@ -701,6 +753,9 @@ public final class AllControlsAndListeners extends JFrame {
         jNextPage4.setToolTipText("Go to next page if all shapes have been identified");
     }
 
+    /**
+     * initialize listeners for {@link #initializePage4Members()}
+     */
     private void initializePage4Listeners() {
         
         drawLine.addActionListener(new ActionListener() {
@@ -862,6 +917,9 @@ public final class AllControlsAndListeners extends JFrame {
 
     }
 
+    /**
+     * initialize class variables (math) corresponding to Page 4
+     */
     private void initializePage4MathMembers() {
         // maths parameter page 4
         distanceParameter = new javax.swing.JLabel();
@@ -909,6 +967,9 @@ public final class AllControlsAndListeners extends JFrame {
 
     }
 
+    /**
+     * initialize listeners for {@link #initializePage4MathMembers()}
+     */
     private void initializePage4MathListeners() {
         // maths parameter page 4
         jMathGoBackPage4.setToolTipText("Revert back to previous stage");
@@ -1002,6 +1063,9 @@ public final class AllControlsAndListeners extends JFrame {
         });
     }
 
+    /**
+     * initialize class variables corresponding to Page 5
+     */
     private void initializePage5Members() {
         //page5
         jFillColor = new javax.swing.JToggleButton("Fill Color");
@@ -1016,6 +1080,9 @@ public final class AllControlsAndListeners extends JFrame {
         
     }
 
+    /**
+     * initialize listeners for {@link #initializePage5Members()}
+     */
     private void initializePage5Listeners() {
         // page-5
         jFillColor.setToolTipText("Add colours to shapes");
@@ -1067,9 +1134,10 @@ public final class AllControlsAndListeners extends JFrame {
         });
     }
 
+    /*Constructor to call all initializing methods described above*/
     public AllControlsAndListeners() throws FontFormatException, IOException {
-        screen = new Screen(r);
-        intializeMembers();
+        screen = new Screen(0);
+        initializeMembers();
         initializePage0Members();
         initializePage1Members();
         initializePage2Members();

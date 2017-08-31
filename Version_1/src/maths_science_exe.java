@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Class to run math/science extraction
+ */
 public class maths_science_exe {
 
     private Screen screen = new Screen(0);

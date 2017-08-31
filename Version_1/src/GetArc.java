@@ -4,7 +4,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 
-
+/**
+ * Class to create arcs
+ */
 public class GetArc {
     private boolean firstPointCaptured = false;
     private boolean secondPointCaptured = false;

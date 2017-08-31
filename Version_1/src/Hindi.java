@@ -15,6 +15,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
+/**
+ *
+ */
 public class Hindi extends javax.swing.JFrame {
     private String tempString;
     private BufferedImage screen;

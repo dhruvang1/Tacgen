@@ -4,6 +4,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 
+/**
+ * Class to create regions
+ */
 public class GetRegions {
     public ArrayList<ArrayList<Pair<Integer,Integer>>> regions =new ArrayList<ArrayList<Pair<Integer,Integer>>>();
     public ArrayList<Pair<Integer,Integer>> regionPoints =new ArrayList<Pair<Integer,Integer>>();

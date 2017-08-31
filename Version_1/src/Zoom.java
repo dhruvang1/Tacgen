@@ -9,6 +9,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
 
+/**
+ * Class to enable zooming in and out of the canvas
+ */
 public class Zoom {
     public static void main(String[] args) throws MalformedURLException, IOException {
         JFrame frame = new JFrame();

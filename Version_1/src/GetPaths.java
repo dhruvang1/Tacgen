@@ -4,6 +4,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 
+/**
+ * Class to create paths
+ */
 public class GetPaths {
     public ArrayList<ArrayList<Pair<Integer,Integer>>> paths = new ArrayList<>();
     public ArrayList<Pair<Integer,Integer>> pathPoints = new ArrayList<>();
