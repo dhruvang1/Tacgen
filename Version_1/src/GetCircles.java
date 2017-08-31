@@ -7,21 +7,18 @@ import java.util.ArrayList;
 
 public class GetCircles {
 
-    boolean firstPointCaptured = false;
-    boolean secondPointCaptured = false;
-    Point selectedPoint1, selectedPoint2, selectedPoint3;
-    ArrayList<Pair<Float, Float>> circles = new ArrayList<>();
-    ArrayList<Pair<Float, Float>> centers = new ArrayList<>();
-    ArrayList<Integer> circleIndices = new ArrayList<>();
-    ArrayList<Float> radii = new ArrayList<>();
-    ArrayList<Integer> fillArray = new ArrayList<>();
-    ArrayList<Color> colorArray = new ArrayList<>();
+    private boolean firstPointCaptured = false;
+    private boolean secondPointCaptured = false;
+    private Point selectedPoint1, selectedPoint2, selectedPoint3;
+    public ArrayList<Pair<Float, Float>> circles = new ArrayList<>();
+    public ArrayList<Pair<Float, Float>> centers = new ArrayList<>();
+    public ArrayList<Integer> circleIndices = new ArrayList<>();
+    public ArrayList<Float> radii = new ArrayList<>();
+    public ArrayList<Integer> fillArray = new ArrayList<>();
+    public ArrayList<Color> colorArray = new ArrayList<>();
 
-    Pair<Float, Float> circleA, circleB, circleC;
-    float radius;
-    int j = 0;
-    int r = 0;
-    Screen screen = new Screen(r);
+    private Pair<Float, Float> circleA, circleB, circleC;
+    private Screen screen = new Screen(0);
 
     public GetCircles() {}
 
@@ -66,7 +63,7 @@ public class GetCircles {
                 center.setL((float) (int) b[0]);
                 center.setR((float) (int) b[1]);
                 centers.add(center);
-                radius = a.getRadius(center, circleC);
+                float radius = a.getRadius(center, circleC);
                 radii.add(radius);
                 colorArray.add(Screen.currentColor);
                 fillArray.add(0);

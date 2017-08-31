@@ -22,7 +22,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class RestoreSVG {
-    Screen screen = new Screen(0);
+    private Screen screen = new Screen(0);
     public void restore() throws SAXException, ParserConfigurationException, IOException, XPathExpressionException, ScriptException, NoSuchMethodException{
         String currentFileAbsolutePath = screen.currentFile.getAbsolutePath();
         String currentFileName = String.valueOf(screen.currentFile.getName());
@@ -39,7 +39,8 @@ public class RestoreSVG {
             textRestore(newFileAbsolutePath);
         }
     }
-    public void lineRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
+
+    private void lineRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         org.w3c.dom.Document document = builder.parse(name);
@@ -63,7 +64,8 @@ public class RestoreSVG {
             Screen.linesObject.lines.add(new Pair<>(x2,y2));
         }
     }
-    public void circleRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
+
+    private void circleRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         org.w3c.dom.Document document = builder.parse(name);
@@ -95,7 +97,7 @@ public class RestoreSVG {
         }   
     }
     
-    public void arcRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
+    private void arcRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         org.w3c.dom.Document document = builder.parse(name);
@@ -135,7 +137,7 @@ public class RestoreSVG {
         }
     }
     
-    public void polygonRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
+    private void polygonRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         org.w3c.dom.Document document = builder.parse(name);
@@ -173,7 +175,7 @@ public class RestoreSVG {
         }
     }
     
-    public void polypathRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
+    private void polypathRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         org.w3c.dom.Document document = builder.parse(name);
@@ -201,11 +203,11 @@ public class RestoreSVG {
             String col = svgPaths_1.item(3*i+2).getNodeValue().substring(1);
             
             Screen.pathsObject.colorArray.add(new Color(Integer.decode("0x"+col)));
-            Screen.pathsObject.regions.add(Points_regions);
+            Screen.pathsObject.paths.add(Points_regions);
         }
     }    
     
-    public void textRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException, ScriptException, NoSuchMethodException{
+    private void textRestore(String name) throws SAXException, ParserConfigurationException, IOException, XPathExpressionException, ScriptException, NoSuchMethodException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         org.w3c.dom.Document document = builder.parse(name);

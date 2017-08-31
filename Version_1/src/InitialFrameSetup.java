@@ -12,15 +12,14 @@ import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 
 public class InitialFrameSetup {
-    Screen screen;
     private static final long serialVersionUID = 1L;
     public javax.swing.JScrollPane jScrollPane1;
-    JLabel screenLabel=null;
-    Container contentPane = null;
-    BufferedImage screenCopy;
-    BufferedImage whitecopy;
-    JScrollPane preview;
-    JLabel previewLabel = null;
+    public JLabel screenLabel = null;
+    public Container contentPane = null;
+    public BufferedImage screenCopy;
+    public BufferedImage whitecopy;
+    public JScrollPane preview;
+    public JLabel previewLabel = null;
     public javax.swing.JScrollPane previewScrollPane;
     public InitialFrameSetup() throws IOException {
         screenLabel = new JLabel();
@@ -28,18 +27,18 @@ public class InitialFrameSetup {
         previewLabel = new JLabel();
         previewScrollPane = new javax.swing.JScrollPane();
         Screen.previewFrame.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-        
+
         previewScrollPane.setViewportView(previewLabel);
-        
+
         JScrollBar previewScrollPaneHorizontalScrollBar = previewScrollPane.getHorizontalScrollBar();
         previewScrollPaneHorizontalScrollBar.setUnitIncrement(20);
-        
+
         InputMap previewScrollPaneHorizontalScrollBarInputMap = previewScrollPaneHorizontalScrollBar.getInputMap( JComponent.WHEN_IN_FOCUSED_WINDOW );
         previewScrollPaneHorizontalScrollBarInputMap.put( KeyStroke.getKeyStroke( "RIGHT" ), "positiveUnitIncrement" );
         previewScrollPaneHorizontalScrollBarInputMap.put( KeyStroke.getKeyStroke( "LEFT" ),"negativeUnitIncrement");
         JScrollBar previewScrollPaneVerticalScrollBar = previewScrollPane.getVerticalScrollBar();
         previewScrollPaneVerticalScrollBar.setUnitIncrement(20);
-        
+
         InputMap previewScrollPaneVerticalScrollBarInputMap = previewScrollPaneVerticalScrollBar.getInputMap( JComponent.WHEN_IN_FOCUSED_WINDOW );
         previewScrollPaneVerticalScrollBarInputMap.put( KeyStroke.getKeyStroke( "DOWN" ), "positiveUnitIncrement" );
         previewScrollPaneVerticalScrollBarInputMap.put( KeyStroke.getKeyStroke( "UP" ), "negativeUnitIncrement" );
@@ -61,7 +60,7 @@ public class InitialFrameSetup {
                 .addContainerGap())
         );
         //Screen.preview_frame.pack();
-        
+
         File file = new File(Screen.config.get("white"));
         Screen.bufferedImageWhite = ImageIO.read(file);
         whitecopy = new BufferedImage(
@@ -72,18 +71,17 @@ public class InitialFrameSetup {
         previewLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         previewLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         preview.setViewportView(previewLabel);
-        
-        screen = new Screen(0);
+
         jScrollPane1 = new javax.swing.JScrollPane();
         JScrollBar jScrollPane1HorizontalScrollBar = jScrollPane1.getHorizontalScrollBar();
         jScrollPane1HorizontalScrollBar.setUnitIncrement(20);
-        
+
         InputMap jScrollPane1HorizontalScrollBarInputMap = jScrollPane1HorizontalScrollBar.getInputMap( JComponent.WHEN_IN_FOCUSED_WINDOW );
         jScrollPane1HorizontalScrollBarInputMap.put( KeyStroke.getKeyStroke( "RIGHT" ), "positiveUnitIncrement" );
         jScrollPane1HorizontalScrollBarInputMap.put( KeyStroke.getKeyStroke( "LEFT" ),"negativeUnitIncrement");
         JScrollBar jScrollPane1VerticalScrollBar = jScrollPane1.getVerticalScrollBar();
         jScrollPane1VerticalScrollBar.setUnitIncrement(20);
-        
+
         InputMap jScrollPane1VerticalScrollBarInputMap = jScrollPane1VerticalScrollBar.getInputMap( JComponent.WHEN_IN_FOCUSED_WINDOW );
         jScrollPane1VerticalScrollBarInputMap.put( KeyStroke.getKeyStroke( "DOWN" ), "positiveUnitIncrement" );
         jScrollPane1VerticalScrollBarInputMap.put( KeyStroke.getKeyStroke( "UP" ), "negativeUnitIncrement" );

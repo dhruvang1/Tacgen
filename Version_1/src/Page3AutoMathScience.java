@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Page3AutoMathScience extends JPanel{
-    Screen screen = new Screen(0);
+    private Screen screen = new Screen(0);
     public Page3AutoMathScience(){
         Screen.initialFrameSetup.contentPane.removeAll();
         Screen.mainFrame.setJMenuBar(Screen.allControlsAndListeners.jMenuBar);

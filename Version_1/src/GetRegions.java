@@ -5,12 +5,12 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 
 public class GetRegions {
-    ArrayList<ArrayList<Pair<Integer,Integer>>> regions =new ArrayList<ArrayList<Pair<Integer,Integer>>>();
-    ArrayList<Pair<Integer,Integer>> regionPoints =new ArrayList<Pair<Integer,Integer>>();
-    ArrayList<Integer> regionIndices =new ArrayList<Integer>();
-    ArrayList<Integer> fillArray =new ArrayList<Integer>();
-    ArrayList<Color> colorArray = new ArrayList<Color>();
-    Screen screen = new Screen(0);
+    public ArrayList<ArrayList<Pair<Integer,Integer>>> regions =new ArrayList<ArrayList<Pair<Integer,Integer>>>();
+    public ArrayList<Pair<Integer,Integer>> regionPoints =new ArrayList<Pair<Integer,Integer>>();
+    public ArrayList<Integer> regionIndices =new ArrayList<Integer>();
+    public ArrayList<Integer> fillArray =new ArrayList<Integer>();
+    public ArrayList<Color> colorArray = new ArrayList<Color>();
+    private Screen screen = new Screen(0);
 //    boolean firstPointCaptured = false;
     
     public void getRegion(MouseEvent e) throws NoninvertibleTransformException
@@ -46,7 +46,7 @@ public class GetRegions {
         Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
     }
     
-      public void addIndices(MouseEvent e) throws NoninvertibleTransformException{
+    public void addIndices(MouseEvent e) throws NoninvertibleTransformException{
             Point originalZoomedCoordinate = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             int regionsMaxSize = 50000;
         //    originalZoomedCoordinate.y=-1*originalZoomedCoordinate.y;
@@ -100,8 +100,7 @@ public class GetRegions {
             }
       }
       
-      
-      public void addColorIndices(MouseEvent e) throws NoninvertibleTransformException{
+    public void addColorIndices(MouseEvent e) throws NoninvertibleTransformException{
             Point originalZoomedCoordinate = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             int regionsMaxSize = 50000;
         //    originalZoomedCoordinate.y=-1*originalZoomedCoordinate.y;
@@ -159,7 +158,7 @@ public class GetRegions {
             }
       }
 
-      public void deleteIndices(){
+    public void deleteIndices(){
           regionIndices.sort(null);
           for(int i = regionIndices.size()-1; i>=0; i--){
               colorArray.remove((int) regionIndices.get(i));
@@ -212,5 +211,5 @@ public class GetRegions {
 //
 //            }
 //      }
-    
+
 }

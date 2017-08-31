@@ -6,20 +6,15 @@ import java.util.ArrayList;
 
 
 public class GetPolygon {
-    int x =0;int y=0;
-    ArrayList<ArrayList<Pair<Integer,Integer>>> polygons = new ArrayList<>();
-    ArrayList<Pair<Integer,Integer>> points = new ArrayList<>();
-    ArrayList<Integer> polygonIndices = new ArrayList<>();
-    ArrayList<Integer> fillOrNot = new ArrayList<>();
-    ArrayList<Color> colorArray = new ArrayList<>();
+    private int x =0; private int y=0;
+    public ArrayList<ArrayList<Pair<Integer,Integer>>> polygons = new ArrayList<>();
+    public ArrayList<Pair<Integer,Integer>> points = new ArrayList<>();
+    public ArrayList<Integer> polygonIndices = new ArrayList<>();
+    public ArrayList<Integer> fillOrNot = new ArrayList<>();
+    public ArrayList<Color> colorArray = new ArrayList<>();
     boolean firstPointCaptured = false;
-    //	boolean end_selected = false;
-    Point startPoint;
-    Point nextPoint;
-    Pair<Integer,Integer> startPointPair = new Pair<>(x, y);
-    int r =0;
-    Screen screen = new Screen(r);
-    int i=0;
+    private Pair<Integer,Integer> startPointPair = new Pair<>(x, y);
+    private Screen screen = new Screen(0);
 
     public GetPolygon() {}
 
@@ -28,11 +23,10 @@ public class GetPolygon {
         Pair<Integer,Integer> temp = new Pair<>(x, y);
         if (Screen.allControlsAndListeners.polygonStart.isSelected()&&!firstPointCaptured)
         {
-            startPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
+            Point startPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             firstPointCaptured = true;
             temp.setL(startPoint.x);
             temp.setR(startPoint.y);
-            nextPoint = null;
             points = new ArrayList<>();
             points.add(temp);
             startPointPair =temp;
@@ -66,7 +60,7 @@ public class GetPolygon {
                 //	System.out.println("size == "+Polygons.get(0).size());
             }
             if(firstPointCaptured){
-                nextPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
+                Point nextPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
                 temp.setL(nextPoint.x);
                 temp.setR(nextPoint.y);
                 points.add(temp);

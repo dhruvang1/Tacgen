@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public class ImageAreaListeners {
 
-    Screen screen = new Screen(0);
+    private Screen screen = new Screen(0);
 
     public ImageAreaListeners() {
         add();
@@ -33,7 +33,7 @@ public class ImageAreaListeners {
                     if (Screen.allControlsAndListeners.drawRegion.isSelected() && Screen.allControlsAndListeners.drawRegion.isDisplayable()) {
                         Screen.regionsObject.getRegion(me);
                     } else if (Screen.allControlsAndListeners.drawPath.isSelected() && Screen.allControlsAndListeners.drawPath.isDisplayable()) {
-                        Screen.pathsObject.getRegion(me);
+                        Screen.pathsObject.getPath(me);
                     } else if (Screen.allControlsAndListeners.jGoBackPage2.isDisplayable()) {
                         if (Screen.modifyTextObject.selectedRectangle != 10000) {
                             Screen.textboxObject.translateText(me);//

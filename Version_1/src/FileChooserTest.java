@@ -28,8 +28,8 @@ public class FileChooserTest
  */
 class ImageViewerFrame extends JFrame
 {
-    public static final int DEFAULT_WIDTH = 300;
-    public static final int DEFAULT_HEIGHT = 400;
+    private static final int DEFAULT_WIDTH = 300;
+    private static final int DEFAULT_HEIGHT = 400;
 
     private JLabel label;
     private JFileChooser chooser;
@@ -191,8 +191,8 @@ class ImagePreviewer extends JLabel
  */
 class SingleRootFileSystemView extends FileSystemView
 {
-    File root;
-    File[] roots = new File[1];
+    private File root;
+    private File[] roots = new File[1];
  
     public SingleRootFileSystemView(File root)
     {

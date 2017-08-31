@@ -1,7 +1,7 @@
 import javax.swing.JFrame;
 
 public class Page1AutoText {
-    Screen screen = new Screen(0);
+    private Screen screen = new Screen(0);
     public Page1AutoText(){
         Screen.initialFrameSetup.contentPane.removeAll();
         Screen.mainFrame.setJMenuBar(Screen.allControlsAndListeners.jMenuBar);

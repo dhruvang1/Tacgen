@@ -4,7 +4,7 @@ import java.awt.geom.NoninvertibleTransformException;
 
 public class ModifyText {
     
-    int selectedRectangle =10000;
+    public int selectedRectangle =10000;
     public void modifySelectedRectangle(MouseEvent e) throws NoninvertibleTransformException{
         boolean clickedOutside = true;
         for(int i = 0; i< Screen.textboxObject.rectangleArray.size(); i++){

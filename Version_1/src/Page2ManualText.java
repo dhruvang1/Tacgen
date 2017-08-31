@@ -2,7 +2,7 @@ import java.io.File;
 import javax.swing.JFrame;
 
 public class Page2ManualText {
-    Screen screen = new Screen(0);
+    private Screen screen = new Screen(0);
     public Page2ManualText(){
         Screen.initialFrameSetup.contentPane.removeAll();
         Screen.mainFrame.setJMenuBar(Screen.allControlsAndListeners.jMenuBar);

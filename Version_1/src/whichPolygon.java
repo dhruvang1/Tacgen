@@ -5,11 +5,11 @@ import static java.lang.Integer.min;
 
 
 public class whichPolygon {
-    boolean isOnSegment(Point p, Point q, Point r){
+    private boolean isOnSegment(Point p, Point q, Point r){
         return q.x <= max(p.x, r.x) && q.x >= min(p.x, r.x) && q.y <= max(p.y, r.y) && q.y >= min(p.y, r.y);
     }
 
-    int orientation(Point p, Point q, Point r)
+    private int orientation(Point p, Point q, Point r)
     {
         int val = (q.y - p.y) * (r.x - q.x) -
               (q.x - p.x) * (r.y - q.y);
@@ -18,7 +18,7 @@ public class whichPolygon {
         return (val > 0)? 1: 2; // clock or counterclock wise
     }
     
-    boolean doIntersect(Point p1, Point q1, Point p2, Point q2)
+    private boolean doIntersect(Point p1, Point q1, Point p2, Point q2)
     {
     // Find the four orientations needed for general and
     // special cases
@@ -48,7 +48,7 @@ public class whichPolygon {
     }
  
     // Returns true if the point p lies inside the polygon[] with n vertices
-    boolean isInside(Point polygon[], int n, Point p)
+    public boolean isInside(Point polygon[], int n, Point p)
     {
     // There must be at least 3 vertices in polygon[]
 

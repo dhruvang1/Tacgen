@@ -16,18 +16,16 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 public class Hindi extends javax.swing.JFrame {
-    String tempString;
-    BufferedImage screen;
-    BufferedImage screenCopy;
-    Font current_font;
-    Font englishFont;
-    Font hindiFont;
-    String[] languages;
-    JComboBox jComboBox;
+    private String tempString;
+    private BufferedImage screen;
+    private BufferedImage screenCopy;
+    private Font englishFont;
+    private Font hindiFont;
+    private JComboBox jComboBox;
     public Hindi() throws FontFormatException, IOException {
         initComponents();
         tempString = "";
-        languages = new String[]{"Language","English","Hindi"};
+        String[] languages = new String[]{"Language","English","Hindi"};
         jComboBox = new JComboBox(languages);
         jComboBox.setMaximumSize(new java.awt.Dimension(80, 25));
         jToolBar.setRollover(true);

@@ -7,14 +7,13 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 
 public class GetTextbox {
-    int currentX, currentY;
-    int r = 0;
-    Screen screen = new Screen(r);
-    Rectangle captureRectangle;
-    ArrayList<Rectangle> rectangleArray = new ArrayList<>();
-    ArrayList<String> languageArray = new ArrayList<>();
-    ArrayList<Integer> rectangleIndices = new ArrayList<>();
-    ArrayList<Pair<String, String>> label = new ArrayList<>();
+    private int currentX, currentY;
+    private Screen screen = new Screen(0);
+    public Rectangle captureRectangle;
+    public ArrayList<Rectangle> rectangleArray = new ArrayList<>();
+    public ArrayList<String> languageArray = new ArrayList<>();
+    public ArrayList<Integer> rectangleIndices = new ArrayList<>();
+    public ArrayList<Pair<String, String>> label = new ArrayList<>();
 
     public void translateText(MouseEvent e) throws NoninvertibleTransformException {
         int w = Screen.textboxObject.rectangleArray.get(Screen.modifyTextObject.selectedRectangle).width;

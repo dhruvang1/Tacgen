@@ -56,7 +56,7 @@ public class PlaceholderTextField extends JTextField {
             .getMaxAscent() + getInsets().top);
     }
 
-    public void setPlaceholder(final String s) {
+    private void setPlaceholder(final String s) {
         placeholder = s;
     }
 

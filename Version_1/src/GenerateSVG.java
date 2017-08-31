@@ -16,10 +16,10 @@ import javax.script.ScriptException;
 import sun.security.pkcs11.wrapper.Constants;
 
 public class GenerateSVG {
-    Screen screen = new Screen(0);
-    boolean isSVGBlank;
-    File directory;
-    public void svgLines() throws FileNotFoundException, IOException{
+    private Screen screen = new Screen(0);
+    private boolean isSVGBlank;
+    private File directory;
+    private void svgLines() throws FileNotFoundException, IOException{
         File file = new File(directory,"line.svg");
         
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
@@ -43,7 +43,7 @@ public class GenerateSVG {
         outputStreamWriter.close();
     }
 
-    public void svgArc() throws FileNotFoundException, IOException{
+    private void svgArc() throws FileNotFoundException, IOException{
         File file = new File(directory,"arc.svg");
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 //        outputStreamWriter.append("<svg>");
@@ -83,7 +83,7 @@ public class GenerateSVG {
 //        outputStreamWriter.append("</svg>");
         outputStreamWriter.close();
     }    
-    public String rgbToHash(int r, int g, int b){
+    private String rgbToHash(int r, int g, int b){
         String redHex = Integer.toHexString(r);
         if(redHex.length()==1){
             redHex = "0"+ redHex;
@@ -98,7 +98,7 @@ public class GenerateSVG {
         }
         return redHex + greenHex + blueHex;
     }
-    public void svgCircles() throws FileNotFoundException, IOException{
+    private void svgCircles() throws FileNotFoundException, IOException{
         File file = new File(directory,"circle.svg");
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 //        outputStreamWriter.append("<svg>");
@@ -126,7 +126,7 @@ public class GenerateSVG {
         outputStreamWriter.close();
     }
 
-    public void svgPolygon() throws FileNotFoundException, IOException{
+    private void svgPolygon() throws FileNotFoundException, IOException{
         File file = new File(directory,"polygon.svg");
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 //        outputStreamWriter.append("<svg>");
@@ -156,7 +156,7 @@ public class GenerateSVG {
         outputStreamWriter.close();
     }
     
-    public void svgRegion() throws FileNotFoundException, IOException{
+    private void svgRegion() throws FileNotFoundException, IOException{
         File file = new File(directory,"region.svg");
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 //        outputStreamWriter.append("<svg>");
@@ -186,18 +186,18 @@ public class GenerateSVG {
         outputStreamWriter.close();
     }    
     
-    public void svgPathRegion() throws FileNotFoundException, IOException{
+    private void svgPathRegion() throws FileNotFoundException, IOException{
         File file = new File(directory,"path_region.svg");
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 //        outputStreamWriter.append("<svg>");
         outputStreamWriter.append(Constants.NEWLINE);
-        if(Screen.pathsObject.regions.size()>0){
+        if(Screen.pathsObject.paths.size()>0){
             isSVGBlank = false;
         }
-        for(int i = 0; i< Screen.pathsObject.regions.size(); i++){
+        for(int i = 0; i< Screen.pathsObject.paths.size(); i++){
             outputStreamWriter.append("<polyline points="+"\"");
-            for(int j = 0; j< Screen.pathsObject.regions.get(i).size()-1; j++){
-                outputStreamWriter.append(Screen.pathsObject.regions.get(i).get(j).getL()+","+ Screen.pathsObject.regions.get(i).get(j).getR()+" ");
+            for(int j = 0; j< Screen.pathsObject.paths.get(i).size()-1; j++){
+                outputStreamWriter.append(Screen.pathsObject.paths.get(i).get(j).getL()+","+ Screen.pathsObject.paths.get(i).get(j).getR()+" ");
             }
             String hashCode = rgbToHash(Screen.pathsObject.colorArray.get(i).getRed(),
                     Screen.pathsObject.colorArray.get(i).getGreen(),
@@ -210,7 +210,7 @@ public class GenerateSVG {
 //        outputStreamWriter.append("</svg>");
         outputStreamWriter.close();
     }
-    public void svgText() throws FileNotFoundException, IOException, ScriptException, NoSuchMethodException{
+    private void svgText() throws FileNotFoundException, IOException, ScriptException, NoSuchMethodException{
         File file = new File(directory,"text.svg");
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 //        outputStreamWriter.append("<svg>");
@@ -263,7 +263,7 @@ public class GenerateSVG {
 //        outputStreamWriter.append("</svg>");
         outputStreamWriter.close();
     }
-    public void svgRect() throws FileNotFoundException, IOException{
+    private void svgRect() throws FileNotFoundException, IOException{
         File file = new File(directory,"rect.svg");
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
         outputStreamWriter.append(Constants.NEWLINE);

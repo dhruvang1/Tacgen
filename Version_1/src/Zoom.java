@@ -31,11 +31,9 @@ public class Zoom {
 @SuppressWarnings("serial")
 class ImageView extends JComponent {
 
-    double scale;
-    int panelWidth;
-    int panelHeight;
-    int imageWidth;
-    int imageHeight;
+    private double scale;
+    private int imageWidth;
+    private int imageHeight;
     private BufferedImage image;
     private AffineTransform paintXfrm;
     private Point mouseDownCoord;
@@ -49,8 +47,8 @@ class ImageView extends JComponent {
             graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
-            panelWidth = getWidth(); //panel width
-            panelHeight = getHeight();// panel height
+            int panelWidth = getWidth(); //panel width
+            int panelHeight = getHeight();// panel height
             double x = (panelWidth - scale * imageWidth)/2;
             double y = (panelHeight - scale * imageHeight)/2;
             System.out.println("x,y: "+x+" "+y);

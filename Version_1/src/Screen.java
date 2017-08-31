@@ -43,8 +43,8 @@ public class Screen {
     static AllObjectReinitializer allObjectReinitializer = null;
     static GetPaths pathsObject = null;
     static RestoreSVG restoreSVG = null;
-    static color colorObject = null;
-    
+    static Colors colorObject = null;
+
     static Page0OpenImage page0OpenImage =null;
     static Page1AutoText page1AutoText =null;
     static Page2ManualText page2ManualText =null;
@@ -258,28 +258,28 @@ public class Screen {
             graphics2D.setColor(currentColor);
     	}
         
-        if(pathsObject.regionPoints.size()>0){
+        if(pathsObject.pathPoints.size()>0){
             graphics2D.setColor(currentColor);
-            for(int h = 0; h< pathsObject.regionPoints.size(); h++){
-                graphics2D.fillRect(pathsObject.regionPoints.get(h).getL(), pathsObject.regionPoints.get(h).getR(), 2,2);
+            for(int h = 0; h< pathsObject.pathPoints.size(); h++){
+                graphics2D.fillRect(pathsObject.pathPoints.get(h).getL(), pathsObject.pathPoints.get(h).getR(), 2,2);
             }
-            for(int k = 0; k< pathsObject.regionPoints.size()-1; k++){
-                graphics2D.drawLine(pathsObject.regionPoints.get(k).getL(), pathsObject.regionPoints.get(k).getR(), pathsObject.regionPoints.get(k+1).getL(), pathsObject.regionPoints.get(k+1).getR());
+            for(int k = 0; k< pathsObject.pathPoints.size()-1; k++){
+                graphics2D.drawLine(pathsObject.pathPoints.get(k).getL(), pathsObject.pathPoints.get(k).getR(), pathsObject.pathPoints.get(k+1).getL(), pathsObject.pathPoints.get(k+1).getR());
             }
         }
         
-    	for(int k = 0; k< pathsObject.regions.size(); k++){
+    	for(int k = 0; k< pathsObject.paths.size(); k++){
             graphics2D.setColor(pathsObject.colorArray.get(k));
-            if(pathsObject.regionIndices.contains(k)){
+            if(pathsObject.pathIndices.contains(k)){
                 graphics2D.setStroke(new BasicStroke(3.0f));
-                for(int h = 0; h< pathsObject.regions.get(k).size()-2; h++){
-                    graphics2D.drawLine(pathsObject.regions.get(k).get(h).getL(), pathsObject.regions.get(k).get(h).getR(), pathsObject.regions.get(k).get(h+1).getL(), pathsObject.regions.get(k).get(h+1).getR());
+                for(int h = 0; h< pathsObject.paths.get(k).size()-2; h++){
+                    graphics2D.drawLine(pathsObject.paths.get(k).get(h).getL(), pathsObject.paths.get(k).get(h).getR(), pathsObject.paths.get(k).get(h+1).getL(), pathsObject.paths.get(k).get(h+1).getR());
                 }
                 graphics2D.setStroke(new BasicStroke(1.0f));
             }
             else{
-                for(int h = 0; h< pathsObject.regions.get(k).size()-2; h++){
-                    graphics2D.drawLine(pathsObject.regions.get(k).get(h).getL(), pathsObject.regions.get(k).get(h).getR(), pathsObject.regions.get(k).get(h+1).getL(), pathsObject.regions.get(k).get(h+1).getR());
+                for(int h = 0; h< pathsObject.paths.get(k).size()-2; h++){
+                    graphics2D.drawLine(pathsObject.paths.get(k).get(h).getL(), pathsObject.paths.get(k).get(h).getR(), pathsObject.paths.get(k).get(h+1).getL(), pathsObject.paths.get(k).get(h+1).getR());
                 }	    
             }
             graphics2D.setColor(currentColor);
@@ -419,7 +419,7 @@ public class Screen {
         imageAreaListeners = new ImageAreaListeners();
         allObjectReinitializer = new AllObjectReinitializer();
         restoreSVG = new RestoreSVG();
-        colorObject = new color();
+        colorObject = new Colors();
         page0OpenImage =new Page0OpenImage();
 
     	SwingUtilities.invokeLater(() -> {

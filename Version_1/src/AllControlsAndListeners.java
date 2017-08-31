@@ -41,77 +41,75 @@ public final class AllControlsAndListeners extends JFrame {
 
     int r = 0;
     Screen screen;
-    javax.swing.JMenuBar jMenuBar;
-    javax.swing.JMenu jFileMenu;
-    javax.swing.JMenuItem jOpenFileItem;
-    javax.swing.JMenu jHelpMenu;
-    javax.swing.JMenuItem jTutorialHelpItem;
-    javax.swing.JSlider jZoomSlider;
-    javax.swing.JLabel jPreviewButton;
-    JButton jGenerateSvg;
-    JButton jClearSvg;
+    public javax.swing.JMenuBar jMenuBar;
+    public javax.swing.JSlider jZoomSlider;
+    public javax.swing.JLabel jPreviewButton;
+
+    private javax.swing.JMenuItem jOpenFileItem;
+    private javax.swing.JMenuItem jTutorialHelpItem;
+    private JButton jClearSvg;
 
     //page-0
-    JButton start;
+    private JButton start;
 
     //page-1
-    javax.swing.JButton jDetectText;
-    javax.swing.JButton jSkipPage1;
-    String[] languages;
-    JComboBox jComboPage1;
-    javax.swing.JToolBar jToolbarPage1;
-    Font hindiFont;
-    Font englishFont;
-    Font bengaliFont;
+    public javax.swing.JButton jDetectText;
+    public javax.swing.JButton jSkipPage1;
+    public javax.swing.JToolBar jToolbarPage1;
+    public Font hindiFont;
+    public Font englishFont;
+    public Font bengaliFont;
+
+    private JComboBox jComboPage1;
 
     //page-2
-    javax.swing.JToggleButton jSelectText;
-    javax.swing.JToggleButton jEdit;
-    javax.swing.JToggleButton jModifyLabel;
-    javax.swing.JButton jDeletePage2;
-    javax.swing.JTextField jLabel;
-    javax.swing.JButton jSavePage2;
-    javax.swing.JSeparator jSeparator1;
-    javax.swing.JSeparator jSeparator2;
-    javax.swing.JButton jGoBackPage2;
-    javax.swing.JButton jNextPage2;
+    public javax.swing.JToggleButton jSelectText;
+    public javax.swing.JToggleButton jEdit;
+    public javax.swing.JToggleButton jModifyLabel;
+    public javax.swing.JButton jDeletePage2;
+    public javax.swing.JTextField jLabel;
+    public javax.swing.JButton jSavePage2;
+    public javax.swing.JSeparator jSeparator1;
+    public javax.swing.JSeparator jSeparator2;
+    public javax.swing.JButton jGoBackPage2;
+    public javax.swing.JButton jNextPage2;
 
     //page-3
-    javax.swing.JComboBox jComboPage3;
-    javax.swing.JButton jMathButton;
-    javax.swing.JButton jScienceDiagram;
-    javax.swing.JButton jGoBackPage3;
-    javax.swing.JButton jSkipPage3;
+    private javax.swing.JComboBox jComboPage3;
+    public javax.swing.JButton jMathButton;
+    public javax.swing.JButton jScienceDiagram;
+    public javax.swing.JButton jGoBackPage3;
+    public javax.swing.JButton jSkipPage3;
 
     //page-4
-    javax.swing.JToggleButton drawLine;
-    javax.swing.JToggleButton drawCircle;
-    javax.swing.JToggleButton drawArc;
-    javax.swing.JToggleButton drawPolygon;
-    javax.swing.JRadioButton polygonStart;
-    javax.swing.JRadioButton polygonEnd;
-    javax.swing.JToggleButton drawPath;
-    javax.swing.JToggleButton drawRegion;
-    javax.swing.JToggleButton jEditPage4;
-    javax.swing.JButton jDeleteButton;
-    javax.swing.JButton jGoBackPage4;
-    javax.swing.JButton jNextPage4;
+    public javax.swing.JToggleButton drawLine;
+    public javax.swing.JToggleButton drawCircle;
+    public javax.swing.JToggleButton drawArc;
+    public javax.swing.JToggleButton drawPolygon;
+    public javax.swing.JRadioButton polygonStart;
+    public javax.swing.JRadioButton polygonEnd;
+    public javax.swing.JToggleButton drawPath;
+    public javax.swing.JToggleButton drawRegion;
+    public javax.swing.JToggleButton jEditPage4;
+    public javax.swing.JButton jDeleteButton;
+    public javax.swing.JButton jGoBackPage4;
+    public javax.swing.JButton jNextPage4;
 
     //maths parameter page 4
-    javax.swing.JLabel angleParameter;
-    javax.swing.JLabel distanceParameter;
-    javax.swing.JSlider duplicateLineDetectionByAngle;
-    javax.swing.JSlider duplicateLineDetectionByDistance;
-    javax.swing.JToolBar jToolbarPage4;
-    javax.swing.JButton jMathGoBackPage4;
-    javax.swing.JButton jMathNextPage4;
+    private javax.swing.JLabel angleParameter;
+    private javax.swing.JLabel distanceParameter;
+    public javax.swing.JSlider duplicateLineDetectionByAngle;
+    public javax.swing.JSlider duplicateLineDetectionByDistance;
+    public javax.swing.JToolBar jToolbarPage4;
+    public javax.swing.JButton jMathGoBackPage4;
+    public javax.swing.JButton jMathNextPage4;
 
     //page5
-    javax.swing.JToggleButton jFillColor;
-    javax.swing.JButton jChooseColor;
-    javax.swing.JButton jSelectedColor;
-    javax.swing.JButton jGoBackPage5;
-    javax.swing.JButton jSaveButton;
+    public javax.swing.JToggleButton jFillColor;
+    private javax.swing.JButton jChooseColor;
+    public javax.swing.JButton jSelectedColor;
+    public javax.swing.JButton jGoBackPage5;
+    public javax.swing.JButton jSaveButton;
 
     public void deselectRadioButtons() {
         Screen.allControlsAndListeners.polygonStart.setSelected(false);
@@ -129,7 +127,7 @@ public final class AllControlsAndListeners extends JFrame {
         Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
     }
     
-    public Hashtable getLabelTable(int minLabel, int maxLabel, int increment) {
+    private Hashtable getLabelTable(int minLabel, int maxLabel, int increment) {
         Hashtable<Integer,JLabel> table = new Hashtable<Integer,JLabel>();
         for(int j = minLabel; j <= maxLabel; j += increment) {
             String labels = String.format("%.2f", (j+4)/20.0);
@@ -137,28 +135,25 @@ public final class AllControlsAndListeners extends JFrame {
         }
         return table;
     }
+
     public Point getOriginalZoomedCoordinate(MouseEvent e) throws NoninvertibleTransformException{
         Point p = e.getPoint();
         Screen.zoomAffineTransform.inverseTransform(p, p);
         return p;
     }
     
-//    public Point get_zoomed_point_coordinate(Point p) throws NoninvertibleTransformException{
-//        Screen.zoom_affine_transform.transform(p, p);
-//        return p;
-//    }
-//
-    public void intializeMembers() {
+    private void intializeMembers() {
+        javax.swing.JMenu jFileMenu = new javax.swing.JMenu("File");
+        javax.swing.JMenu jHelpMenu = new javax.swing.JMenu("Help");;
+
         jMenuBar = new javax.swing.JMenuBar();
         jMenuBar.setPreferredSize(new java.awt.Dimension(56, 30));
-        jFileMenu = new javax.swing.JMenu("File");
         jFileMenu.setBackground(Color.BLUE);
         jFileMenu.setForeground(Color.WHITE);
         jFileMenu.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jFileMenu.setIconTextGap(10);
         jFileMenu.setOpaque(true);
         jFileMenu.setPreferredSize(new java.awt.Dimension(50, 25));
-        jHelpMenu = new javax.swing.JMenu("Help");
         jHelpMenu.setBackground(Color.BLUE);
         jHelpMenu.setForeground(Color.WHITE);
         jHelpMenu.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -171,7 +166,7 @@ public final class AllControlsAndListeners extends JFrame {
         jTutorialHelpItem = new javax.swing.JMenuItem("Tutorial");
         jTutorialHelpItem.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTutorialHelpItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
-        jGenerateSvg = new JButton("SVG");
+        JButton jGenerateSvg = new JButton("SVG");
         jClearSvg = new JButton("CLEAR");
         jPreviewButton = new JLabel(new javax.swing.ImageIcon(Screen.config.get("hover_image")));
         jPreviewButton.setToolTipText("See progress in preview pane");
@@ -193,7 +188,7 @@ public final class AllControlsAndListeners extends JFrame {
         jZoomSlider.setValue(16);
     }
 
-    public void initializeListeners() {
+    private void initializeListeners() {
         Screen.mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
@@ -364,12 +359,12 @@ public final class AllControlsAndListeners extends JFrame {
         });
     }
 
-    public void initializePage0Members() {
+    private void initializePage0Members() {
         //page-0
         start = new JButton("Start!");
     }
 
-    public void initializePage0Listeners() {
+    private void initializePage0Listeners() {
         //page-0
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -379,7 +374,7 @@ public final class AllControlsAndListeners extends JFrame {
 
     }
 
-    public void initializePage1Members() {
+    private void initializePage1Members() {
         //page-1
         jDetectText = new javax.swing.JButton(new javax.swing.ImageIcon(Screen.config.get("detect_text")));
         jDetectText.setContentAreaFilled(false);
@@ -387,7 +382,7 @@ public final class AllControlsAndListeners extends JFrame {
         jSkipPage1 = new javax.swing.JButton(new javax.swing.ImageIcon(Screen.config.get("skip_page1")));
         jSkipPage1.setContentAreaFilled(false);
         jSkipPage1.setBorderPainted(false);
-        languages = new String[]{"Language", "English", "Hindi","Bengali"};
+        String[] languages = new String[]{"Language", "English", "Hindi","Bengali"};
         jComboPage1 = new JComboBox(languages);
         jComboPage1.setMaximumSize(new java.awt.Dimension(80, 25));
         jToolbarPage1 = new javax.swing.JToolBar();
@@ -398,7 +393,7 @@ public final class AllControlsAndListeners extends JFrame {
 
     }
 
-    public void initializePage1Listeners() {
+    private void initializePage1Listeners() {
         jComboPage1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -452,7 +447,7 @@ public final class AllControlsAndListeners extends JFrame {
         });
     }
 
-    public void initializePage2Members() throws FontFormatException, IOException {
+    private void initializePage2Members() throws FontFormatException, IOException {
         //page-2
         jSelectText = new javax.swing.JToggleButton("Select Text");
         jEdit = new javax.swing.JToggleButton("Edit");
@@ -494,7 +489,7 @@ public final class AllControlsAndListeners extends JFrame {
         jLabel.setToolTipText("Modify labels here");
     }
 
-    public void initializePage2Listeners() {
+    private void initializePage2Listeners() {
         jSelectText.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (jSelectText.isSelected()) {
@@ -601,7 +596,7 @@ public final class AllControlsAndListeners extends JFrame {
         });
     }
 
-    public void initializePage3Members() {
+    private void initializePage3Members() {
         //page-3
         jComboPage3 = new javax.swing.JComboBox();
         jMathButton = new javax.swing.JButton("Maths");
@@ -618,7 +613,7 @@ public final class AllControlsAndListeners extends JFrame {
         jSkipPage3.setToolTipText("Go to next stage");
     }
 
-    public void initializePage3Listeners() {
+    private void initializePage3Listeners() {
         jMathButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -672,7 +667,7 @@ public final class AllControlsAndListeners extends JFrame {
         });
     }
 
-    public void initializePage4Members() {
+    private void initializePage4Members() {
         //page-4
         drawLine = new javax.swing.JToggleButton("Line");
         drawCircle = new javax.swing.JToggleButton("Circle");
@@ -706,7 +701,7 @@ public final class AllControlsAndListeners extends JFrame {
         jNextPage4.setToolTipText("Go to next page if all shapes have been identified");
     }
 
-    public void initializePage4Listeners() {
+    private void initializePage4Listeners() {
         
         drawLine.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -867,7 +862,7 @@ public final class AllControlsAndListeners extends JFrame {
 
     }
 
-    public void initializePage4MathMembers() {
+    private void initializePage4MathMembers() {
         // maths parameter page 4
         distanceParameter = new javax.swing.JLabel();
         distanceParameter.setMaximumSize(new Dimension(60, 45));
@@ -914,7 +909,7 @@ public final class AllControlsAndListeners extends JFrame {
 
     }
 
-    public void initializePage4MathListeners() {
+    private void initializePage4MathListeners() {
         // maths parameter page 4
         jMathGoBackPage4.setToolTipText("Revert back to previous stage");
         jMathNextPage4.setToolTipText("Go to next page if you see best detection result");
@@ -1007,7 +1002,7 @@ public final class AllControlsAndListeners extends JFrame {
         });
     }
 
-    public void initializePage5Members() {
+    private void initializePage5Members() {
         //page5
         jFillColor = new javax.swing.JToggleButton("Fill Color");
         jChooseColor = new javax.swing.JButton("Choose");
@@ -1021,7 +1016,7 @@ public final class AllControlsAndListeners extends JFrame {
         
     }
 
-    public void initializePage5Listeners() {
+    private void initializePage5Listeners() {
         // page-5
         jFillColor.setToolTipText("Add colours to shapes");
         jChooseColor.setToolTipText("Choose a colour");

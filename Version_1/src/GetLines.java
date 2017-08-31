@@ -5,15 +5,11 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 
 public class GetLines {
-    ArrayList<Pair<Integer,Integer>> lines;
-    ArrayList<Integer> lineIndices;
-    ArrayList<Color> colorArray;
-    boolean firstPointCaptured; 
-    Point startPoint;
-    Point endPoint;
-    int r =0;
-    Screen screen = new Screen(r);
-    int i=0;
+    public ArrayList<Pair<Integer,Integer>> lines;
+    public ArrayList<Integer> lineIndices;
+    public ArrayList<Color> colorArray;
+    private boolean firstPointCaptured;
+    private Screen screen = new Screen(0);
 
     public GetLines() {
         lines = new ArrayList<>();
@@ -36,18 +32,17 @@ public class GetLines {
         Pair<Integer,Integer> point = new Pair<>(x, y);
         if (!firstPointCaptured)
         {
-            startPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
+            Point startPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             firstPointCaptured = true;
             point.setL(startPoint.x);
             point.setR(startPoint.y);
-            endPoint = null;
             System.out.println("lines size : "+ lines.size());
             lines.add(point);
             colorArray.add(Screen.currentColor);
         }
         else
         {
-            endPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
+            Point endPoint = Screen.allControlsAndListeners.getOriginalZoomedCoordinate(e);
             if(getDistance(endPoint.x, endPoint.y, lines.get(lines.size()-1).getL() , lines.get(lines.size()-1).getR())>5){
                 point.setL(endPoint.x);
                 point.setR(endPoint.y);

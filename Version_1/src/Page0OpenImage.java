@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class Page0OpenImage {
-    Screen screen = new Screen(0);
+    private Screen screen = new Screen(0);
     public Page0OpenImage() throws IOException{
         Screen.allObjectReinitializer.refresh();
         Screen.initialFrameSetup.contentPane.removeAll();

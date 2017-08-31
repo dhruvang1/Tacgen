@@ -6,20 +6,19 @@ import java.util.ArrayList;
 
 
 public class GetArc {
-    boolean firstPointCaptured = false;
-    boolean secondPointCaptured = false;
-    Point selectedPoint1, selectedPoint2, selectedPoint3;
-    ArrayList<Pair<Float,Float>> circles = new ArrayList<>();
-    ArrayList<Pair<Float,Float>> centers = new ArrayList<>();
-    ArrayList<Integer> circleIndices = new ArrayList<>();
-    ArrayList<Float> radii = new ArrayList<>();
-    ArrayList<Integer> fillArray = new ArrayList<>();
-    ArrayList<Color> colorArray = new ArrayList<>();
-    ArrayList<Pair<Integer,Integer>> arcAngles = new ArrayList<>();
+    private boolean firstPointCaptured = false;
+    private boolean secondPointCaptured = false;
+    private Point selectedPoint1, selectedPoint2, selectedPoint3;
+    public ArrayList<Pair<Float,Float>> circles = new ArrayList<>();
+    public ArrayList<Pair<Float,Float>> centers = new ArrayList<>();
+    public ArrayList<Integer> circleIndices = new ArrayList<>();
+    public ArrayList<Float> radii = new ArrayList<>();
+    public ArrayList<Integer> fillArray = new ArrayList<>();
+    public ArrayList<Color> colorArray = new ArrayList<>();
+    public ArrayList<Pair<Integer,Integer>> arcAngles = new ArrayList<>();
     
-    Pair<Float, Float> arcA, arcB, arcC;
-    float radius;
-    Screen screen = new Screen(0);
+    private Pair<Float, Float> arcA, arcB, arcC;
+    private Screen screen = new Screen(0);
     public GetArc() {
             // TODO Auto-generated constructor stub
     }
@@ -65,7 +64,7 @@ public class GetArc {
                 center.setL((float)(int)b[0]);
                 center.setR((float)(int)b[1]);
                 centers.add(center);
-                radius = a.getRadius(center, arcC);
+                float radius = a.getRadius(center, arcC);
                 radii.add(radius);
                 int [] b1 = a.getArcAngles((int)(float)arcA.getL(),(int)(float) arcA.getR(),(int)(float) arcB.getL(),(int)(float) arcB.getR(),(int)(float) arcC.getL(),(int)(float) arcC.getR());
                 temp_angle.setL(b1[0]);
@@ -81,7 +80,7 @@ public class GetArc {
 
 }
 
-    public  int calc_an(int a1,int a2){
+    private int calc_an(int a1,int a2){
     int an=0;
     an = (int) ( (double)(180.0/Math.PI) * Math.acos(a1/Math.pow((Math.pow(a1,2)+Math.pow(a2,2)),0.5))  );
     if(a2>0){
@@ -89,7 +88,7 @@ public class GetArc {
     }
     return an;    }
 
-    public boolean checkInside(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8){
+    private boolean checkInside(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8){
         int s0 = calc_an(a1,a2);
         int [] selectedPoint1 = new int[3];
         selectedPoint1[0] = calc_an(a3,a4);

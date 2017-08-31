@@ -3,7 +3,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Page4MathParameter extends JPanel{
-    Screen screen = new Screen(0);
+    private Screen screen = new Screen(0);
     public Page4MathParameter(){
         Screen.initialFrameSetup.contentPane.removeAll();
         Screen.mainFrame.setJMenuBar(Screen.allControlsAndListeners.jMenuBar);
