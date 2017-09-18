@@ -59,9 +59,13 @@ public class Page5ColorMapping extends JPanel{
         for(int i = 0; i< Screen.linesObject.colorArray.size(); i++){
             Screen.linesObject.colorArray.set(i, Color.black);
         }
-        for(int i = 0; i< Screen.circlesObject.colorArray.size(); i++){
-            Screen.circlesObject.colorArray.set(i, Color.black);
-            Screen.circlesObject.fillArray.set(i, 0);
+//        for(int i = 0; i< Screen.circlesObject.colorArray.size(); i++){
+//            Screen.circlesObject.colorArray.set(i, Color.black);
+//            Screen.circlesObject.fillArray.set(i, 0);
+//        }
+        for(int i = 0; i< Screen.circlesObject.allCircles.size(); i++){
+            Screen.circlesObject.allCircles.get(i).color = Color.black;
+            Screen.circlesObject.allCircles.get(i).fill = 0;
         }
         for(int i = 0; i< Screen.regionsObject.colorArray.size(); i++){
             Screen.regionsObject.colorArray.set(i, Color.black);

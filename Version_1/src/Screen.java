@@ -207,10 +207,17 @@ public class Screen {
             graphics2D.setColor(currentColor);
     	}        
     	
-    	for(int k = 0; k< circlesObject.circles.size(); k++){
+//    	for(int k = 0; k< circlesObject.circles.size(); k++){
+//            graphics2D.setColor(currentColor);
+//            int x = (int)(float) circlesObject.circles.get(k).getL();
+//            int y = (int)(float) circlesObject.circles.get(k).getR();
+//            graphics2D.fillRect(x, y,2,2);
+//    	}
+
+        for(int k=0; k < circlesObject.tempPoints.size(); k++){
             graphics2D.setColor(currentColor);
-            int x = (int)(float) circlesObject.circles.get(k).getL();
-            int y = (int)(float) circlesObject.circles.get(k).getR();
+            int x = (int)(float) circlesObject.tempPoints.get(k).getL();
+            int y = (int)(float) circlesObject.tempPoints.get(k).getR();
             graphics2D.fillRect(x, y,2,2);
     	}
         
@@ -222,11 +229,16 @@ public class Screen {
             graphics2D.fillRect(x, y,2,2);
     	}
 
-    	for(int k = 0; k< circlesObject.centers.size(); k++){
-            int x = (int)(float) circlesObject.centers.get(k).getL();
-            int y = (int)(float) circlesObject.centers.get(k).getR();
-            int radius = (int)(float) circlesObject.radii.get(k);
-            graphics2D.setColor(circlesObject.colorArray.get(k));
+//    	for(int k = 0; k< circlesObject.centers.size(); k++){
+        for(int k = 0; k< circlesObject.allCircles.size(); k++){
+//            int x = (int)(float) circlesObject.centers.get(k).getL();
+//            int y = (int)(float) circlesObject.centers.get(k).getR();
+//            int radius = (int)(float) circlesObject.radii.get(k);
+//            graphics2D.setColor(circlesObject.colorArray.get(k));
+            int x = (int)(float) circlesObject.allCircles.get(k).center.getL();
+            int y = (int)(float) circlesObject.allCircles.get(k).center.getR();
+            int radius = (int)(float) circlesObject.allCircles.get(k).radius;
+            graphics2D.setColor(circlesObject.allCircles.get(k).color);
             if(circlesObject.circleIndices.contains(k)){
                 graphics2D.setStroke(new BasicStroke(3.0f));
                 graphics2D.drawArc(x - radius, y - radius,2* radius,2* radius, 0, 360);
@@ -236,7 +248,8 @@ public class Screen {
                 graphics2D.drawArc(x - radius, y - radius,2* radius,2* radius, 0, 360);
             }
             //System.out.println(graphics2D.getColor());
-            if(circlesObject.fillArray.get(k)==1){
+//            if(circlesObject.fillArray.get(k)==1){
+            if(circlesObject.allCircles.get(k).fill==1){
                 graphics2D.fillArc(x - radius, y - radius,2* radius,2* radius, 0, 360);
             }
             graphics2D.setColor(currentColor);

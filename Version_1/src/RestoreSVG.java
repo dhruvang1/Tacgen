@@ -87,16 +87,24 @@ public class RestoreSVG {
             col = svgPaths.item(i+2).getNodeValue().substring(1);
             stroke_col = svgPaths.item(i+4).getNodeValue().substring(1);
             i = i+4;
+            GetCircles.Circle tempCircle = Screen.circlesObject.new Circle();
             if(col.contentEquals("one")){
-                Screen.circlesObject.fillArray.add(0);
-                Screen.circlesObject.colorArray.add(new Color(Integer.decode("0x"+stroke_col)));
+//                Screen.circlesObject.fillArray.add(0);
+//                Screen.circlesObject.colorArray.add(new Color(Integer.decode("0x"+stroke_col)));
+                tempCircle.fill = 0;
+                tempCircle.color = new Color(Integer.decode("0x"+stroke_col));
             }
             else{
-                Screen.circlesObject.fillArray.add(1);
-                Screen.circlesObject.colorArray.add(new Color(Integer.decode("0x"+col)));
+//                Screen.circlesObject.fillArray.add(1);
+//                Screen.circlesObject.colorArray.add(new Color(Integer.decode("0x"+col)));
+                tempCircle.fill = 1;
+                tempCircle.color = new Color(Integer.decode("0x"+col));
             }
-            Screen.circlesObject.centers.add(new Pair<>(cx,cy));
-            Screen.circlesObject.radii.add(r);
+//            Screen.circlesObject.centers.add(new Pair<>(cx,cy));
+//            Screen.circlesObject.radii.add(r);
+            tempCircle.center = new Pair<>(cx,cy);
+            tempCircle.radius = r;
+            Screen.circlesObject.allCircles.add(tempCircle);
         }   
     }
     
@@ -115,7 +123,7 @@ public class RestoreSVG {
         XPath xpath_1 = xpf_1.newXPath();
         XPathExpression expression_1= xpath_1.compile(xpathExpression_1);
         NodeList svgPaths_1 = (NodeList)expression_1.evaluate(document, XPathConstants.NODESET);
-        Circle c = new Circle();
+        CircleHelper c = new CircleHelper();
         for(int i=0;i<svgPaths.getLength();i++){
             String [] p = svgPaths.item(i).getNodeValue().split(",|\\ ");
             float [] ret = c.potentialCenters(Float.valueOf(p[1]),Float.valueOf(p[2]),

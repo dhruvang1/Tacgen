@@ -61,7 +61,7 @@ public class GetArc {
                 circles.add(temp3);
                 firstPointCaptured=secondPointCaptured = false;
                 arcC=temp3;
-                Circle a= new Circle();
+                CircleHelper a= new CircleHelper();
                 int [] b = a.getCenter((int)(float)arcA.getL(),(int)(float) arcA.getR(),(int)(float) arcB.getL(),(int)(float) arcB.getR(),(int)(float) arcC.getL(),(int)(float) arcC.getR());
                 center.setL((float)(int)b[0]);
                 center.setR((float)(int)b[1]);

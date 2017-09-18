@@ -101,23 +101,32 @@ public class GenerateSVG {
         }
         return redHex + greenHex + blueHex;
     }
-    private void svgCircles() throws FileNotFoundException, IOException{
+    private void svgCircles() throws  IOException{
         File file = new File(directory,"circle.svg");
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 //        outputStreamWriter.append("<svg>");
         outputStreamWriter.append(Constants.NEWLINE);
-        if(Screen.circlesObject.radii.size()>0){
+//        if(Screen.circlesObject.radii.size()>0){
+        if(Screen.circlesObject.allCircles.size()>0){
             isSVGBlank = false;
         }
-        for(int i = 0; i< Screen.circlesObject.radii.size(); i++){
+//        for(int i = 0; i< Screen.circlesObject.radii.size(); i++){
+        for(int i = 0; i< Screen.circlesObject.allCircles.size(); i++){
         //    <circle cx="196.0" cy="172.0" r="138.0" stroke="#006600" fill="#ffffff"/>
-            outputStreamWriter.append("<circle cx="+"\""+ Screen.circlesObject.centers.get(i).getL()+"\" ");
-            outputStreamWriter.append("cy="+"\""+ Screen.circlesObject.centers.get(i).getR()+"\" ");
-            outputStreamWriter.append("r="+"\""+ Screen.circlesObject.radii.get(i)+"\" ");
-            String hashCode = rgbToHash(Screen.circlesObject.colorArray.get(i).getRed(),
-                    Screen.circlesObject.colorArray.get(i).getGreen(),
-                    Screen.circlesObject.colorArray.get(i).getBlue());
-            if(Screen.circlesObject.fillArray.get(i)==0){
+//            outputStreamWriter.append("<circle cx="+"\""+ Screen.circlesObject.centers.get(i).getL()+"\" ");
+//            outputStreamWriter.append("cy="+"\""+ Screen.circlesObject.centers.get(i).getR()+"\" ");
+//            outputStreamWriter.append("r="+"\""+ Screen.circlesObject.radii.get(i)+"\" ");
+//            String hashCode = rgbToHash(Screen.circlesObject.colorArray.get(i).getRed(),
+//                    Screen.circlesObject.colorArray.get(i).getGreen(),
+//                    Screen.circlesObject.colorArray.get(i).getBlue());
+            outputStreamWriter.append("<circle cx="+"\""+ Screen.circlesObject.allCircles.get(i).center.getL()+"\" ");
+            outputStreamWriter.append("cy="+"\""+ Screen.circlesObject.allCircles.get(i).center.getR()+"\" ");
+            outputStreamWriter.append("r="+"\""+ Screen.circlesObject.allCircles.get(i).radius+"\" ");
+            String hashCode = rgbToHash(Screen.circlesObject.allCircles.get(i).color.getRed(),
+                    Screen.circlesObject.allCircles.get(i).color.getGreen(),
+                    Screen.circlesObject.allCircles.get(i).color.getBlue());
+//            if(Screen.circlesObject.fillArray.get(i)==0){
+            if(Screen.circlesObject.allCircles.get(i).fill==0){
                 outputStreamWriter.append("stroke=\"#"+hashCode+"\" fill=\""+"none"+"\"" +"/>");//outputStreamWriter.append("stroke=\"#"+hashCode+"\" fill=\""+"none"+"\"" +"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
             }
             else{

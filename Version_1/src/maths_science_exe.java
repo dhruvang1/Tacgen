@@ -135,19 +135,39 @@ public class maths_science_exe {
                 float f3 = Float.valueOf(gt[2]);
                 Pair<Float,Float> tempPair = new Pair <> (f1,f2);
                 boolean match = false;
-                for(int i = 0; i< Screen.circlesObject.centers.size(); i++){
-                    if(Screen.circlesObject.centers.get(i).equalsFloat(tempPair)){
-                        if (Math.abs(Screen.circlesObject.radii.get(i)-f3)<=3) {
+//                for(int i = 0; i< Screen.circlesObject.centers.size(); i++){
+//                    if(Screen.circlesObject.centers.get(i).equalsFloat(tempPair)){
+//                        if (Math.abs(Screen.circlesObject.radii.get(i)-f3)<=3) {
+//                            match = true;
+//                            break;
+//                        }
+//                    }
+//                }
+//                if(!match){
+//                    Screen.circlesObject.centers.add(tempPair);
+//                    Screen.circlesObject.radii.add(f3);
+//                    Screen.circlesObject.colorArray.add(Screen.currentColor);
+//                    Screen.circlesObject.fillArray.add(0);
+//                }
+                for(int i = 0; i< Screen.circlesObject.allCircles.size(); i++){
+                    if(Screen.circlesObject.allCircles.get(i).center.equalsFloat(tempPair)){
+                        if (Math.abs(Screen.circlesObject.allCircles.get(i).radius-f3)<=3) {
                             match = true;
                             break;
                         }
                     }
                 }
                 if(!match){
-                    Screen.circlesObject.centers.add(tempPair);
-                    Screen.circlesObject.radii.add(f3);
-                    Screen.circlesObject.colorArray.add(Screen.currentColor);
-                    Screen.circlesObject.fillArray.add(0);
+//                    Screen.circlesObject.centers.add(tempPair);
+//                    Screen.circlesObject.radii.add(f3);
+//                    Screen.circlesObject.colorArray.add(Screen.currentColor);
+//                    Screen.circlesObject.fillArray.add(0);
+                    GetCircles.Circle tempCircle = Screen.circlesObject.new Circle();
+                    tempCircle.center = tempPair;
+                    tempCircle.radius = f3;
+                    tempCircle.color = Screen.currentColor;
+                    tempCircle.fill = 0;
+                    Screen.circlesObject.allCircles.add(tempCircle);
                 }
             }
             line = bufferedReader.readLine();
