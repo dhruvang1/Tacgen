@@ -88,8 +88,8 @@ public class GetCircles {
                 currentCircle.radius = radius;
                 currentCircle.color = Screen.currentColor;
                 currentCircle.fill = 0;
-                tempPoints.clear();
                 allCircles.add(currentCircle);
+                tempPoints.clear();
             }
             screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
             Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();

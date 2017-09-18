@@ -46,36 +46,49 @@ public class GenerateSVG {
         outputStreamWriter.close();
     }
 
-    private void svgArc() throws FileNotFoundException, IOException{
+    private void svgArc() throws IOException{
         File file = new File(directory,"arc.svg");
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 //        outputStreamWriter.append("<svg>");
         outputStreamWriter.append(Constants.NEWLINE);
-        if(Screen.arcObject.radii.size()>0){
+//        if(Screen.arcObject.radii.size()>0){
+        if(Screen.arcObject.allArcs.size()>0){
             isSVGBlank = false;
         }
-        for(int i = 0; i< Screen.arcObject.radii.size(); i++){
-            float centerX = Screen.arcObject.centers.get(i).getL();
-            float centerY = Screen.arcObject.centers.get(i).getR();
-            float radius = Screen.arcObject.radii.get(i);
-            int angle1 = Screen.arcObject.arcAngles.get(i).getL();
-            int angle2 = Screen.arcObject.arcAngles.get(i).getR();
+//        for(int i = 0; i< Screen.arcObject.radii.size(); i++){
+//            float centerX = Screen.arcObject.centers.get(i).getL();
+//            float centerY = Screen.arcObject.centers.get(i).getR();
+//            float radius = Screen.arcObject.radii.get(i);
+//            int angle1 = Screen.arcObject.arcAngles.get(i).getL();
+//            int angle2 = Screen.arcObject.arcAngles.get(i).getR();
+        for(int i = 0; i< Screen.arcObject.allArcs.size(); i++){
+            GetArc.Arc tempArc = Screen.arcObject.allArcs.get(i);
+            float centerX = tempArc.center.getL();
+            float centerY = tempArc.center.getR();
+            float radius = tempArc.radius;
+            int angle1 = tempArc.arcAngles.getL();
+            int angle2 = tempArc.arcAngles.getR();
             int angle3 = (angle1 + angle2)%360;
             float s1 = (float) (centerX + radius *Math.cos(Math.toRadians(angle1)));
             float s2 = (float) (centerY - radius *Math.sin(Math.toRadians(angle1)));
             float e1 = (float) (centerX + radius *Math.cos(Math.toRadians(angle3)));
             float e2 = (float) (centerY - radius *Math.sin(Math.toRadians(angle3)));
             int lsa = 0; //don't know what is this
-            if(Screen.arcObject.arcAngles.get(i).getR()>180){
+//            if(Screen.arcObject.arcAngles.get(i).getR()>180){
+            if(angle2 > 180){
                 lsa = 1;
             }
-            String hash_code = rgbToHash(Screen.arcObject.colorArray.get(i).getRed(),
-                    Screen.arcObject.colorArray.get(i).getGreen(),
-                    Screen.arcObject.colorArray.get(i).getBlue());
+//            String hash_code = rgbToHash(Screen.arcObject.colorArray.get(i).getRed(),
+//                    Screen.arcObject.colorArray.get(i).getGreen(),
+//                    Screen.arcObject.colorArray.get(i).getBlue());
+            String hash_code = rgbToHash(tempArc.color.getRed(),
+                    tempArc.color.getGreen(),
+                    tempArc.color.getBlue());
             
             outputStreamWriter.append("<path d="+"\"M "+s1+" "+s2+" A "+ radius +" "+ radius +", 0, "+lsa+", 0, "+e1+" "+e2+"\" ");
             //outputStreamWriter.append("style="+"\""+"stroke:#006600; fill:#"+hash_code+";"+"\"" +"/>");
-            if(Screen.arcObject.fillArray.get(i)==0){
+//            if(Screen.arcObject.fillArray.get(i)==0){
+            if(tempArc.fill==0){
                 outputStreamWriter.append("stroke=\"#"+hash_code+"\" fill=\""+"none"+"\"" +"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
             }
             else{

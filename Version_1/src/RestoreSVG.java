@@ -131,20 +131,28 @@ public class RestoreSVG {
             
             Pair<Float,Float> center = new Pair<Float,Float>(ret[0], ret[1]);
             Pair<Integer,Integer> temp_angle = new Pair<Integer,Integer>((int)ret[2],(int)ret[3]);
-            Screen.arcObject.centers.add(center);
-            Screen.arcObject.radii.add(Float.valueOf(p[4]));
-            Screen.arcObject.arcAngles.add(temp_angle);
             String col = svgPaths_1.item(3*i+1).getNodeValue().substring(1);
             String stroke_col = svgPaths_1.item(3*i+2).getNodeValue().substring(1);
+            GetArc.Arc tempArc = Screen.arcObject.new Arc();
+//            Screen.arcObject.centers.add(center);
+//            Screen.arcObject.radii.add(Float.valueOf(p[4]));
+//            Screen.arcObject.arcAngles.add(temp_angle);
+            tempArc.center = center;
+            tempArc.radius = Float.valueOf(p[4]);
+            tempArc.arcAngles = temp_angle;
             if(col.contentEquals("one")){
-                Screen.arcObject.fillArray.add(0);
-                Screen.arcObject.colorArray.add(new Color(Integer.decode("0x"+stroke_col)));
+//                Screen.arcObject.fillArray.add(0);
+//                Screen.arcObject.colorArray.add(new Color(Integer.decode("0x"+stroke_col)));
+                tempArc.fill = 0;
+                tempArc.color = new Color(Integer.decode("0x"+stroke_col));
             }
             else{
-                Screen.arcObject.fillArray.add(1);
-                Screen.arcObject.colorArray.add(new Color(Integer.decode("0x"+col)));
+//                Screen.arcObject.fillArray.add(1);
+//                Screen.arcObject.colorArray.add(new Color(Integer.decode("0x"+col)));
+                tempArc.fill = 1;
+                tempArc.color = new Color(Integer.decode("0x"+col));
             }
-            
+            Screen.arcObject.allArcs.add(tempArc);
         }
     }
     

@@ -75,15 +75,19 @@ public class Page5ColorMapping extends JPanel{
             Screen.polygonObject.colorArray.set(i, Color.black);
             Screen.polygonObject.fillOrNot.set(i, 0);
         }
-        for(int i = 0; i< Screen.arcObject.colorArray.size(); i++){
-            Screen.arcObject.colorArray.set(i, Color.black);
-            Screen.arcObject.fillArray.set(i, 0);
+//        for(int i = 0; i< Screen.arcObject.colorArray.size(); i++){
+//            Screen.arcObject.colorArray.set(i, Color.black);
+//            Screen.arcObject.fillArray.set(i, 0);
+//        }
+        for(int i = 0; i< Screen.arcObject.allArcs.size(); i++){
+            Screen.arcObject.allArcs.get(i).color = Color.black;
+            Screen.arcObject.allArcs.get(i).fill = 0;
         }
 //        for(int i=0;i<Screen.a16.color_array.size();i++){
 //            Screen.a16.color_array.set(i, Color.black);
 //        }
-        Screen.currentColor =Color.black;
-        Screen.page4ManualMathScience =new Page4ManualMathScience();
+        Screen.currentColor = Color.black;
+        Screen.page4ManualMathScience = new Page4ManualMathScience();
     }
     
     private void refresh(){
