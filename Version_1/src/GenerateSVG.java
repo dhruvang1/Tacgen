@@ -229,17 +229,26 @@ public class GenerateSVG {
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 //        outputStreamWriter.append("<svg>");
         outputStreamWriter.append(Constants.NEWLINE);
-        if(Screen.pathsObject.paths.size()>0){
+//        if(Screen.pathsObject.paths.size()>0){
+        if(Screen.pathsObject.allPaths.size()>0){
             isSVGBlank = false;
         }
-        for(int i = 0; i< Screen.pathsObject.paths.size(); i++){
+//        for(int i = 0; i< Screen.pathsObject.paths.size(); i++){
+//            outputStreamWriter.append("<polyline points="+"\"");
+//            for(int j = 0; j< Screen.pathsObject.paths.get(i).size()-1; j++){
+//                outputStreamWriter.append(Screen.pathsObject.paths.get(i).get(j).getL()+","+ Screen.pathsObject.paths.get(i).get(j).getR()+" ");
+//            }
+//            String hashCode = rgbToHash(Screen.pathsObject.colorArray.get(i).getRed(),
+//                    Screen.pathsObject.colorArray.get(i).getGreen(),
+//                    Screen.pathsObject.colorArray.get(i).getBlue());
+        for(int i = 0; i< Screen.pathsObject.allPaths.size(); i++){
             outputStreamWriter.append("<polyline points="+"\"");
-            for(int j = 0; j< Screen.pathsObject.paths.get(i).size()-1; j++){
-                outputStreamWriter.append(Screen.pathsObject.paths.get(i).get(j).getL()+","+ Screen.pathsObject.paths.get(i).get(j).getR()+" ");
+            for(int j = 0; j< Screen.pathsObject.allPaths.get(i).points.size()-1; j++){
+                outputStreamWriter.append(Screen.pathsObject.allPaths.get(i).points.get(j).getL()+","+ Screen.pathsObject.allPaths.get(i).points.get(j).getR()+" ");
             }
-            String hashCode = rgbToHash(Screen.pathsObject.colorArray.get(i).getRed(),
-                    Screen.pathsObject.colorArray.get(i).getGreen(),
-                    Screen.pathsObject.colorArray.get(i).getBlue());
+            String hashCode = rgbToHash(Screen.pathsObject.allPaths.get(i).color.getRed(),
+                    Screen.pathsObject.allPaths.get(i).color.getGreen(),
+                    Screen.pathsObject.allPaths.get(i).color.getBlue());
             
             outputStreamWriter.append("\" ");
             outputStreamWriter.append("stroke=\"#"+hashCode+"\" fill=\"none\""+"/>");
@@ -248,6 +257,7 @@ public class GenerateSVG {
 //        outputStreamWriter.append("</svg>");
         outputStreamWriter.close();
     }
+
     private void svgText() throws FileNotFoundException, IOException, ScriptException, NoSuchMethodException{
         File file = new File(directory,"text.svg");
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");

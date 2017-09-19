@@ -212,17 +212,21 @@ public class RestoreSVG {
         
         for(int i=0;i<svgPaths.getLength();i++){
             String [] p = svgPaths.item(i).getNodeValue().split(",|\\ ");
-            ArrayList<Pair<Integer,Integer>> Points_regions=new ArrayList<Pair<Integer,Integer>>();
+//            ArrayList<Pair<Integer,Integer>> Points_regions=new ArrayList<>();
+            GetPaths.Path tempPath = Screen.pathsObject.new Path();
             for(int j =0;j<p.length-1;j++){
-                Points_regions.add(new Pair<>(Integer.valueOf(p[j]),Integer.valueOf(p[j+1])));
+//                Points_regions.add(new Pair<>(Integer.valueOf(p[j]),Integer.valueOf(p[j+1])));
+                tempPath.points.add(new Pair<>(Integer.valueOf(p[j]),Integer.valueOf(p[j+1])));
                 j++;
             }
-            Points_regions.add(new Pair<>(Integer.valueOf(p[0]),Integer.valueOf(p[1])));
-            
+//            Points_regions.add(new Pair<>(Integer.valueOf(p[0]),Integer.valueOf(p[1])));
+            tempPath.points.add(new Pair<>(Integer.valueOf(p[0]),Integer.valueOf(p[1])));
             String col = svgPaths_1.item(3*i+2).getNodeValue().substring(1);
-            
-            Screen.pathsObject.colorArray.add(new Color(Integer.decode("0x"+col)));
-            Screen.pathsObject.paths.add(Points_regions);
+
+//            Screen.pathsObject.colorArray.add(new Color(Integer.decode("0x"+col)));
+//            Screen.pathsObject.paths.add(Points_regions);
+            tempPath.color = new Color(Integer.decode("0x"+col));
+            Screen.pathsObject.allPaths.add(tempPath);
         }
     }    
     

@@ -208,7 +208,9 @@ public class maths_science_exe {
             tempPointsRegions.add(tempPair);
             boolean match = false;
             int tempIndex;
-            for (ArrayList<Pair<Integer, Integer>> Region : Screen.pathsObject.paths) {
+//            for (ArrayList<Pair<Integer, Integer>> Region : Screen.pathsObject.paths) {
+            for (GetPaths.Path path : Screen.pathsObject.allPaths) {
+                ArrayList<Pair<Integer, Integer>> Region = path.points;
                 tempIndex = Region.size() - 2;
                 //if (Region.size() == tempPointsRegions.size() && Region.get(0).equals(tempPointsRegions.get(0)) && Region.get(tempIndex).equals(tempPointsRegions.get(tempIndex))) {
                 if (Region.size() == tempPointsRegions.size()&&Region.get(0).equals(tempPointsRegions.get(0)) && Region.get(tempIndex).equals(tempPointsRegions.get(tempIndex))) {
@@ -217,10 +219,14 @@ public class maths_science_exe {
                 }
             }
             if(!match){
-                Screen.pathsObject.paths.add(tempPointsRegions);
+                GetPaths.Path tempPath = Screen.pathsObject.new Path();
+//                Screen.pathsObject.paths.add(tempPointsRegions);
+                tempPath.points = tempPointsRegions;
                 Random rand = new Random();
-                Color randomColor = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat());
-                Screen.pathsObject.colorArray.add(randomColor);
+//                Color randomColor = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat());
+//                Screen.pathsObject.colorArray.add(randomColor);
+                tempPath.color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat());
+                Screen.pathsObject.allPaths.add(tempPath);
             }
             line = bufferedReader.readLine();
         }

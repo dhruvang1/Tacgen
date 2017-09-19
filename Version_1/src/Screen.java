@@ -326,32 +326,59 @@ public class Screen {
             graphics2D.setColor(currentColor);
     	}
         
-        if(pathsObject.pathPoints.size()>0){
+//        if(pathsObject.pathPoints.size()>0){
+//            graphics2D.setColor(currentColor);
+//            for(int h = 0; h< pathsObject.pathPoints.size(); h++){
+//                graphics2D.fillRect(pathsObject.pathPoints.get(h).getL(), pathsObject.pathPoints.get(h).getR(), 2,2);
+//            }
+//            for(int k = 0; k< pathsObject.pathPoints.size()-1; k++){
+//                graphics2D.drawLine(pathsObject.pathPoints.get(k).getL(), pathsObject.pathPoints.get(k).getR(), pathsObject.pathPoints.get(k+1).getL(), pathsObject.pathPoints.get(k+1).getR());
+//            }
+//        }
+        if(pathsObject.currentPath.points.size()>0){
             graphics2D.setColor(currentColor);
-            for(int h = 0; h< pathsObject.pathPoints.size(); h++){
-                graphics2D.fillRect(pathsObject.pathPoints.get(h).getL(), pathsObject.pathPoints.get(h).getR(), 2,2);
+            for(int h = 0; h< pathsObject.currentPath.points.size(); h++){
+                graphics2D.fillRect(pathsObject.currentPath.points.get(h).getL(), pathsObject.currentPath.points.get(h).getR(), 2,2);
             }
-            for(int k = 0; k< pathsObject.pathPoints.size()-1; k++){
-                graphics2D.drawLine(pathsObject.pathPoints.get(k).getL(), pathsObject.pathPoints.get(k).getR(), pathsObject.pathPoints.get(k+1).getL(), pathsObject.pathPoints.get(k+1).getR());
+            for(int k = 0; k< pathsObject.currentPath.points.size()-1; k++){
+                graphics2D.drawLine(pathsObject.currentPath.points.get(k).getL(), pathsObject.currentPath.points.get(k).getR(), pathsObject.currentPath.points.get(k+1).getL(), pathsObject.currentPath.points.get(k+1).getR());
             }
         }
         
-    	for(int k = 0; k< pathsObject.paths.size(); k++){
-            graphics2D.setColor(pathsObject.colorArray.get(k));
+//    	for(int k = 0; k< pathsObject.paths.size(); k++){
+//            graphics2D.setColor(pathsObject.colorArray.get(k));
+//            if(pathsObject.pathIndices.contains(k)){
+//                graphics2D.setStroke(new BasicStroke(3.0f));
+//                for(int h = 0; h< pathsObject.paths.get(k).size()-2; h++){
+//                    graphics2D.drawLine(pathsObject.paths.get(k).get(h).getL(), pathsObject.paths.get(k).get(h).getR(), pathsObject.paths.get(k).get(h+1).getL(), pathsObject.paths.get(k).get(h+1).getR());
+//                }
+//                graphics2D.setStroke(new BasicStroke(1.0f));
+//            }
+//            else{
+//                for(int h = 0; h< pathsObject.paths.get(k).size()-2; h++){
+//                    graphics2D.drawLine(pathsObject.paths.get(k).get(h).getL(), pathsObject.paths.get(k).get(h).getR(), pathsObject.paths.get(k).get(h+1).getL(), pathsObject.paths.get(k).get(h+1).getR());
+//                }
+//            }
+//            graphics2D.setColor(currentColor);
+//    	}
+        for(int k = 0; k< pathsObject.allPaths.size(); k++){
+            GetPaths.Path tempPath = pathsObject.allPaths.get(k);
+            graphics2D.setColor(tempPath.color);
             if(pathsObject.pathIndices.contains(k)){
                 graphics2D.setStroke(new BasicStroke(3.0f));
-                for(int h = 0; h< pathsObject.paths.get(k).size()-2; h++){
-                    graphics2D.drawLine(pathsObject.paths.get(k).get(h).getL(), pathsObject.paths.get(k).get(h).getR(), pathsObject.paths.get(k).get(h+1).getL(), pathsObject.paths.get(k).get(h+1).getR());
+                for(int h = 0; h< tempPath.points.size()-2; h++){
+                    graphics2D.drawLine(tempPath.points.get(h).getL(), tempPath.points.get(h).getR(), tempPath.points.get(h+1).getL(), tempPath.points.get(h+1).getR());
                 }
                 graphics2D.setStroke(new BasicStroke(1.0f));
             }
             else{
-                for(int h = 0; h< pathsObject.paths.get(k).size()-2; h++){
-                    graphics2D.drawLine(pathsObject.paths.get(k).get(h).getL(), pathsObject.paths.get(k).get(h).getR(), pathsObject.paths.get(k).get(h+1).getL(), pathsObject.paths.get(k).get(h+1).getR());
-                }	    
+                for(int h = 0; h<tempPath.points.size()-2; h++){
+                    graphics2D.drawLine(tempPath.points.get(h).getL(),tempPath.points.get(h).getR(), tempPath.points.get(h+1).getL(), tempPath.points.get(h+1).getR());
+                }
             }
             graphics2D.setColor(currentColor);
-    	}
+        }
+
         for(int k = 0; k< textboxObject.rectangleArray.size(); k++){
             graphics2D.setColor(Color.black);
             AttributedString attributedString = new AttributedString(textboxObject.label.get(k).getR());
