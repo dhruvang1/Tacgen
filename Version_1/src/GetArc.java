@@ -9,11 +9,11 @@ import java.util.ArrayList;
  */
 public class GetArc {
     public class Arc {
-        Pair<Integer,Integer> arcAngles;
-        Pair<Float, Float> center;
-        Float radius;
-        Color color;
-        Integer fill;
+        public Pair<Integer,Integer> arcAngles;
+        public Pair<Float, Float> center;
+        public Float radius;
+        public Color color;
+        public Integer fill;
     }
 
     public ArrayList<Arc> allArcs = new ArrayList<>();

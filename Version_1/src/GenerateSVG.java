@@ -156,20 +156,33 @@ public class GenerateSVG {
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 //        outputStreamWriter.append("<svg>");
         outputStreamWriter.append(Constants.NEWLINE);
-        if(Screen.polygonObject.polygons.size()>0){
+//        if(Screen.polygonObject.polygons.size()>0){
+        if(Screen.polygonObject.allPolygons.size()>0){
             isSVGBlank = false;
         }
-        for(int i = 0; i< Screen.polygonObject.polygons.size(); i++){
+//        for(int i = 0; i< Screen.polygonObject.polygons.size(); i++){
+//            outputStreamWriter.append("<polygon points="+"\"");
+//            for(int j = 0; j< Screen.polygonObject.polygons.get(i).size()-1; j++){
+//                outputStreamWriter.append(Screen.polygonObject.polygons.get(i).get(j).getL()+","+ Screen.polygonObject.polygons.get(i).get(j).getR()+" ");
+//            }
+//            outputStreamWriter.append("\" ");
+//            String hashCode = rgbToHash(Screen.polygonObject.colorArray.get(i).getRed(),
+//                    Screen.polygonObject.colorArray.get(i).getGreen(),
+//                    Screen.polygonObject.colorArray.get(i).getBlue());
+//
+//            if(Screen.polygonObject.fillOrNot.get(i)==0){
+        for(int i = 0; i< Screen.polygonObject.allPolygons.size(); i++){
+            GetPolygon.Polygon tempPolygon = Screen.polygonObject.allPolygons.get(i);
             outputStreamWriter.append("<polygon points="+"\"");
-            for(int j = 0; j< Screen.polygonObject.polygons.get(i).size()-1; j++){
-                outputStreamWriter.append(Screen.polygonObject.polygons.get(i).get(j).getL()+","+ Screen.polygonObject.polygons.get(i).get(j).getR()+" ");
+            for(int j = 0; j< tempPolygon.points.size()-1; j++){
+                outputStreamWriter.append(tempPolygon.points.get(j).getL()+","+ tempPolygon.points.get(j).getR()+" ");
             }
             outputStreamWriter.append("\" ");
-            String hashCode = rgbToHash(Screen.polygonObject.colorArray.get(i).getRed(),
-                    Screen.polygonObject.colorArray.get(i).getGreen(),
-                    Screen.polygonObject.colorArray.get(i).getBlue());
-            
-            if(Screen.polygonObject.fillOrNot.get(i)==0){
+            String hashCode = rgbToHash(tempPolygon.color.getRed(),
+                    tempPolygon.color.getGreen(),
+                    tempPolygon.color.getBlue());
+
+            if(tempPolygon.fill==0){
                 outputStreamWriter.append("stroke=\"#"+hashCode+"\" fill=\""+"none"+"\"" +"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
             }
             else{

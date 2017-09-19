@@ -9,10 +9,10 @@ import java.util.ArrayList;
  */
 public class GetCircles {
     class Circle{
-        Pair<Float, Float> center;
-        Float radius;
-        Color color;
-        Integer fill;
+        public Pair<Float, Float> center;
+        public Float radius;
+        public Color color;
+        public Integer fill;
     }
 
     public ArrayList<Circle> allCircles = new ArrayList<>();

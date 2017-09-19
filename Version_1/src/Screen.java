@@ -138,15 +138,26 @@ public class Screen {
             graphics2D.setColor(currentColor);
             k++;
     	}
-        if(polygonObject.points !=null){
+
+//        if(polygonObject.points !=null){
+//            graphics2D.setColor(currentColor);
+//            for(int h = 0; h< polygonObject.points.size(); h++){
+//                graphics2D.fillRect(polygonObject.points.get(h).getL(), polygonObject.points.get(h).getR(), 2,2);
+//            }
+//            for(int k = 0; k< polygonObject.points.size()-1; k++){
+//                graphics2D.drawLine(polygonObject.points.get(k).getL(), polygonObject.points.get(k).getR(), polygonObject.points.get(k+1).getL(), polygonObject.points.get(k+1).getR());
+//            }
+//
+//        }
+        if(polygonObject.currentPolygon.points !=null){
             graphics2D.setColor(currentColor);
-            for(int h = 0; h< polygonObject.points.size(); h++){
-                graphics2D.fillRect(polygonObject.points.get(h).getL(), polygonObject.points.get(h).getR(), 2,2);
+            for(int h = 0; h< polygonObject.currentPolygon.points.size(); h++){
+                graphics2D.fillRect(polygonObject.currentPolygon.points.get(h).getL(), polygonObject.currentPolygon.points.get(h).getR(), 2,2);
             }
-            for(int k = 0; k< polygonObject.points.size()-1; k++){
-                graphics2D.drawLine(polygonObject.points.get(k).getL(), polygonObject.points.get(k).getR(), polygonObject.points.get(k+1).getL(), polygonObject.points.get(k+1).getR());
+            for(int k = 0; k< polygonObject.currentPolygon.points.size()-1; k++){
+                graphics2D.drawLine(polygonObject.currentPolygon.points.get(k).getL(), polygonObject.currentPolygon.points.get(k).getR(), polygonObject.currentPolygon.points.get(k+1).getL(), polygonObject.currentPolygon.points.get(k+1).getR());
             }
-            
+
         }
         
         if(regionsObject.regionPoints.size()>0){
@@ -159,29 +170,53 @@ public class Screen {
             }
         }
         
-    	for(int k = 0; k< polygonObject.polygons.size(); k++){
-            graphics2D.setColor(polygonObject.colorArray.get(k));
+//    	for(int k = 0; k< polygonObject.polygons.size(); k++){
+//            graphics2D.setColor(polygonObject.colorArray.get(k));
+//            if(polygonObject.polygonIndices.contains(k)){
+//                graphics2D.setStroke(new BasicStroke(3.0f));
+//                for(int h = 0; h< polygonObject.polygons.get(k).size()-1; h++){
+//                    graphics2D.drawLine(polygonObject.polygons.get(k).get(h).getL(), polygonObject.polygons.get(k).get(h).getR(), polygonObject.polygons.get(k).get(h+1).getL(), polygonObject.polygons.get(k).get(h+1).getR());
+//                }
+//                graphics2D.setStroke(new BasicStroke(1.0f));
+//            }
+//            else{
+//                for(int h = 0; h< polygonObject.polygons.get(k).size()-1; h++){
+//                    graphics2D.drawLine(polygonObject.polygons.get(k).get(h).getL(), polygonObject.polygons.get(k).get(h).getR(), polygonObject.polygons.get(k).get(h+1).getL(), polygonObject.polygons.get(k).get(h+1).getR());
+//                }
+//            }
+//            if(polygonObject.fillOrNot.get(k)==1){
+//                Polygon polygon = new Polygon();
+//                for(int h = 0; h< polygonObject.polygons.get(k).size()-1; h++){
+//                    polygon.addPoint(polygonObject.polygons.get(k).get(h).getL(), polygonObject.polygons.get(k).get(h).getR());
+//                }
+//                graphics2D.fillPolygon(polygon);
+//            }
+//            graphics2D.setColor(currentColor);
+//    	}
+        for(int k = 0; k< polygonObject.allPolygons.size(); k++){
+            GetPolygon.Polygon tempPolygon  = polygonObject.allPolygons.get(k);
+            graphics2D.setColor(tempPolygon.color);
             if(polygonObject.polygonIndices.contains(k)){
                 graphics2D.setStroke(new BasicStroke(3.0f));
-                for(int h = 0; h< polygonObject.polygons.get(k).size()-1; h++){
-                    graphics2D.drawLine(polygonObject.polygons.get(k).get(h).getL(), polygonObject.polygons.get(k).get(h).getR(), polygonObject.polygons.get(k).get(h+1).getL(), polygonObject.polygons.get(k).get(h+1).getR());
+                for(int h = 0; h< tempPolygon.points.size()-1; h++){
+                    graphics2D.drawLine(tempPolygon.points.get(h).getL(), tempPolygon.points.get(h).getR(), tempPolygon.points.get(h+1).getL(), tempPolygon.points.get(h+1).getR());
                 }
                 graphics2D.setStroke(new BasicStroke(1.0f));
             }
             else{
-                for(int h = 0; h< polygonObject.polygons.get(k).size()-1; h++){
-                    graphics2D.drawLine(polygonObject.polygons.get(k).get(h).getL(), polygonObject.polygons.get(k).get(h).getR(), polygonObject.polygons.get(k).get(h+1).getL(), polygonObject.polygons.get(k).get(h+1).getR());
+                for(int h = 0; h< tempPolygon.points.size()-1; h++){
+                    graphics2D.drawLine(tempPolygon.points.get(h).getL(), tempPolygon.points.get(h).getR(), tempPolygon.points.get(h+1).getL(), tempPolygon.points.get(h+1).getR());
                 }
             }
-            if(polygonObject.fillOrNot.get(k)==1){
+            if(tempPolygon.fill==1){
                 Polygon polygon = new Polygon();
-                for(int h = 0; h< polygonObject.polygons.get(k).size()-1; h++){
-                    polygon.addPoint(polygonObject.polygons.get(k).get(h).getL(), polygonObject.polygons.get(k).get(h).getR());
+                for(int h = 0; h< tempPolygon.points.size()-1; h++){
+                    polygon.addPoint(tempPolygon.points.get(h).getL(), tempPolygon.points.get(h).getR());
                 }
                 graphics2D.fillPolygon(polygon);
             }
             graphics2D.setColor(currentColor);
-    	}
+        }
         
     	for(int k = 0; k< regionsObject.regions.size(); k++){
             graphics2D.setColor(regionsObject.colorArray.get(k));
