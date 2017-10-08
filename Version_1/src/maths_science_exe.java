@@ -31,44 +31,9 @@ public class maths_science_exe {
         Screen.arcObject = new GetArc();
         Screen.pathsObject = new GetPaths();
         
-        
-//        BufferedImage temp = ImageIO.read(outputfile1);
-//        int r = 255;
-//        int g = 255;
-//        int b = 255;
-//        int col = (r << 16) | (g << 8) | b;
-//        int col_black = 0;
-//        int h = temp.getHeight();
-//        int w = temp.getWidth();
-//        int count_black = 0;
-//        int count_white = 0;
-//        for(int f1 = 0;f1<h;f1++){
-//            for(int g1 = 0;g1<w;g1++){
-//                int sRbgColor = temp.getRGB(g1,f1);
-//                Color c = new Color(sRbgColor);
-//                int red = c.getRed();
-//                int green = c.getGreen();
-//                int blue = c.getBlue();
-//                if(red<240 && green <240){
-//                    temp.setRGB(g1, f1, col);
-//                    count_white++;
-//                }
-//                else{
-//                    count_black++;
-//                    temp.setRGB(g1, f1, col_black);
-//                }
-//            }
-//        }
-//        System.out.println(count_white);
-//        System.out.println(count_black);
-//        File outputfile = new File("temp_bw.png");
-//        ImageIO.write(temp, "PNG", outputfile);
-        
         Runtime rt = Runtime.getRuntime();
         File dir = new File(Screen.config.get("library_directory_path"));
         System.out.println("Math start");
-        
-        
         
         float thresh_line_overlap_circle = (float) 20.0; // Initial threshold value for deciding if a line overlaps with any circle,
         // the lesser the value, the stricter the bound  
@@ -81,20 +46,39 @@ public class maths_science_exe {
     
         int minDistForSimilarLines = Screen.allControlsAndListeners.duplicateLineDetectionByDistance.getValue();
         int angleSmall = Screen.allControlsAndListeners.duplicateLineDetectionByAngle.getValue();
-        Process pr = rt.exec("\""+ Screen.config.get("maths.exe")+"\""+" "
-                +"\""+outputfile1.getAbsolutePath()+"\""+" "
-                + angleSmall +" "
-                +thresh_line_overlap_circle+" "
-                + minDistForSimilarLines +" "
-                + thresholdForLineConnectedEndPoints +" "
-                + erodeSize +" "
-                + minNumIntersectionsToDetectLine +" "
-                + minNumPointsForLine +" "
-                + thresholdGapBetweenTwoPointsInSameLine
-                ,null,dir);
-        //Process pr = rt.exec("maths.exe " +"temp_bw.png");
-        pr.waitFor();
-        //outputfile.delete();
+        String [] args = new String[] { Screen.config.get("library_directory_path"),
+                                        outputfile1.getAbsolutePath(),
+                                        Integer.toString(angleSmall),
+                                        Float.toString(thresh_line_overlap_circle),
+                                        Integer.toString(minDistForSimilarLines),
+                                        Float.toString(thresholdForLineConnectedEndPoints),
+                                        Integer.toString(erodeSize),
+                                        Integer.toString(minNumIntersectionsToDetectLine),
+                                        Integer.toString(minNumPointsForLine),
+                                        Integer.toString(thresholdGapBetweenTwoPointsInSameLine)};
+
+        MathsExtraction extraction = new MathsExtraction();
+        extraction.extract(args);
+//        Process pr = rt.exec("\""+ Screen.config.get("maths.exe")+"\""+" "
+//                +"\""+outputfile1.getAbsolutePath()+"\""+" "
+//                + angleSmall +" "
+//                + thresh_line_overlap_circle +" "
+//                + minDistForSimilarLines +" "
+//                + thresholdForLineConnectedEndPoints +" "
+//                + erodeSize +" "
+//                + minNumIntersectionsToDetectLine +" "
+//                + minNumPointsForLine +" "
+//                + thresholdGapBetweenTwoPointsInSameLine
+//                ,null,dir);
+//        //Process pr = rt.exec("maths.exe " +"temp_bw.png");
+//
+//        pr.waitFor();
+//        BufferedReader in = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
+//        String lin;
+//        while ((lin = in.readLine()) != null) {
+//            System.out.println(lin);
+//        }
+//        outputfile.delete();
         
         System.out.println("Math done");
 //        int ind=outputfile1.getAbsolutePath().lastIndexOf("\\");
@@ -175,6 +159,7 @@ public class maths_science_exe {
         bufferedReader.close();
         file.delete();
     }
+
     public void load_science() throws IOException, InterruptedException{
         String h1 = screen.currentFile.getAbsolutePath();
         String h2 = String.valueOf(screen.currentFile.getName());
@@ -186,8 +171,10 @@ public class maths_science_exe {
         Runtime runtime = Runtime.getRuntime();
         File dir = new File(Screen.config.get("library_directory_path"));
         System.out.println("Science start");
-        Process process = runtime.exec("\""+ Screen.config.get("science.exe")+"\""+" "+"\""+ outputFile.getAbsolutePath()+"\"",null,dir);
-        process.waitFor();
+//        Process process = runtime.exec("\""+ Screen.config.get("science.exe")+"\""+" "+"\""+ outputFile.getAbsolutePath()+"\"",null,dir);
+//        process.waitFor();
+        ScienceExtraction extraction = new ScienceExtraction();
+        extraction.extract(outputFile.getAbsolutePath(),Screen.config.get("library_directory_path"));
         System.out.println("Science done");
         File file = new File(Screen.config.get("library_directory_path")+"//regions.txt");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));

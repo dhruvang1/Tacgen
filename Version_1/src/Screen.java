@@ -1,3 +1,6 @@
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
@@ -18,6 +21,8 @@ import javax.swing.*;
 
 /**Main class for the tool. Spawns all other classes.*/
 public class Screen {
+    static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
+
     public static int label_counts=0;
     public static JFrame mainFrame =null;
     public static JFrame previewFrame =null;
