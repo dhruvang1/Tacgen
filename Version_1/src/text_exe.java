@@ -96,7 +96,7 @@ public class text_exe {
     }
     public void store() throws FileNotFoundException, IOException, SAXException, ParserConfigurationException, XPathExpressionException, ScriptException, NoSuchMethodException{
         Screen.svgGenerateObject.svgFile();
-        BufferedImage temp = ImageIO.read(screen.currentFile);
+        BufferedImage temp = ImageIO.read(Screen.currentFile);
         for(int i = 0; i< Screen.textboxObject.rectangleArray.size(); i++){
             int x1 = Screen.textboxObject.rectangleArray.get(i).x;
             int y1 = Screen.textboxObject.rectangleArray.get(i).y;
@@ -112,8 +112,8 @@ public class text_exe {
                 }
             }
         }
-        String h1 = screen.currentFile.getAbsolutePath();
-        String h2 = String.valueOf(screen.currentFile.getName());
+        String h1 = Screen.currentFile.getAbsolutePath();
+        String h2 = String.valueOf(Screen.currentFile.getName());
         String ty = h2.substring(0,h2.lastIndexOf("."))+"_1"+h2.substring(h2.lastIndexOf("."));
         String h4 = h1;
         int index=h4.lastIndexOf("\\");

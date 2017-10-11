@@ -21,7 +21,7 @@ import javax.swing.*;
 
 /**Main class for the tool. Spawns all other classes.*/
 public class Screen {
-    static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
+	static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
 
     public static int label_counts=0;
     public static JFrame mainFrame =null;

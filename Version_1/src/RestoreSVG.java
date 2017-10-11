@@ -29,7 +29,7 @@ public class RestoreSVG {
     public void restore() throws SAXException, ParserConfigurationException, IOException, XPathExpressionException, ScriptException, NoSuchMethodException{
         String currentFileAbsolutePath = screen.currentFile.getAbsolutePath();
         String currentFileName = String.valueOf(screen.currentFile.getName());
-        String newFileName = currentFileName+".html";
+        String newFileName = currentFileName+".svg";
         int index=currentFileAbsolutePath.lastIndexOf("\\");
         String newFileAbsolutePath =currentFileAbsolutePath.substring(0, index+1)+ newFileName;
         File file = new File(newFileAbsolutePath);

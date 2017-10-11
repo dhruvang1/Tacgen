@@ -9,7 +9,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -246,7 +250,7 @@ public final class AllControlsAndListeners extends JFrame {
                         outputFile1.delete();
                         File textFile = new File(Screen.currentFile.getAbsolutePath() + ".txt");
                         textFile.delete();
-                        File svgFile = new File(Screen.currentFile.getAbsolutePath() + ".html");
+                        File svgFile = new File(Screen.currentFile.getAbsolutePath() + ".svg");
                         svgFile.delete();
                         System.exit(0);
                     }
@@ -294,7 +298,7 @@ public final class AllControlsAndListeners extends JFrame {
                         screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
                         Screen.mainFrame.setVisible(true);
                         Screen.allObjectReinitializer.refresh();
-                        File svgFile = new File(Screen.currentFile.getAbsolutePath() + ".html");
+                        File svgFile = new File(Screen.currentFile.getAbsolutePath() + ".svg");
                         if (svgFile.exists()) {
                             String optionButtons[] = {"Yes", "No"};
                             int promptResult = JOptionPane.showOptionDialog(null, "You already have saved SVG for this file. Do you want to restore it?", "Restore", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, optionButtons, optionButtons[0]);
@@ -1109,17 +1113,35 @@ public final class AllControlsAndListeners extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Screen.svgGenerateObject.svgFile();
-                    String currentFilePath = screen.currentFile.getAbsolutePath();
-                    String currentFileName = String.valueOf(screen.currentFile.getName());
+                    String currentFilePath = Screen.currentFile.getAbsolutePath();
+                    String currentFileName = String.valueOf(Screen.currentFile.getName());
                     String newFileName = currentFileName.substring(0, currentFileName.lastIndexOf(".")) + "_1" + currentFileName.substring(currentFileName.lastIndexOf("."));
                     int index = currentFilePath.lastIndexOf("\\");
                     String newFilePath = currentFilePath.substring(0, index + 1) + newFileName;
-                    File ouputFile = new File(newFilePath);
-                    ouputFile.delete();
+                    File outputFile = new File(newFilePath);
+                    outputFile.delete();
                     File textFile = new File(Screen.currentFile.getAbsolutePath() + ".txt");
                     textFile.delete();
-                    File htmlFile = new File(Screen.currentFile.getAbsolutePath() + ".html");
-                    Desktop.getDesktop().browse(htmlFile.toURI());
+                    File svgFile = new File(Screen.currentFile.getAbsolutePath() + ".svg");
+                    if(currentFilePath.indexOf(".")>0)
+                    	currentFilePath = currentFilePath.substring(0,currentFilePath.lastIndexOf("."));
+                    File tempFile = new File(currentFilePath+".svg");
+
+                    BufferedReader reader = new BufferedReader(new FileReader(svgFile));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+                    String currentLine;
+                    while((currentLine = reader.readLine()) != null) {
+                        // trim newline when comparing with lineToRemove
+                        if(currentLine.length()>5 && "<rect".equals(currentLine.substring(0,5))) continue;
+                        writer.write(currentLine + System.getProperty("line.separator"));
+                    }
+                    writer.close(); 
+                    reader.close(); 
+                    svgFile.delete();
+                    svgFile=tempFile;
+                    
+//                    svgFile.renameTo(currentFilePath.substring(0, index + 1) +currentFileName+".svg");
+                    Desktop.getDesktop().browse(svgFile.toURI());
                     Screen.zoomScale = 1;
                     Screen.allControlsAndListeners.jZoomSlider.setValue(16);
                     Screen.page0OpenImage = new Page0OpenImage();

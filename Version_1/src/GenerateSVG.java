@@ -19,7 +19,6 @@ import sun.security.pkcs11.wrapper.Constants;
  * Class to create SVG downloadable file
  */
 public class GenerateSVG {
-    private Screen screen = new Screen(0);
     private boolean isSVGBlank;
     private File directory;
     private void svgLines() throws FileNotFoundException, IOException{
@@ -85,7 +84,7 @@ public class GenerateSVG {
                     tempArc.color.getGreen(),
                     tempArc.color.getBlue());
             
-            outputStreamWriter.append("<path d="+"\"M "+s1+" "+s2+" A "+ radius +" "+ radius +", 0, "+lsa+", 0, "+e1+" "+e2+"\" ");
+            outputStreamWriter.append("<path class=\"fil1\" d="+"\"M "+s1+" "+s2+" A "+ radius +" "+ radius +", 0, "+lsa+", 0, "+e1+" "+e2+"\" ");
             //outputStreamWriter.append("style="+"\""+"stroke:#006600; fill:#"+hash_code+";"+"\"" +"/>");
 //            if(Screen.arcObject.fillArray.get(i)==0){
             if(tempArc.fill==0){
@@ -173,7 +172,7 @@ public class GenerateSVG {
 //            if(Screen.polygonObject.fillOrNot.get(i)==0){
         for(int i = 0; i< Screen.polygonObject.allPolygons.size(); i++){
             GetPolygon.Polygon tempPolygon = Screen.polygonObject.allPolygons.get(i);
-            outputStreamWriter.append("<polygon points="+"\"");
+            outputStreamWriter.append("<polygon  class=\"fil1\" points=\"+\"\"");
             for(int j = 0; j< tempPolygon.points.size()-1; j++){
                 outputStreamWriter.append(tempPolygon.points.get(j).getL()+","+ tempPolygon.points.get(j).getR()+" ");
             }
@@ -203,7 +202,7 @@ public class GenerateSVG {
             isSVGBlank = false;
         }
         for(int i = 0; i< Screen.regionsObject.regions.size(); i++){
-            outputStreamWriter.append("<polygon points="+"\"");
+            outputStreamWriter.append("<polygon class=\"fil1\" points="+"\"");
             for(int j = 0; j< Screen.regionsObject.regions.get(i).size()-1; j++){
                 outputStreamWriter.append(Screen.regionsObject.regions.get(i).get(j).getL()+","+ Screen.regionsObject.regions.get(i).get(j).getR()+" ");
             }
@@ -212,7 +211,7 @@ public class GenerateSVG {
                     Screen.regionsObject.colorArray.get(i).getBlue());
             outputStreamWriter.append("\" ");
             if(Screen.regionsObject.fillArray.get(i)==0){
-                outputStreamWriter.append("stroke=\"#"+hashCode+"\" fill=\""+"none"+"\"" +"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
+                outputStreamWriter.append("stroke=\"#"+hashCode+"\"" +"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
             }
             else{
                 outputStreamWriter.append("stroke=\"#006600\" fill=\"#"+hashCode+"\"" +"/>");
@@ -242,16 +241,15 @@ public class GenerateSVG {
 //                    Screen.pathsObject.colorArray.get(i).getGreen(),
 //                    Screen.pathsObject.colorArray.get(i).getBlue());
         for(int i = 0; i< Screen.pathsObject.allPaths.size(); i++){
-            outputStreamWriter.append("<polyline points="+"\"");
-            for(int j = 0; j< Screen.pathsObject.allPaths.get(i).points.size()-1; j++){
-                outputStreamWriter.append(Screen.pathsObject.allPaths.get(i).points.get(j).getL()+","+ Screen.pathsObject.allPaths.get(i).points.get(j).getR()+" ");
-            }
             String hashCode = rgbToHash(Screen.pathsObject.allPaths.get(i).color.getRed(),
                     Screen.pathsObject.allPaths.get(i).color.getGreen(),
                     Screen.pathsObject.allPaths.get(i).color.getBlue());
-            
+            outputStreamWriter.append("<polyline class=\"fil1\" points="+"\"");
+            for(int j = 0; j< Screen.pathsObject.allPaths.get(i).points.size()-1; j++){
+                outputStreamWriter.append(Screen.pathsObject.allPaths.get(i).points.get(j).getL()+","+ Screen.pathsObject.allPaths.get(i).points.get(j).getR()+" ");
+            }
             outputStreamWriter.append("\" ");
-            outputStreamWriter.append("stroke=\"#"+hashCode+"\" fill=\"none\""+"/>");
+            outputStreamWriter.append(StringConstants.polylineStyle+hashCode +"\" />");
             outputStreamWriter.append(Constants.NEWLINE);
         }
 //        outputStreamWriter.append("</svg>");
@@ -326,7 +324,7 @@ public class GenerateSVG {
                 outputStreamWriter.append("y="+"\""+y+"\" ");
                 outputStreamWriter.append("height="+"\""+height+"\" ");
                 outputStreamWriter.append("width="+"\""+width+"\" ");
-                outputStreamWriter.append("style="+"\""+"stroke : #ffffff; fill : none;"+"\"" +">");
+                outputStreamWriter.append("style="+"\""+"stroke : #ffffff; "+"\"" +">");
                 outputStreamWriter.append("</rect>");
                 outputStreamWriter.append(Constants.NEWLINE);
             }
@@ -346,28 +344,39 @@ public class GenerateSVG {
         svgRect();
         svgPathRegion();
         if(!isSVGBlank){
-            String currentFileAbsolutePath = screen.currentFile.getAbsolutePath();
-            String currentFileName = screen.currentFileName;
-            String newFileName = currentFileName+".html";
+            String currentFileAbsolutePath = Screen.currentFile.getAbsolutePath();
+            String currentFileName = Screen.currentFileName;
+//            if(currentFileName.indexOf(".")>0)
+//                currentFileName = currentFileName.substring(0,currentFileName.lastIndexOf("."));
+            String newFileName = currentFileName+".svg";
+//            System.out.println(newFileName);
                     //currentFileName.substring(0,currentFileName.indexOf("."))+".html";
             int index=currentFileAbsolutePath.lastIndexOf("\\");
             String newFileAbsolutePath =currentFileAbsolutePath.substring(0, index+1)+ newFileName;
             File file = new File(newFileAbsolutePath);
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
-            outputStreamWriter.append("<!DOCTYPE html>");
+//            outputStreamWriter.append("<!DOCTYPE html>");
+//            outputStreamWriter.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
+            outputStreamWriter.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             outputStreamWriter.append(Constants.NEWLINE);
-            outputStreamWriter.append("<html>");
-            outputStreamWriter.append(Constants.NEWLINE);
-            outputStreamWriter.append("<meta http-equiv="+" \"Content-Type\" "+" content="+" \"text/html; charset=UTF-8\" "+"></meta>");
-            outputStreamWriter.append(Constants.NEWLINE);
-            outputStreamWriter.append("<body>");
-            outputStreamWriter.append(Constants.NEWLINE);
-            outputStreamWriter.append("<div>");
-            outputStreamWriter.append(Constants.NEWLINE);
+//            outputStreamWriter.append("<!DOCTYPE svg >");
+//            outputStreamWriter.append(Constants.NEWLINE);
+//            outputStreamWriter.append("<html>");
+//            outputStreamWriter.append(Constants.NEWLINE);
+//            outputStreamWriter.append("<meta http-equiv="+" \"Content-Type\" "+" content="+" \"text/html; charset=UTF-8\" "+"></meta>");
+//            outputStreamWriter.append(Constants.NEWLINE);
+//            outputStreamWriter.append("<body>");
+//            outputStreamWriter.append(Constants.NEWLINE);
+//            outputStreamWriter.append("<div>");
+//            outputStreamWriter.append(Constants.NEWLINE);
             String screenWidthHeight = "width="+"\""+ Screen.bufferedImageScreen.getWidth() +"\" ";
             screenWidthHeight = screenWidthHeight + "height="+"\""+ Screen.bufferedImageScreen.getHeight()+"\"";
-            outputStreamWriter.append("<svg "+ screenWidthHeight +">");
+            outputStreamWriter.append("<svg "+ StringConstants.svgurls +"\n"+ screenWidthHeight +"\n"+ StringConstants.svgVersion +"\n"+
+                    StringConstants.svgStyle + "\n"+StringConstants.svgViewbox +"\n"+ StringConstants.svgDocNameKey+"\""+currentFileName+".svg"+"\""+">");
             outputStreamWriter.append(Constants.NEWLINE);
+            outputStreamWriter.append(StringConstants.svgDefs);
+            outputStreamWriter.append(Constants.NEWLINE);
+            outputStreamWriter.append(StringConstants.svgGroupId);
 
             File file1 = new File(directory,"line.svg");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file1),"UTF-8"));
@@ -450,14 +459,43 @@ public class GenerateSVG {
             }
             bufferedReader.close();
             file1.delete();
+
+            outputStreamWriter.append("</g>");
+            outputStreamWriter.append(Constants.NEWLINE);
             outputStreamWriter.append("</svg>");
             outputStreamWriter.append(Constants.NEWLINE);
-            outputStreamWriter.append("</div>");
-            outputStreamWriter.append(Constants.NEWLINE);
-            outputStreamWriter.append("</body>");
-            outputStreamWriter.append(Constants.NEWLINE);
-            outputStreamWriter.append("</html>");
+//            outputStreamWriter.append("</div>");
+//            outputStreamWriter.append(Constants.NEWLINE);
+//            outputStreamWriter.append("</body>");
+//            outputStreamWriter.append(Constants.NEWLINE);
+//            outputStreamWriter.append("</html>");
             outputStreamWriter.close();
+
+//            File temp = new File("temp.svg");
+//            outputStreamWriter = new OutputStreamWriter(new FileOutputStream(temp),"UTF-8");
+//            file = new File(newFileAbsolutePath);
+//            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
+//            line  = bufferedReader.readLine();
+//            while(line!=null){
+//                if("<rect".equals(line.substring(0,5))){
+////                    System.out.println(line);
+//                    line = bufferedReader.readLine();
+//                }
+//                outputStreamWriter.append(line);
+//                outputStreamWriter.append(Constants.NEWLINE);
+//                line = bufferedReader.readLine();
+//            }
+//            file.delete();
+//            System.out.println(file.exists());
+////            if(currentFileName.indexOf(".")>0)
+////                currentFileName = currentFileName.substring(0,currentFileName.lastIndexOf("."));
+//            newFileName = currentFileName+".svg";
+//            index=currentFileAbsolutePath.lastIndexOf("\\");
+//            newFileAbsolutePath =currentFileAbsolutePath.substring(0, index+1)+ newFileName;
+//            System.out.println(temp.renameTo(new File(newFileAbsolutePath)));
+//            System.out.println(temp.getAbsolutePath());
+//            outputStreamWriter.close();
+
         }
         else{
             File file = new File(directory,"line.svg");
