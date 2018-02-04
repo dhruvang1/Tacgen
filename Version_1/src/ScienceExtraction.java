@@ -21,38 +21,39 @@ public class ScienceExtraction {
         Imgproc.cvtColor(imgSrc,imgGray,Imgproc.COLOR_BGR2GRAY);
         Imgproc.blur(imgGray,imgGray,new Size(3.0,3.0));
 
-        Mat cannyOutput = new Mat();
-        List<MatOfPoint> contours = new ArrayList<>();
-        Mat heirarchy = new Mat();
-        Imgproc.Canny(imgGray,cannyOutput,threshold,threshold*2,3,true);
-//        Imgcodecs.imwrite("D:\\MTP\\TacGen\\canny.jpg",cannyOutput);
-
-        int erosion_size = 3;
-        int dilation_size = 3;
+        int erosion_size = 4;
+        int dilation_size = 4;
         Mat elementErosion = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(erosion_size , erosion_size));
         Mat elementDilation = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(dilation_size, dilation_size));
 
-        Imgproc.dilate(cannyOutput,cannyOutput,elementDilation);
+        Mat cannyOutput = new Mat();
+        List<MatOfPoint> contours = new ArrayList<>();
+        Mat heirarchy = new Mat();
+        Imgproc.Canny(imgGray,cannyOutput,threshold,threshold*2,3,false);
+        Imgcodecs.imwrite("D:\\MTP\\TacGen\\canny.jpg",cannyOutput);
+
+//        Imgproc.dilate(cannyOutput,cannyOutput,elementDilation);
 //        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\dilate.jpg",cannyOutput);
-
-        Imgproc.erode(cannyOutput,cannyOutput,elementErosion);
+//
+//        Imgproc.erode(cannyOutput,cannyOutput,elementErosion);
 //        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\erode.jpg",cannyOutput);
-
 
         Imgproc.findContours(cannyOutput,contours,heirarchy,Imgproc.RETR_CCOMP,Imgproc.CHAIN_APPROX_TC89_KCOS, new Point(0,0));
         BufferedWriter writer = new BufferedWriter(new FileWriter(destImgPath+"\\"+"regions.txt",false));
         int originalPoints = 0;
         int reducedPoints = 0;
         for(int i=0;i<contours.size();i++){
-            List <Point> tempContour = contours.get(i).toList();
-            originalPoints += tempContour.size();
-            tempContour = reducePoints(tempContour,0,tempContour.size()-1);
-            reducedPoints += tempContour.size();
-            int tempSize = tempContour.size();
-            for(int j=0;j<tempSize-1;j++){
-                writer.append(String.format("%d,%d,",(int)tempContour.get(j).x,(int)tempContour.get(j).y));
+            if(heirarchy.get(0,i)[3] > 0){
+                List <Point> tempContour = contours.get(i).toList();
+                originalPoints += tempContour.size();
+                tempContour = reducePoints(tempContour,0,tempContour.size()-1);
+                reducedPoints += tempContour.size();
+                int tempSize = tempContour.size();
+                for(int j=0;j<tempSize-1;j++){
+                    writer.append(String.format("%d,%d,",(int)tempContour.get(j).x,(int)tempContour.get(j).y));
+                }
+                writer.append(String.format("%d,%d\n",(int)tempContour.get(tempSize-1).x,(int)tempContour.get(tempSize-1).y));
             }
-            writer.append(String.format("%d,%d\n",(int)tempContour.get(tempSize-1).x,(int)tempContour.get(tempSize-1).y));
         }
         System.out.println("Original points: " + originalPoints);
         System.out.println("Reduced points: " + reducedPoints);

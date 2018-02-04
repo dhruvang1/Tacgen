@@ -4,15 +4,27 @@ import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
+import static org.opencv.core.CvType.CV_8U;
+import static org.opencv.core.CvType.CV_8UC3;
 import static org.opencv.imgproc.Imgproc.*;
 
 public class MathsExtraction {
+    private int threshold = 100;
+    private double fraction = 0.4;
+    private int fillgap = 5;
+    private int minLength = 10;
+    private int intensityThreshold = 50;    //boundary between black and white color
+    private int blockParameter = 50;        //Size of block = size of accumulator / blockParameter
+
     Point subtract(Point p1,Point p2){
         return new Point(p1.x-p2.x,p1.y-p2.y);
     }
@@ -438,6 +450,171 @@ public class MathsExtraction {
         return lines;
     }
 
+    ArrayList<Vec4i> houghTransform(Mat src) {
+        int rows = src.rows();
+        int cols = src.cols();
+
+        int dmax = (int)Math.ceil(Math.sqrt(rows*rows + cols*cols));
+        int dmin = -dmax;
+        int thetamin = -90;
+        int thetamax = 89;
+        int accumulatorRows = dmax - dmin + 1;
+        int accumulatorCols = thetamax - thetamin + 1;
+
+        Mat imgGray = new Mat();
+        Mat cannyOutput = new Mat();
+        Imgproc.cvtColor(src,imgGray,Imgproc.COLOR_BGR2GRAY);
+        Imgproc.Canny(src,cannyOutput,threshold,threshold*2,3,false);
+
+        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\canny.jpg",cannyOutput);
+
+        int [][] accumulator = new int[accumulatorRows][accumulatorCols];
+        for(int x=0;x<rows;x++){
+            for(int y=0;y<cols;y++){
+                if(cannyOutput.get(x,y)[0] > 127){
+                    for(int theta= thetamin; theta <= thetamax; theta++){
+                        double radian = (theta * Math.PI) / 180;
+                        double dist = x*Math.cos(radian) + y*Math.sin(radian);
+
+                        if(dist > dmin && dist < dmax){
+//                            System.out.println((int)Math.round(dist-dmin) + " " + (theta - thetamin));
+                           accumulator[(int)Math.round(dist-dmin)][theta - thetamin] += 1;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        ArrayList<int[]> localPeaks = new ArrayList<>();
+//        IntStream stream = Arrays.stream(accumulator).flatMapToInt(Arrays::stream);
+//        int globalMax = stream.max().getAsInt();
+        int globalMax = 0;
+        for(int i=0;i<accumulatorRows;i++){
+            for(int j=0;j<accumulatorCols;j++){
+                globalMax = Math.max(accumulator[i][j],globalMax);
+            }
+        }
+
+        Mat out = Mat.zeros(accumulatorRows,accumulatorCols,CV_8UC3);
+        double [] color = {255,255,255};
+        int blockRow = accumulatorRows/blockParameter;
+        int blockCol = accumulatorCols/blockParameter;
+        for(int i = 0;i < accumulatorRows ;i+=blockRow){
+//            System.out.println(i);
+            for(int j=0;j < accumulatorCols;j+=blockCol){
+
+                int maxValue=0;
+                int maxIndexI=0;
+                int maxIndexJ=0;
+                for(int ii=i;ii<i+blockRow && ii<accumulatorRows;ii++){
+                    for(int jj=j;jj<j+blockCol && jj<accumulatorCols;jj++){
+                        if(accumulator[ii][jj] > maxValue){
+                            maxValue = accumulator[ii][jj];
+                            maxIndexI = ii;
+                            maxIndexJ = jj;
+                        }
+                    }
+                }
+
+                if(maxValue >= fraction * globalMax){
+                    int [] tempParameters = {maxIndexI + dmin,maxIndexJ + thetamin, maxValue};
+                    localPeaks.add(tempParameters);
+                    out.put(maxIndexI,maxIndexJ,color);
+                }
+            }
+        }
+        localPeaks.sort((int[] a, int[] b) -> b[2] - a[2]);
+
+        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\out.jpg",out);
+        Mat blurredCanny = new Mat();
+        GaussianBlur( cannyOutput, blurredCanny, new Size(5, 5), 2, 2 );
+        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\canny2.jpg",blurredCanny);
+        return houghSegments(blurredCanny,localPeaks);
+    }
+
+    ArrayList<Vec4i> houghSegments(Mat cannyOutput, ArrayList<int[]> lines){
+        ArrayList<Vec4i> segments = new ArrayList<>();
+        int rows = cannyOutput.rows();
+        int cols = cannyOutput.cols();
+        for(int i=0;i<lines.size();i++){
+            int dist = lines.get(i)[0];
+            int theta = lines.get(i)[1];
+            double radian = (theta * Math.PI)/180;
+
+            boolean isStarted = false;
+            int emptyGap = 0;
+            int startX = -1, startY = -1;
+            int lastX = -1, lastY = -1;
+
+            if(Math.abs(theta) > 45){
+                for(int x=0;x<rows;x++){
+                    int y = (int)Math.round((dist - x*Math.cos(radian)) / Math.sin(radian));
+                    if(y>=0 && y<cols){
+                        if(cannyOutput.get(x,y)[0] > intensityThreshold){
+                            if(isStarted){
+                                emptyGap = 0;
+                                lastX = x; lastY=y;
+                            } else {
+                                isStarted = true;
+                                startX = x; startY = y;
+                                lastX = x; lastY= y;
+                            }
+                        } else {
+                            if(isStarted){
+                                emptyGap++;
+                                if(emptyGap > fillgap){
+                                    double length = Math.sqrt((startX-lastX)*(startX-lastX) + (startY-lastY)*(startY-lastY));
+                                    if(length > minLength){
+                                        Vec4i current = new Vec4i(startY,startX,lastY,lastX);
+                                        if(lastX < 0 || lastY < 0)
+                                            System.out.println("problem");
+                                        segments.add(current);
+                                    }
+                                    isStarted = false;
+                                    emptyGap = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                for(int y=0;y<cols;y++){
+                    int x = (int)Math.round((dist - y*Math.sin(radian)) / Math.cos(radian));
+                    if(x>=0 && x<rows){
+                        if(cannyOutput.get(x,y)[0] > intensityThreshold){
+                            if(isStarted){
+                                emptyGap = 0;
+                                lastX = x; lastY=y;
+                            } else {
+                                isStarted = true;
+                                startX = x; startY = y;
+                                lastX = x; lastY= y;
+                            }
+                        } else {
+                            if(isStarted){
+                                emptyGap++;
+                                if(emptyGap > fillgap){
+                                    double length = Math.sqrt((startX-lastX)*(startX-lastX) + (startY-lastY)*(startY-lastY));
+                                    if(length > minLength){
+                                        Vec4i current = new Vec4i(startY,startX,lastY,lastX);
+                                        if(lastX < 0 || lastY < 0)
+                                            System.out.println("problem");
+                                        segments.add(current);
+                                    }
+                                    isStarted = false;
+                                    emptyGap = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return segments;
+    }
+
     /// --------------------------- MAIN ---------------------------
 
     /** @function main */
@@ -530,16 +707,14 @@ public class MathsExtraction {
         Mat lineMatrix = new Mat();
         ArrayList<Vec4i> lines = new ArrayList<>(), min_lines = new ArrayList<>(), new_lines = new ArrayList<>();
         HoughLinesP( dst2, lineMatrix, 1, Math.PI/180, thresh_detect_line, thresh_min_line_length, thresh_min_line_gap );
+        ArrayList<Vec4i> mylines = houghTransform(src);
+        lines = mylines;
 
         System.out.println(lineMatrix.cols() + " " + lineMatrix.rows());
-//        for(int j=0;j<lineMatrix.cols();j++){
-//            double[] points = lineMatrix.get(0,j);
+//        for(int j=0;j<lineMatrix.rows();j++){
+//            double[] points = lineMatrix.get(j,0);
 //            lines.add(new Vec4i((int)points[0],(int)points[1],(int)points[2],(int)points[3]));
 //        }
-        for(int j=0;j<lineMatrix.rows();j++){
-            double[] points = lineMatrix.get(j,0);
-            lines.add(new Vec4i((int)points[0],(int)points[1],(int)points[2],(int)points[3]));
-        }
 
         /// Remove extra lines
         lines = merge_lines(lines,thresh_min_line_dist,a1);
