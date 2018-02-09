@@ -4,10 +4,7 @@ import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -149,7 +146,7 @@ public class MathsExtraction {
 
         double m = Math.min(a,b);
 
-        if (m<thresh_min_line_dist && Math.abs(slope1-slope2)<angle_s)
+        if (m<thresh_min_line_dist && (Math.abs(slope1-slope2)<angle_s || Math.abs(slope1) + Math.abs(slope2) == 180))
             return true;
         else
             return false;
@@ -304,7 +301,6 @@ public class MathsExtraction {
                     Point b = new Point(lines.get(i).points[2], lines.get(i).points[3]);
                     Point c = new Point(lines.get(j).points[0], lines.get(j).points[1]);
                     Point d = new Point(lines.get(j).points[2], lines.get(j).points[3]);
-                    Point e = new Point(0,0);
                     if(nearly_same(a,b,c,d,thresh_min_line_dist,angle_s)){
                         b = extend(a,b,c,d);
                         lines.get(i).points[2] = (int)b.x;
@@ -406,8 +402,8 @@ public class MathsExtraction {
             //m=m+2;
 
         }
-        ArrayList<Integer> line_no = new ArrayList<Integer>();
-        ArrayList<Integer> point_no = new ArrayList<Integer>();
+        ArrayList<Integer> line_no = new ArrayList<>();
+        ArrayList<Integer> point_no = new ArrayList<>();
         for(int p=0;p<2*size;p++){
             int alpha = 0;
             int r=0;
@@ -447,6 +443,54 @@ public class MathsExtraction {
             line_no.clear();point_no.clear();
         }
 
+        return lines;
+    }
+
+    ArrayList<Vec4i> lineSegmentDetector(Mat src) throws IOException, InterruptedException{
+        ArrayList<Vec4i> lines = new ArrayList<>();
+        String pathToExec = Screen.config.get("library_directory_path") + "\\lsd.exe";
+        String pathToPgm = Screen.config.get("library_directory_path") + "\\pgmImage.pgm";
+        String pathToTxt = Screen.config.get("library_directory_path") + "\\pgmText.txt";
+
+        //generating the pgm file for lsd
+        Mat srcGray = new Mat();
+        cvtColor( src, srcGray, COLOR_BGR2GRAY );
+        Core.MinMaxLocResult mmr = Core.minMaxLoc(srcGray);
+        int max = (int)mmr.maxVal;
+        int rows = srcGray.rows();
+        int cols = srcGray.cols();
+        BufferedWriter writer = new BufferedWriter(new FileWriter(pathToPgm));
+        writer.append("P2\n");
+        writer.append(cols + " " + rows + "\n");
+        writer.append(max+"\n");
+        for(int n=0,i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                writer.append(" " + (int)srcGray.get(i,j)[0] + " ");
+                if(++n == 8 ){
+                    writer.append("\n");
+                    n = 0;
+                }
+            }
+        }
+        writer.close();
+
+        Runtime runtime = Runtime.getRuntime();
+        Process pr = runtime.exec(pathToExec + " " + pathToPgm + " " + pathToTxt);
+        pr.waitFor();
+        BufferedReader reader = new BufferedReader(new FileReader(pathToTxt));
+        String line = reader.readLine();
+        while(line != null){
+            String [] array = line.split(" ");
+            Vec4i currentLine = new Vec4i((int)Double.parseDouble(array[0]),(int)Double.parseDouble(array[1]),(int)Double.parseDouble(array[2]),(int)Double.parseDouble(array[3]));
+            lines.add(currentLine);
+            line = reader.readLine();
+        }
+        reader.close();
+
+        File textFile = new File(pathToTxt);
+        File pgmFile = new File(pathToPgm);
+        textFile.delete();
+        pgmFile.delete();
         return lines;
     }
 
@@ -528,7 +572,7 @@ public class MathsExtraction {
 
         Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\out.jpg",out);
         Mat blurredCanny = new Mat();
-        GaussianBlur( cannyOutput, blurredCanny, new Size(5, 5), 2, 2 );
+        GaussianBlur( cannyOutput, blurredCanny, new Size(7, 7), 2, 2 );
         Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\canny2.jpg",blurredCanny);
         return houghSegments(blurredCanny,localPeaks);
     }
@@ -618,7 +662,7 @@ public class MathsExtraction {
     /// --------------------------- MAIN ---------------------------
 
     /** @function main */
-    int extract( String[] args) throws IOException
+    int extract( String[] args) throws IOException, InterruptedException
     {
         Mat src_gray = new Mat();
         Mat src = Imgcodecs.imread(args[1], Imgcodecs.IMREAD_COLOR);
@@ -659,7 +703,7 @@ public class MathsExtraction {
         cvtColor( src, src_gray, COLOR_BGR2GRAY );
 
         /// Reduce the noise so we avoid false circle detection
-        GaussianBlur( src_gray, src_gray, new Size(9, 9), 2, 2 );
+        GaussianBlur( src_gray, src_gray, new Size(5, 5), 2, 2 );
 
         /// -----------------------------------CIRCLE DETECTION----------------------------------
         ArrayList<Point3> circles = new ArrayList<>();
@@ -707,7 +751,8 @@ public class MathsExtraction {
         Mat lineMatrix = new Mat();
         ArrayList<Vec4i> lines = new ArrayList<>(), min_lines = new ArrayList<>(), new_lines = new ArrayList<>();
         HoughLinesP( dst2, lineMatrix, 1, Math.PI/180, thresh_detect_line, thresh_min_line_length, thresh_min_line_gap );
-        ArrayList<Vec4i> mylines = houghTransform(src);
+//        ArrayList<Vec4i> mylines = houghTransform(src);
+        ArrayList<Vec4i> mylines = lineSegmentDetector(src);
         lines = mylines;
 
         System.out.println(lineMatrix.cols() + " " + lineMatrix.rows());
@@ -717,9 +762,9 @@ public class MathsExtraction {
 //        }
 
         /// Remove extra lines
-        lines = merge_lines(lines,thresh_min_line_dist,a1);
         lines = remove_duplicates(lines,circles,a1,thresh_line_overlap_circle,thresh_min_line_dist);
-        lines = heuristic_avg(lines,thresh_min_line_dist,a1);
+//        lines = merge_lines(lines,thresh_min_line_dist,a1);
+//        lines = heuristic_avg(lines,thresh_min_line_dist,a1);
         lines = combining_end_points(lines,thresh_end_point_combined);
 
         /// ----------------------------------WRITING ON FILE-----------------------------------
