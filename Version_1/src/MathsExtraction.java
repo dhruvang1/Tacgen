@@ -1,16 +1,10 @@
-import com.sun.javafx.geom.Vec3f;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.imgproc.LineSegmentDetector;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.IntStream;
-
-import static org.opencv.core.CvType.CV_8U;
 import static org.opencv.core.CvType.CV_8UC3;
 import static org.opencv.imgproc.Imgproc.*;
 
@@ -494,6 +488,37 @@ public class MathsExtraction {
         return lines;
     }
 
+    ArrayList<Vec4i> lsd (Mat src) {
+        Mat dest = new Mat(),srcGray = new Mat();
+        cvtColor( src, srcGray, COLOR_BGR2GRAY );
+        ArrayList<Vec4i> lines = new ArrayList<>();
+        LineSegmentDetector detector =  Imgproc.createLineSegmentDetector();
+        detector.detect(srcGray,dest);
+        for(int i=0;i<dest.rows();i++){
+            double[] temp = dest.get(i,0);
+            lines.add(new Vec4i((int)temp[0],(int)temp[1],(int)temp[2],(int)temp[3]));
+        }
+        return lines;
+    }
+
+    ArrayList<Vec4i> lsd2(Mat src){
+        Mat srcGray = new Mat();
+        cvtColor( src, srcGray, COLOR_BGR2GRAY );
+        LSD lsd = new LSD();
+        ArrayList<Vec4i> lines = new ArrayList<>();
+        int rows=  src.rows(), cols = src.cols();
+        int sz  = src.rows() * src.cols();
+        double[] arr = new double[sz];
+        for(int j=0;j<src.cols();j++){
+            for(int i=0;i<src.rows();i++){
+                arr[i + j*rows] = src.get(i,j)[0];
+            }
+        }
+
+        ArrayList<Double> out =lsd.lsd(null,arr,rows,cols);
+        return lines;
+    }
+
     ArrayList<Vec4i> houghTransform(Mat src) {
         int rows = src.rows();
         int cols = src.cols();
@@ -505,9 +530,7 @@ public class MathsExtraction {
         int accumulatorRows = dmax - dmin + 1;
         int accumulatorCols = thetamax - thetamin + 1;
 
-        Mat imgGray = new Mat();
         Mat cannyOutput = new Mat();
-        Imgproc.cvtColor(src,imgGray,Imgproc.COLOR_BGR2GRAY);
         Imgproc.Canny(src,cannyOutput,threshold,threshold*2,3,false);
 
         Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\canny.jpg",cannyOutput);
@@ -750,9 +773,10 @@ public class MathsExtraction {
 
         Mat lineMatrix = new Mat();
         ArrayList<Vec4i> lines = new ArrayList<>(), min_lines = new ArrayList<>(), new_lines = new ArrayList<>();
-        HoughLinesP( dst2, lineMatrix, 1, Math.PI/180, thresh_detect_line, thresh_min_line_length, thresh_min_line_gap );
+//        HoughLinesP( dst2, lineMatrix, 1, Math.PI/180, thresh_detect_line, thresh_min_line_length, thresh_min_line_gap );
 //        ArrayList<Vec4i> mylines = houghTransform(src);
         ArrayList<Vec4i> mylines = lineSegmentDetector(src);
+//        ArrayList<Vec4i> mylines = lsd2(src);
         lines = mylines;
 
         System.out.println(lineMatrix.cols() + " " + lineMatrix.rows());
@@ -765,7 +789,7 @@ public class MathsExtraction {
         lines = remove_duplicates(lines,circles,a1,thresh_line_overlap_circle,thresh_min_line_dist);
 //        lines = merge_lines(lines,thresh_min_line_dist,a1);
 //        lines = heuristic_avg(lines,thresh_min_line_dist,a1);
-        lines = combining_end_points(lines,thresh_end_point_combined);
+//        lines = combining_end_points(lines,thresh_end_point_combined);
 
         /// ----------------------------------WRITING ON FILE-----------------------------------
         /// Draw the lines detected

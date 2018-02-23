@@ -43,7 +43,7 @@ public class ScienceExtraction {
         int originalPoints = 0;
         int reducedPoints = 0;
         for(int i=0;i<contours.size();i++){
-            if(heirarchy.get(0,i)[3] > 0){
+//            if(heirarchy.get(0,i)[3] > 0){
                 List <Point> tempContour = contours.get(i).toList();
                 originalPoints += tempContour.size();
                 tempContour = reducePoints(tempContour,0,tempContour.size()-1);
@@ -53,7 +53,7 @@ public class ScienceExtraction {
                     writer.append(String.format("%d,%d,",(int)tempContour.get(j).x,(int)tempContour.get(j).y));
                 }
                 writer.append(String.format("%d,%d\n",(int)tempContour.get(tempSize-1).x,(int)tempContour.get(tempSize-1).y));
-            }
+//            }
         }
         System.out.println("Original points: " + originalPoints);
         System.out.println("Reduced points: " + reducedPoints);
