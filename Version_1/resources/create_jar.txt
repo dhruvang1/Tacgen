@@ -1,0 +1,27 @@
+1. Go to TacGen\Version_1\out\production\Version_1
+
+2. Create file meta.txt with content:
+	
+	Manifest-Version: 2.0
+	Class-Path: opencv-3.2.0-1.jar
+	Created-By: Tacgen team
+	Ant-Version: Apache Ant 1.6.2
+	Main-Class: Screen
+
+3. Create file build-jar.bat with content:
+
+	jar -cfm ../../../Tacgen.jar meta.txt *.class
+
+4. Run build-jar.bat
+   Tacgen.jar should be created in TacGen\Version_1
+
+5. Make sure the following files are present in TacGen\Version_1 
+	Tacgen.jar
+	opencv-3.2.0-1.jar
+	opencv_java320.dll
+
+6. Create file tactile_tool.bat with content:
+	
+	start javaw -cp Tacgen.jar Screen
+
+7. Running tactile_tool.bat should run Tacgen

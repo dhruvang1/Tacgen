@@ -1,1 +1,1 @@
-start javaw -jar BANA.jar
+start javaw -cp Tacgen.jar Screen

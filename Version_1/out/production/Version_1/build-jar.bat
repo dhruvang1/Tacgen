@@ -1,0 +1,1 @@
+jar -cfm ../../../Tacgen.jar meta.txt *.class
