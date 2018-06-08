@@ -449,6 +449,11 @@ public class MathsExtraction {
         //generating the pgm file for lsd
         Mat srcGray = new Mat();
         cvtColor( src, srcGray, COLOR_BGR2GRAY );
+
+//        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\before2.jpg",srcGray);
+        threshold(srcGray,srcGray,220,255,THRESH_BINARY);
+//        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\after2.jpg",srcGray);
+
         Core.MinMaxLocResult mmr = Core.minMaxLoc(srcGray);
         int max = (int)mmr.maxVal;
         int rows = srcGray.rows();
@@ -725,6 +730,10 @@ public class MathsExtraction {
         /// Convert it to gray
         cvtColor( src, src_gray, COLOR_BGR2GRAY );
 
+//        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\before.jpg",src_gray);
+        threshold(src_gray,src_gray,220,255,THRESH_BINARY);
+//        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\after.jpg",src_gray);
+
         /// Reduce the noise so we avoid false circle detection
         GaussianBlur( src_gray, src_gray, new Size(5, 5), 2, 2 );
 
@@ -763,13 +772,13 @@ public class MathsExtraction {
 
         //GaussianBlur( src, blursrc, Size(9, 9), 2, 2 );
         // int erode_sz = 2;
-        Mat element = getStructuringElement(MORPH_CROSS,new Size(2*erode_sz + 1, 2*erode_sz + 1), new Point(erode_sz, erode_sz));
-        erode(src,blursrc,element);
+//        Mat element = getStructuringElement(MORPH_CROSS,new Size(2*erode_sz + 1, 2*erode_sz + 1), new Point(erode_sz, erode_sz));
+//        erode(src,blursrc,element);
 //        imshow("abc",blursrc);
 
         /// Detecting lines
-        Canny(blursrc, dst2, 50, 200, 3,true);
-        cvtColor(dst2, cdst, COLOR_GRAY2BGR);
+//        Canny(blursrc, dst2, 50, 200, 3,true);
+//        cvtColor(dst2, cdst, COLOR_GRAY2BGR);
 
         Mat lineMatrix = new Mat();
         ArrayList<Vec4i> lines = new ArrayList<>(), min_lines = new ArrayList<>(), new_lines = new ArrayList<>();
