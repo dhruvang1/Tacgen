@@ -39,7 +39,7 @@ public class GenerateSVG {
             String hash_code = rgbToHash(Screen.linesObject.colorArray.get(i).getRed(),
                     Screen.linesObject.colorArray.get(i).getGreen(),
                     Screen.linesObject.colorArray.get(i).getBlue());
-            outputStreamWriter.append("stroke="+"\""+"#"+hash_code+"\"" +"/>");
+            outputStreamWriter.append("stroke=\"black\"/>");
             outputStreamWriter.append(Constants.NEWLINE);
         }
         outputStreamWriter.close();
@@ -88,10 +88,10 @@ public class GenerateSVG {
             //outputStreamWriter.append("style="+"\""+"stroke:#006600; fill:#"+hash_code+";"+"\"" +"/>");
 //            if(Screen.arcObject.fillArray.get(i)==0){
             if(tempArc.fill==0){
-                outputStreamWriter.append("stroke=\"#"+hash_code+"\" fill=\""+"none"+"\"" +"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
+                outputStreamWriter.append("stroke=\"black\" fill=\"none\"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
             }
             else{
-                outputStreamWriter.append("stroke=\"#006600\" fill=\"#"+hash_code+"\"" +"/>");
+                outputStreamWriter.append("stroke=\"black\" fill=\"none\"/>");
             }
             outputStreamWriter.append(Constants.NEWLINE);
         }
@@ -139,10 +139,10 @@ public class GenerateSVG {
                     Screen.circlesObject.allCircles.get(i).color.getBlue());
 //            if(Screen.circlesObject.fillArray.get(i)==0){
             if(Screen.circlesObject.allCircles.get(i).fill==0){
-                outputStreamWriter.append("stroke=\"#"+hashCode+"\" fill=\""+"none"+"\"" +"/>");//outputStreamWriter.append("stroke=\"#"+hashCode+"\" fill=\""+"none"+"\"" +"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
+                outputStreamWriter.append("stroke=\"black\" fill=\"none\"/>");//outputStreamWriter.append("stroke=\"#"+hashCode+"\" fill=\""+"none"+"\"" +"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
             }
             else{
-                outputStreamWriter.append("stroke=\"#006600\" fill=\"#"+hashCode+"\"" +"/>");
+                outputStreamWriter.append("stroke=\"black\" fill=\"none\"/>");
             }
             outputStreamWriter.append(Constants.NEWLINE);
         }
@@ -172,7 +172,7 @@ public class GenerateSVG {
 //            if(Screen.polygonObject.fillOrNot.get(i)==0){
         for(int i = 0; i< Screen.polygonObject.allPolygons.size(); i++){
             GetPolygon.Polygon tempPolygon = Screen.polygonObject.allPolygons.get(i);
-            outputStreamWriter.append("<polygon  class=\"fil1\" points=\"+\"\"");
+            outputStreamWriter.append("<polygon  class=\"fil1\" points=\"");
             for(int j = 0; j< tempPolygon.points.size()-1; j++){
                 outputStreamWriter.append(tempPolygon.points.get(j).getL()+","+ tempPolygon.points.get(j).getR()+" ");
             }
@@ -182,10 +182,10 @@ public class GenerateSVG {
                     tempPolygon.color.getBlue());
 
             if(tempPolygon.fill==0){
-                outputStreamWriter.append("stroke=\"#"+hashCode+"\" fill=\""+"none"+"\"" +"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
+                outputStreamWriter.append("stroke=\"black\" fill=\"none\"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
             }
             else{
-                outputStreamWriter.append("stroke=\"#006600\" fill=\"#"+hashCode+"\"" +"/>");
+                outputStreamWriter.append("stroke=\"black\" fill=\"none\"/>");
             }
             outputStreamWriter.append(Constants.NEWLINE);
         }
@@ -211,10 +211,10 @@ public class GenerateSVG {
                     Screen.regionsObject.colorArray.get(i).getBlue());
             outputStreamWriter.append("\" ");
             if(Screen.regionsObject.fillArray.get(i)==0){
-                outputStreamWriter.append("stroke=\"#"+hashCode+"\"" +"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
+                outputStreamWriter.append("stroke=\"black\"/>");//outputStreamWriter.append("stroke=\"#006600\" fill=\""+"none"+"\"" +"/>");
             }
             else{
-                outputStreamWriter.append("stroke=\"#006600\" fill=\"#"+hashCode+"\"" +"/>");
+                outputStreamWriter.append("stroke=\"black\" fill=\"none\"/>");
             }
             
             outputStreamWriter.append(Constants.NEWLINE);
@@ -249,7 +249,7 @@ public class GenerateSVG {
                 outputStreamWriter.append(Screen.pathsObject.allPaths.get(i).points.get(j).getL()+","+ Screen.pathsObject.allPaths.get(i).points.get(j).getR()+" ");
             }
             outputStreamWriter.append("\" ");
-            outputStreamWriter.append(StringConstants.polylineStyle+hashCode +"\" />");
+            outputStreamWriter.append(StringConstants.polylineStyle +"\" />");
             outputStreamWriter.append(Constants.NEWLINE);
         }
 //        outputStreamWriter.append("</svg>");
@@ -324,7 +324,7 @@ public class GenerateSVG {
                 outputStreamWriter.append("y="+"\""+y+"\" ");
                 outputStreamWriter.append("height="+"\""+height+"\" ");
                 outputStreamWriter.append("width="+"\""+width+"\" ");
-                outputStreamWriter.append("style="+"\""+"stroke : #ffffff; "+"\"" +">");
+                outputStreamWriter.append("style="+"\""+"stroke:black;fill:none; "+"\"" +">");
                 outputStreamWriter.append("</rect>");
                 outputStreamWriter.append(Constants.NEWLINE);
             }

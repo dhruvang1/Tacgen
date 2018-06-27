@@ -28,9 +28,23 @@ public class ScienceExtraction {
 
         Mat cannyOutput = new Mat();
         List<MatOfPoint> contours = new ArrayList<>();
+        ArrayList<ArrayList<Point>> new_contours;
         Mat heirarchy = new Mat();
+
+//        Mat flooded = new Mat();
+//        Imgcodecs.imwrite("D:\\MTP\\TacGen\\before_flood.jpg",imgGray);
+//        Imgproc.floodFill(imgGray,flooded,new Point(1000,635),new Scalar(0),new Rect(),new Scalar(10),new Scalar(10),8);
+
+
+        Imgcodecs.imwrite("D:\\MTP\\TacGen\\after_flood.jpg",imgGray);
+
         Imgproc.Canny(imgGray,cannyOutput,threshold,threshold*2,3,false);
         Imgcodecs.imwrite("D:\\MTP\\TacGen\\canny.jpg",cannyOutput);
+
+//        cannyOutput = Imgcodecs.imread("D:\\MTP\\TacGen\\canny2.jpg");
+//        Imgproc.cvtColor(cannyOutput,cannyOutput,Imgproc.COLOR_BGR2GRAY);
+//        Imgproc.threshold(cannyOutput,cannyOutput,100,255,Imgproc.THRESH_BINARY);
+//        Imgcodecs.imwrite("D:\\MTP\\TacGen\\canny3.jpg",cannyOutput);
 
 //        Imgproc.dilate(cannyOutput,cannyOutput,elementDilation);
 //        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\dilate.jpg",cannyOutput);
@@ -39,11 +53,28 @@ public class ScienceExtraction {
 //        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\erode.jpg",cannyOutput);
 
         Imgproc.findContours(cannyOutput,contours,heirarchy,Imgproc.RETR_CCOMP,Imgproc.CHAIN_APPROX_TC89_KCOS, new Point(0,0));
+//        ContourDetection contourDetection = new ContourDetection();
+//        new_contours = contourDetection.findContours(cannyOutput);
+//
         BufferedWriter writer = new BufferedWriter(new FileWriter(destImgPath+"\\"+"regions.txt",false));
         int originalPoints = 0;
         int reducedPoints = 0;
+//        for(int i=0;i<new_contours.size();i++){
+//            List <Point> tempContour = new_contours.get(i);
+//            originalPoints += tempContour.size();
+////            tempContour = reducePoints(tempContour,0,tempContour.size()-1);
+//            reducedPoints += tempContour.size();
+//            int tempSize = tempContour.size();
+//            for(int j=0;j<tempSize-1;j++){
+//                writer.append(String.format("%d,%d,",(int)tempContour.get(j).x,(int)tempContour.get(j).y));
+//            }
+//            writer.append(String.format("%d,%d\n",(int)tempContour.get(tempSize-1).x,(int)tempContour.get(tempSize-1).y));
+//
+//        }
+
+
         for(int i=0;i<contours.size();i++){
-//            if(heirarchy.get(0,i)[3] > 0){
+            if(heirarchy.get(0,i)[3] == -1){
                 List <Point> tempContour = contours.get(i).toList();
                 originalPoints += tempContour.size();
                 tempContour = reducePoints(tempContour,0,tempContour.size()-1);
@@ -53,7 +84,7 @@ public class ScienceExtraction {
                     writer.append(String.format("%d,%d,",(int)tempContour.get(j).x,(int)tempContour.get(j).y));
                 }
                 writer.append(String.format("%d,%d\n",(int)tempContour.get(tempSize-1).x,(int)tempContour.get(tempSize-1).y));
-//            }
+            }
         }
         System.out.println("Original points: " + originalPoints);
         System.out.println("Reduced points: " + reducedPoints);

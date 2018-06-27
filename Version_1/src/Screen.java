@@ -38,6 +38,7 @@ public class Screen {
     public static GetTextbox textboxObject = null;
     public static GetPolygon polygonObject = null;
     public static GetArc arcObject = null;
+    public static GetEraser eraserObject = null;
     public static ModifyText modifyTextObject = null;
     public static whichPolygon whichPolygonObject = null;
     public static text_exe textExeObject = null;
@@ -55,6 +56,7 @@ public class Screen {
     public static Page3AutoMathScience page3AutoMathScience =null;
     public static Page4ManualMathScience page4ManualMathScience =null;
     public static Page4MathParameter page4MathParameter = null;
+    public static Page4ScienceParameter page4ScienceParameter = null;
     public static Page5ColorMapping page5ColorMapping =null;
     
     public static Point start = new Point();
@@ -463,6 +465,13 @@ public class Screen {
             graphics2D.drawRect(textboxObject.captureRectangle.x, textboxObject.captureRectangle.y, textboxObject.captureRectangle.width, textboxObject.captureRectangle.height);
             graphics2D.setColor(currentColor);
         }
+
+        if(eraserObject.captureRectangle != null) {
+    	    graphics2D.setColor(Color.BLACK);
+    	    graphics2D.drawRect(eraserObject.captureRectangle.x, eraserObject.captureRectangle.y, eraserObject.captureRectangle.width, eraserObject.captureRectangle.height);
+    	    graphics2D.setColor(currentColor);
+        }
+
     	graphics2D.dispose();
     }
 
@@ -515,6 +524,7 @@ public class Screen {
     	textboxObject = new GetTextbox();
     	polygonObject = new GetPolygon();
         arcObject = new GetArc();
+        eraserObject = new GetEraser();
         modifyTextObject = new ModifyText();
         whichPolygonObject = new whichPolygon();
         pathsObject = new GetPaths();

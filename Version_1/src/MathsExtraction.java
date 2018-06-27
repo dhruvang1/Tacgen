@@ -257,7 +257,7 @@ public class MathsExtraction {
                             //cout<<a<<b<<c<<d<<endl;
                             int temp = is_shorter(a,b,c,d);
                             if (temp<0 || (temp==0 && i<j)){
-                                //cout<<"Flag = true"<<endl;  
+                                //cout<<"Flag = true"<<endl;
                                 flag = 1;
                             }
                         }
@@ -451,8 +451,8 @@ public class MathsExtraction {
         cvtColor( src, srcGray, COLOR_BGR2GRAY );
 
 //        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\before2.jpg",srcGray);
-        threshold(srcGray,srcGray,220,255,THRESH_BINARY);
-//        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\after2.jpg",srcGray);
+        threshold(srcGray,srcGray,175,255,THRESH_BINARY);
+        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\after2.jpg",srcGray);
 
         Core.MinMaxLocResult mmr = Core.minMaxLoc(srcGray);
         int max = (int)mmr.maxVal;
@@ -788,7 +788,7 @@ public class MathsExtraction {
 //        ArrayList<Vec4i> mylines = lsd2(src);
         lines = mylines;
 
-        System.out.println(lineMatrix.cols() + " " + lineMatrix.rows());
+//        System.out.println(lineMatrix.cols() + " " + lineMatrix.rows());
 //        for(int j=0;j<lineMatrix.rows();j++){
 //            double[] points = lineMatrix.get(j,0);
 //            lines.add(new Vec4i((int)points[0],(int)points[1],(int)points[2],(int)points[3]));

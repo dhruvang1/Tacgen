@@ -46,6 +46,8 @@ public class ImageAreaListeners {
                         if (Screen.modifyTextObject.selectedRectangle != 10000) {
                             Screen.textboxObject.translateText(me);
                         }
+                    } else if (Screen.allControlsAndListeners.jSkipPage1.isDisplayable()) {
+                        Screen.eraserObject.eraserActive(me);
                     }
                 } catch (NoninvertibleTransformException ex) {
                     Logger.getLogger(ImageAreaListeners.class.getName()).log(Level.SEVERE, null, ex);
@@ -165,6 +167,12 @@ public class ImageAreaListeners {
                 } else if (Screen.allControlsAndListeners.jGoBackPage3.isDisplayable()) {
                     if (Screen.modifyTextObject.selectedRectangle != 10000) {
                         Screen.modifyTextObject.selectedRectangle = 10000;
+                    }
+                } else if (Screen.allControlsAndListeners.jSkipPage1.isDisplayable()){
+                    try{
+                        Screen.eraserObject.eraserDeactivate(me);
+                    } catch (NoninvertibleTransformException ex) {
+                        Logger.getLogger(ImageAreaListeners.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 if (Screen.allControlsAndListeners.drawRegion.isSelected() && Screen.allControlsAndListeners.drawRegion.isDisplayable()) {

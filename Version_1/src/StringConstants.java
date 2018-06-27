@@ -11,9 +11,9 @@ public class StringConstants {
 
     public static String svgVersion = "version=\"1.1\"";
 
-    public static String svgStyle = "style=\"shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd\"";
+    public static String svgStyle = "style=\"shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; clip-rule:evenodd\"";
 
-    public static String polylineStyle = "style=\"fill:#373435;fill-rule:nonzero;stroke:#";
+    public static String polylineStyle = "style=\"fill:none;stroke:black";
     public static String svgViewbox = "viewBox=\"0 0 1000 1000\"";
 
     public static String  svgDocNameKey= "sodipodi:docname=";
@@ -22,8 +22,8 @@ public class StringConstants {
             "     id=\"defs4\"><style\n" +
             "       type=\"text/css\"\n" +
             "       id=\"style2\"><![CDATA[\n" +
-            "    .fil0 {fill:#373435}\n" +
-            "    .fil1 {fill:#373435;fill-rule:nonzero}\n" +
+            "    .fil0 {fill:none}\n" +
+            "    .fil1 {fill:none}\n" +
             "   ]]></style></defs>";
 
     public static String svgGroupId = "<g id=\"group1\">";

@@ -58,6 +58,7 @@ public final class AllControlsAndListeners extends JFrame {
 
     //page-1
     public javax.swing.JButton jDetectText;
+    public javax.swing.JButton jEraser;
     public javax.swing.JButton jSkipPage1;
     public javax.swing.JToolBar jToolbarPage1;
     public Font hindiFont;
@@ -107,6 +108,19 @@ public final class AllControlsAndListeners extends JFrame {
     public javax.swing.JToolBar jToolbarPage4;
     public javax.swing.JButton jMathGoBackPage4;
     public javax.swing.JButton jMathNextPage4;
+
+    //science parameter page 4
+    private javax.swing.JLabel dilationLabel;
+    private javax.swing.JLabel erosionLabel;
+    private javax.swing.JLabel reduceNodesLabel;
+    public javax.swing.JCheckBox dilationCheck;
+    public javax.swing.JCheckBox erosionCheck;
+    public javax.swing.JSlider dilationSlider;
+    public javax.swing.JSlider erosionSlider;
+    public javax.swing.JSlider removeNodesSlider;
+    public javax.swing.JToolBar jToolbarSciencePage4;
+    public javax.swing.JButton jScienceGoBackPage4;
+    public javax.swing.JButton jScienceNextPage4;
 
     //page5
     public javax.swing.JToggleButton jFillColor;
@@ -417,6 +431,7 @@ public final class AllControlsAndListeners extends JFrame {
         jDetectText = new javax.swing.JButton(new javax.swing.ImageIcon(Screen.config.get("detect_text")));
         jDetectText.setContentAreaFilled(false);
         jDetectText.setBorderPainted(false);
+        jEraser = new javax.swing.JButton("Eraser");
         jSkipPage1 = new javax.swing.JButton(new javax.swing.ImageIcon(Screen.config.get("skip_page1")));
         jSkipPage1.setContentAreaFilled(false);
         jSkipPage1.setBorderPainted(false);
@@ -425,10 +440,10 @@ public final class AllControlsAndListeners extends JFrame {
         jComboPage1.setMaximumSize(new java.awt.Dimension(80, 25));
         jToolbarPage1 = new javax.swing.JToolBar();
         jDetectText.setToolTipText("Automatically detect text and go to next stage");
+        jEraser.setToolTipText("Convert pixels to white");
         jSkipPage1.setToolTipText("Go to next stage without text detection");
         jToolbarPage1.setRollover(true);
         jToolbarPage1.add(jComboPage1);
-
     }
 
     /**
@@ -689,7 +704,8 @@ public final class AllControlsAndListeners extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Screen.maths_science_exe.load_science();
-                    Screen.page4ManualMathScience = new Page4ManualMathScience();
+//                    Screen.page4ManualMathScience = new Page4ManualMathScience();
+                    Screen.page4ScienceParameter = new Page4ScienceParameter();
                     Screen.mainFrame.validate();
                     Screen.mainFrame.repaint();
                     screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
@@ -1068,6 +1084,98 @@ public final class AllControlsAndListeners extends JFrame {
     }
 
     /**
+     * initialize class variables (science) corresponding to Page 4
+     */
+    private void initializePage4ScienceMembers(){
+        //science parameters page 4
+        dilationLabel = new javax.swing.JLabel();
+        dilationLabel.setMaximumSize(new Dimension(60, 45));
+        dilationLabel.setText("<html>Dilation<br>parameter</html>");
+
+        erosionLabel = new javax.swing.JLabel();
+        erosionLabel.setMaximumSize(new Dimension(60, 45));
+        erosionLabel.setText("<html>Erosion<br>Parameter</html>");
+
+        dilationCheck = new javax.swing.JCheckBox();
+        dilationCheck.setSelected(false);
+        erosionCheck = new javax.swing.JCheckBox();
+        erosionCheck.setSelected(false);
+
+        dilationSlider = new javax.swing.JSlider();
+        dilationSlider.setMajorTickSpacing(2);
+        dilationSlider.setMinimum(3);
+        dilationSlider.setMaximum(9);
+        dilationSlider.setValue(3);
+        dilationSlider.setPaintLabels(true);
+        dilationSlider.setPaintTicks(true);
+        dilationSlider.setSnapToTicks(true);
+        dilationSlider.setEnabled(false);
+        dilationSlider.setMaximumSize(new java.awt.Dimension(100, 45));
+
+        erosionSlider = new javax.swing.JSlider();
+        erosionSlider.setMajorTickSpacing(2);
+        erosionSlider.setMinimum(3);
+        erosionSlider.setMaximum(9);
+        erosionSlider.setValue(3);
+        erosionSlider.setPaintLabels(true);
+        erosionSlider.setPaintTicks(true);
+        erosionSlider.setSnapToTicks(true);
+        erosionSlider.setEnabled(false);
+        erosionSlider.setMaximumSize(new java.awt.Dimension(100, 45));
+
+        jToolbarSciencePage4 = new javax.swing.JToolBar();
+        jToolbarSciencePage4.add(dilationCheck);
+        jToolbarSciencePage4.add(dilationLabel);
+        jToolbarSciencePage4.add(dilationSlider);
+        jToolbarSciencePage4.add(erosionCheck);
+        jToolbarSciencePage4.add(erosionLabel);
+        jToolbarSciencePage4.add(erosionSlider);
+
+        jScienceGoBackPage4 = new javax.swing.JButton(new javax.swing.ImageIcon(Screen.config.get("Go_back_parameter_page4")));
+        jScienceGoBackPage4.setContentAreaFilled(false);
+        jScienceGoBackPage4.setBorderPainted(false);
+
+        jScienceNextPage4 = new javax.swing.JButton(new javax.swing.ImageIcon(Screen.config.get("Next_parameter_page4")));
+        jScienceNextPage4.setContentAreaFilled(false);
+        jScienceNextPage4.setBorderPainted(false);
+    }
+
+    /**
+     * initialize listeners for {@Link #initializePage4ScienceMembers()}
+     */
+    private void initializePage4ScienceListeners(){
+        jScienceGoBackPage4.setToolTipText("Revert back to previous stage");
+        jScienceNextPage4.setToolTipText("Go to next page if you see best detection result");
+        dilationSlider.setToolTipText("<html>A parameter to select mask size for dilation</html>");
+        duplicateLineDetectionByAngle.setToolTipText("<html>A parameter to select mask size for erosion</html>");
+
+
+        jScienceGoBackPage4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Screen.page4ScienceParameter.goBack();
+                } catch (IOException ex) {
+                    Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        jScienceNextPage4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Screen.page4ManualMathScience = new Page4ManualMathScience();
+                Screen.mainFrame.validate();
+                Screen.mainFrame.repaint();
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                Screen.mainFrame.setVisible(true);
+                screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
+            }
+        });
+
+    }
+
+    /**
      * initialize class variables corresponding to Page 5
      */
     private void initializePage5Members() {
@@ -1166,6 +1274,7 @@ public final class AllControlsAndListeners extends JFrame {
         initializePage3Members();
         initializePage4Members();
         initializePage4MathMembers();
+        initializePage4ScienceMembers();
         initializePage5Members();
 
         initializeListeners();
@@ -1175,6 +1284,7 @@ public final class AllControlsAndListeners extends JFrame {
         initializePage3Listeners();
         initializePage4Listeners();
         initializePage4MathListeners();
+        initializePage4ScienceListeners();
         initializePage5Listeners();
     }
 }
