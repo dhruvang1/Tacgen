@@ -4,6 +4,7 @@ import org.opencv.core.Mat;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.image.*;
 import java.io.BufferedReader;
@@ -37,6 +38,7 @@ public class Screen {
     public static GetRegions regionsObject = null;
     public static GetTextbox textboxObject = null;
     public static GetPolygon polygonObject = null;
+    public static GetBezier bezierObject = null;
     public static GetArc arcObject = null;
     public static GetEraser eraserObject = null;
     public static ModifyText modifyTextObject = null;
@@ -176,7 +178,52 @@ public class Screen {
                 graphics2D.drawLine(regionsObject.regionPoints.get(k).getL(), regionsObject.regionPoints.get(k).getR(), regionsObject.regionPoints.get(k+1).getL(), regionsObject.regionPoints.get(k+1).getR());
             }
         }
-        
+
+        if(bezierObject.currentBezier.startPoint != null){
+            graphics2D.setColor(currentColor);
+            graphics2D.fillRect((int)bezierObject.currentBezier.startPoint.x,(int)bezierObject.currentBezier.startPoint.y,2,2);
+            for(int h=0;h<bezierObject.currentBezier.endPoints.size(); h++){
+                graphics2D.fillRect((int)bezierObject.currentBezier.endPoints.get(h).x,(int)bezierObject.currentBezier.endPoints.get(h).y,2,2);
+            }
+
+            GeneralPath bezierPath = new GeneralPath();
+            bezierPath.moveTo(bezierObject.currentBezier.startPoint.x , bezierObject.currentBezier.startPoint.y);
+            for(int h=0;h<bezierObject.currentBezier.firstControlPoints.size();h++){
+                bezierPath.curveTo(bezierObject.currentBezier.firstControlPoints.get(h).x,
+                        bezierObject.currentBezier.firstControlPoints.get(h).y,
+                        bezierObject.currentBezier.secondControlPoints.get(h).x,
+                        bezierObject.currentBezier.secondControlPoints.get(h).y,
+                        bezierObject.currentBezier.endPoints.get(h).x,
+                        bezierObject.currentBezier.endPoints.get(h).y);
+            }
+            graphics2D.draw(bezierPath);
+        }
+
+        for(int k = 0; k< bezierObject.allBeziers.size(); k++){
+            GetBezier.Bezier tempBezier = bezierObject.allBeziers.get(k);
+            graphics2D.setColor(currentColor);
+//            if(polygonObject.polygonIndices.contains(k)){  todo beizerIndices
+//                graphics2D.setStroke(new BasicStroke(3.0f));
+//                for(int h = 0; h< tempPolygon.points.size()-1; h++){
+//                    graphics2D.drawLine(tempPolygon.points.get(h).getL(), tempPolygon.points.get(h).getR(), tempPolygon.points.get(h+1).getL(), tempPolygon.points.get(h+1).getR());
+//                }
+//                graphics2D.setStroke(new BasicStroke(1.0f));
+//            }
+            GeneralPath bezierPath = new GeneralPath();
+            bezierPath.moveTo(tempBezier.startPoint.x , tempBezier.startPoint.y);
+            for(int h = 0; h< tempBezier.endPoints.size(); h++){
+                bezierPath.curveTo(tempBezier.firstControlPoints.get(h).x,
+                        tempBezier.firstControlPoints.get(h).y,
+                        tempBezier.secondControlPoints.get(h).x,
+                        tempBezier.secondControlPoints.get(h).y,
+                        tempBezier.endPoints.get(h).x,
+                        tempBezier.endPoints.get(h).y);
+            }
+            graphics2D.draw(bezierPath);
+            graphics2D.setColor(currentColor);
+        }
+
+
 //    	for(int k = 0; k< polygonObject.polygons.size(); k++){
 //            graphics2D.setColor(polygonObject.colorArray.get(k));
 //            if(polygonObject.polygonIndices.contains(k)){
@@ -523,6 +570,7 @@ public class Screen {
     	regionsObject = new GetRegions();
     	textboxObject = new GetTextbox();
     	polygonObject = new GetPolygon();
+    	bezierObject = new GetBezier();
         arcObject = new GetArc();
         eraserObject = new GetEraser();
         modifyTextObject = new ModifyText();

@@ -95,6 +95,9 @@ public final class AllControlsAndListeners extends JFrame {
     public javax.swing.JRadioButton polygonEnd;
     public javax.swing.JToggleButton drawPath;
     public javax.swing.JToggleButton drawRegion;
+    public javax.swing.JToggleButton drawBezier;
+    public javax.swing.JRadioButton bezierStart;
+    public javax.swing.JRadioButton bezierEnd;
     public javax.swing.JToggleButton jEditPage4;
     public javax.swing.JButton jDeleteButton;
     public javax.swing.JButton jGoBackPage4;
@@ -132,11 +135,18 @@ public final class AllControlsAndListeners extends JFrame {
     /**
      * deselects all polygon start end radio buttons
      */
-    public void deselectRadioButtons() {
+    public void deselectPolygonRadioButtons() {
         Screen.allControlsAndListeners.polygonStart.setSelected(false);
         Screen.allControlsAndListeners.polygonEnd.setSelected(false);
         Screen.allControlsAndListeners.polygonStart.setEnabled(false);
         Screen.allControlsAndListeners.polygonEnd.setEnabled(false);
+    }
+
+    public void deselectBezierRadioButtons() {
+        Screen.allControlsAndListeners.bezierStart.setSelected(false);
+        Screen.allControlsAndListeners.bezierEnd.setSelected(false);
+        Screen.allControlsAndListeners.bezierStart.setEnabled(false);
+        Screen.allControlsAndListeners.bezierEnd.setEnabled(false);
     }
 
     /**
@@ -147,6 +157,7 @@ public final class AllControlsAndListeners extends JFrame {
         Screen.circlesObject.deleteTemp();
         Screen.arcObject.deleteTemp();
         Screen.polygonObject.deleteTemp();
+        Screen.bezierObject.deleteTemp();
         screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
         Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
     }
@@ -749,6 +760,9 @@ public final class AllControlsAndListeners extends JFrame {
         polygonEnd = new javax.swing.JRadioButton("End");
         drawPath = new javax.swing.JToggleButton("Path");
         drawRegion = new javax.swing.JToggleButton("Region");
+        drawBezier = new javax.swing.JToggleButton("Bezier Curve");
+        bezierStart = new javax.swing.JRadioButton("Start");
+        bezierEnd = new javax.swing.JRadioButton("End");
         jEditPage4 = new javax.swing.JToggleButton("Edit");
         jDeleteButton = new javax.swing.JButton(new javax.swing.ImageIcon(Screen.config.get("delete_page4")));
         jDeleteButton.setContentAreaFilled(false);
@@ -767,6 +781,7 @@ public final class AllControlsAndListeners extends JFrame {
         polygonEnd.setToolTipText("Draw a polygon of selected vertices");
         drawPath.setToolTipText("Select points in order to draw a continuous path");
         drawRegion.setToolTipText("Draw a arbit shape");
+        drawBezier.setToolTipText("Select points for bezier curve");
         jEditPage4.setToolTipText("Select shapes to delete");
         jDeleteButton.setToolTipText("Delete selected shapes");
         jGoBackPage4.setToolTipText("Revert back to previous stage");
@@ -786,8 +801,10 @@ public final class AllControlsAndListeners extends JFrame {
                     drawPolygon.setSelected(false);
                     drawPath.setSelected(false);
                     drawRegion.setSelected(false);
+                    drawBezier.setSelected(false);
                     jEditPage4.setSelected(false);
-                    deselectRadioButtons();
+                    deselectPolygonRadioButtons();
+                    deselectBezierRadioButtons();
                     deleteAllTemp();
                 }
             }
@@ -801,8 +818,10 @@ public final class AllControlsAndListeners extends JFrame {
                     drawPolygon.setSelected(false);
                     drawPath.setSelected(false);
                     drawRegion.setSelected(false);
+                    drawBezier.setSelected(false);
                     jEditPage4.setSelected(false);
-                    deselectRadioButtons();
+                    deselectPolygonRadioButtons();
+                    deselectBezierRadioButtons();
                     deleteAllTemp();
                 }
             }
@@ -816,8 +835,10 @@ public final class AllControlsAndListeners extends JFrame {
                     drawPolygon.setSelected(false);
                     drawPath.setSelected(false);
                     drawRegion.setSelected(false);
+                    drawBezier.setSelected(false);
                     jEditPage4.setSelected(false);
-                    deselectRadioButtons();
+                    deselectPolygonRadioButtons();
+                    deselectBezierRadioButtons();
                     deleteAllTemp();
                 }
             }
@@ -831,12 +852,13 @@ public final class AllControlsAndListeners extends JFrame {
                     drawArc.setSelected(false);
                     drawPath.setSelected(false);
                     drawRegion.setSelected(false);
+                    drawBezier.setSelected(false);
                     jEditPage4.setSelected(false);
                     deleteAllTemp();
                     polygonStart.setEnabled(true);
                     polygonEnd.setEnabled(false);
                 } else {
-                    deselectRadioButtons();
+                    deselectPolygonRadioButtons();
                 }
             }
         });
@@ -862,6 +884,46 @@ public final class AllControlsAndListeners extends JFrame {
             }
         });
 
+        drawBezier.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (drawBezier.isSelected()) {
+                    drawLine.setSelected(false);
+                    drawCircle.setSelected(false);
+                    drawArc.setSelected(false);
+                    drawPolygon.setSelected(false);
+                    drawPath.setSelected(false);
+                    drawRegion.setSelected(false);
+                    jEditPage4.setSelected(false);
+                    deleteAllTemp();
+                    bezierStart.setEnabled(true);
+                    bezierEnd.setEnabled(false);
+                } else {
+                    deselectBezierRadioButtons();
+                }
+            }
+        });
+
+        bezierStart.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    bezierEnd.setSelected(false);
+                }
+            }
+        });
+
+        bezierEnd.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                try {
+                    MouseEvent m = null;
+                    Screen.bezierObject.getBeziers(m);
+                } catch (NoninvertibleTransformException ex) {
+                    Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
         drawPath.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (drawPath.isSelected()) {
@@ -870,8 +932,10 @@ public final class AllControlsAndListeners extends JFrame {
                     drawArc.setSelected(false);
                     drawPolygon.setSelected(false);
                     drawRegion.setSelected(false);
+                    drawBezier.setSelected(false);
                     jEditPage4.setSelected(false);
-                    deselectRadioButtons();
+                    deselectPolygonRadioButtons();
+                    deselectBezierRadioButtons();
                     deleteAllTemp();
                 }
             }
@@ -885,8 +949,10 @@ public final class AllControlsAndListeners extends JFrame {
                     drawArc.setSelected(false);
                     drawPath.setSelected(false);
                     drawPolygon.setSelected(false);
+                    drawBezier.setSelected(false);
                     jEditPage4.setSelected(false);
-                    deselectRadioButtons();
+                    deselectPolygonRadioButtons();
+                    deselectBezierRadioButtons();
                     deleteAllTemp();
                 }
             }
@@ -901,7 +967,9 @@ public final class AllControlsAndListeners extends JFrame {
                     drawPolygon.setSelected(false);
                     drawPath.setSelected(false);
                     drawRegion.setSelected(false);
-                    deselectRadioButtons();
+                    drawBezier.setSelected(false);
+                    deselectPolygonRadioButtons();
+                    deselectBezierRadioButtons();
                 }
             }
         });

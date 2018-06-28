@@ -70,6 +70,8 @@ public class ImageAreaListeners {
                         Screen.arcObject.getCircle(e); //
                     } else if (Screen.allControlsAndListeners.drawPolygon.isSelected() && Screen.allControlsAndListeners.drawPolygon.isDisplayable()) {
                         Screen.polygonObject.getPolygons(e); //
+                    } else if(Screen.allControlsAndListeners.drawBezier.isSelected() && Screen.allControlsAndListeners.drawBezier.isDisplayable()){
+                        Screen.bezierObject.getBeziers(e);
                     }
                     else if (Screen.allControlsAndListeners.jGoBackPage4.isDisplayable()) {
                         try {

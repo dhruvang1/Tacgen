@@ -93,7 +93,7 @@ public class GetPolygon {
         firstPointCaptured = false;
 //        points = null;
         currentPolygon = new Polygon();
-        Screen.allControlsAndListeners.deselectRadioButtons();
+        Screen.allControlsAndListeners.deselectPolygonRadioButtons();
     }
 
     public void addIndices(MouseEvent e) throws NoninvertibleTransformException{

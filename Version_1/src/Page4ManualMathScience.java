@@ -24,6 +24,9 @@ public class Page4ManualMathScience extends JPanel{
                     .addComponent(Screen.allControlsAndListeners.polygonEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Screen.allControlsAndListeners.drawPath, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Screen.allControlsAndListeners.drawRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.allControlsAndListeners.drawBezier, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.allControlsAndListeners.bezierStart, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Screen.allControlsAndListeners.bezierEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Screen.allControlsAndListeners.jDeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addComponent(Screen.initialFrameSetup.jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
@@ -59,6 +62,12 @@ public class Page4ManualMathScience extends JPanel{
                 .addComponent(Screen.allControlsAndListeners.drawPath)
                 .addGap(18, 18, 18)
                 .addComponent(Screen.allControlsAndListeners.drawRegion)
+                .addGap(18, 18, 18)
+                .addComponent(Screen.allControlsAndListeners.drawBezier)
+                .addGap(18, 18, 18)
+                .addComponent(Screen.allControlsAndListeners.bezierStart)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Screen.allControlsAndListeners.bezierEnd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Screen.allControlsAndListeners.jDeleteButton)
                 .addGap(23, 23, 23))
@@ -87,6 +96,7 @@ public class Page4ManualMathScience extends JPanel{
     	Screen.polygonObject = new GetPolygon();
         Screen.arcObject = new GetArc();
         Screen.pathsObject = new GetPaths();
+        Screen.bezierObject = new GetBezier();
         Screen.page3AutoMathScience =new Page3AutoMathScience();
     }
     
@@ -95,9 +105,11 @@ public class Page4ManualMathScience extends JPanel{
         Screen.allControlsAndListeners.drawCircle.setSelected(false);
         Screen.allControlsAndListeners.drawArc.setSelected(false);
         Screen.allControlsAndListeners.drawPolygon.setSelected(false);
-        Screen.allControlsAndListeners.deselectRadioButtons();
+        Screen.allControlsAndListeners.deselectPolygonRadioButtons();
         Screen.allControlsAndListeners.drawPath.setSelected(false);
         Screen.allControlsAndListeners.drawRegion.setSelected(false);
+        Screen.allControlsAndListeners.drawBezier.setSelected(false);
+        Screen.allControlsAndListeners.deselectBezierRadioButtons();
         Screen.allControlsAndListeners.jEditPage4.setSelected(false);
         Screen.allControlsAndListeners.deleteAllTemp();
         Screen.allControlsAndListeners.jPreviewButton.setEnabled(true);

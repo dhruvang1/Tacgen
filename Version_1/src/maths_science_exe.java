@@ -30,6 +30,7 @@ public class maths_science_exe {
     	Screen.polygonObject = new GetPolygon();
         Screen.arcObject = new GetArc();
         Screen.pathsObject = new GetPaths();
+        Screen.bezierObject = new GetBezier();
         
         Runtime rt = Runtime.getRuntime();
         File dir = new File(Screen.config.get("library_directory_path"));

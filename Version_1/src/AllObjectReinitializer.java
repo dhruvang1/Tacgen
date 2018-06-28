@@ -10,6 +10,7 @@ public class AllObjectReinitializer {
     	Screen.textboxObject = new GetTextbox();
     	Screen.polygonObject = new GetPolygon();
         Screen.arcObject = new GetArc();
+        Screen.bezierObject = new GetBezier();
         Screen.modifyTextObject = new ModifyText();
         Screen.pathsObject = new GetPaths();
         Screen.whichPolygonObject = new whichPolygon();

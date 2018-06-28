@@ -150,6 +150,43 @@ public class GenerateSVG {
         outputStreamWriter.close();
     }
 
+    private void svgBezier() throws FileNotFoundException, IOException{
+        File file = new File(directory,"bezier.svg");
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
+//        outputStreamWriter.append("<svg>");
+        outputStreamWriter.append(Constants.NEWLINE);
+//        if(Screen.polygonObject.polygons.size()>0){
+        if(Screen.bezierObject.allBeziers.size() >0){
+            isSVGBlank = false;
+        }
+//        for(int i = 0; i< Screen.polygonObject.polygons.size(); i++){
+//            outputStreamWriter.append("<polygon points="+"\"");
+//            for(int j = 0; j< Screen.polygonObject.polygons.get(i).size()-1; j++){
+//                outputStreamWriter.append(Screen.polygonObject.polygons.get(i).get(j).getL()+","+ Screen.polygonObject.polygons.get(i).get(j).getR()+" ");
+//            }
+//            outputStreamWriter.append("\" ");
+//            String hashCode = rgbToHash(Screen.polygonObject.colorArray.get(i).getRed(),
+//                    Screen.polygonObject.colorArray.get(i).getGreen(),
+//                    Screen.polygonObject.colorArray.get(i).getBlue());
+//
+//            if(Screen.polygonObject.fillOrNot.get(i)==0){
+        for(int i = 0; i< Screen.bezierObject.allBeziers.size(); i++){
+            GetBezier.Bezier tempBezier = Screen.bezierObject.allBeziers.get(i);
+            outputStreamWriter.append("<path  class=\"fil1\" d=\"M" + tempBezier.startPoint.x +" "+ tempBezier.startPoint.y+"C");
+            for(int j = 0; j< tempBezier.endPoints.size(); j++){
+                outputStreamWriter.append(tempBezier.firstControlPoints.get(j).x+","+ tempBezier.firstControlPoints.get(j).y+" ");
+                outputStreamWriter.append(tempBezier.secondControlPoints.get(j).x+","+ tempBezier.secondControlPoints.get(j).y+" ");
+                outputStreamWriter.append(tempBezier.endPoints.get(j).x+","+ tempBezier.endPoints.get(j).y+" ");
+            }
+            outputStreamWriter.append("\" ");
+            outputStreamWriter.append("stroke=\"black\" fill=\"none\"/>");
+
+            outputStreamWriter.append(Constants.NEWLINE);
+        }
+//        outputStreamWriter.append("</svg>");
+        outputStreamWriter.close();
+    }
+
     private void svgPolygon() throws FileNotFoundException, IOException{
         File file = new File(directory,"polygon.svg");
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
@@ -343,6 +380,7 @@ public class GenerateSVG {
         svgText();
         svgRect();
         svgPathRegion();
+        svgBezier();
         if(!isSVGBlank){
             String currentFileAbsolutePath = Screen.currentFile.getAbsolutePath();
             String currentFileName = Screen.currentFileName;
@@ -419,6 +457,18 @@ public class GenerateSVG {
             }
             bufferedReader.close();
             file1.delete();
+
+            file1 = new File(directory,"bezier.svg");
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file1),"UTF-8"));
+            line  = bufferedReader.readLine();
+            while(line!=null){
+                outputStreamWriter.append(line);
+                outputStreamWriter.append(Constants.NEWLINE);
+                line = bufferedReader.readLine();
+            }
+            bufferedReader.close();
+            file1.delete();
+
             file1 = new File(directory,"path_region.svg");
             bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file1),"UTF-8"));
             line  = bufferedReader.readLine();

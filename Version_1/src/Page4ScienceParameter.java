@@ -66,6 +66,7 @@ public class Page4ScienceParameter extends JPanel{
         Screen.polygonObject = new GetPolygon();
         Screen.arcObject = new GetArc();
         Screen.pathsObject = new GetPaths();
+        Screen.bezierObject = new GetBezier();
         Screen.page3AutoMathScience =new Page3AutoMathScience();
     }
 
