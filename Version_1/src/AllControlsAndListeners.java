@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -118,9 +119,10 @@ public final class AllControlsAndListeners extends JFrame {
     private javax.swing.JLabel reduceNodesLabel;
     public javax.swing.JCheckBox dilationCheck;
     public javax.swing.JCheckBox erosionCheck;
+    public javax.swing.JCheckBox reduceNodesCheck;
     public javax.swing.JSlider dilationSlider;
     public javax.swing.JSlider erosionSlider;
-    public javax.swing.JSlider removeNodesSlider;
+    public javax.swing.JSlider reduceNodesSlider;
     public javax.swing.JToolBar jToolbarSciencePage4;
     public javax.swing.JButton jScienceGoBackPage4;
     public javax.swing.JButton jScienceNextPage4;
@@ -714,7 +716,7 @@ public final class AllControlsAndListeners extends JFrame {
         jScienceDiagram.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Screen.maths_science_exe.load_science();
+                    Screen.maths_science_exe.load_science(new HashMap<>());
 //                    Screen.page4ManualMathScience = new Page4ManualMathScience();
                     Screen.page4ScienceParameter = new Page4ScienceParameter();
                     Screen.mainFrame.validate();
@@ -1164,10 +1166,16 @@ public final class AllControlsAndListeners extends JFrame {
         erosionLabel.setMaximumSize(new Dimension(60, 45));
         erosionLabel.setText("<html>Erosion<br>Parameter</html>");
 
+        reduceNodesLabel = new javax.swing.JLabel();
+        reduceNodesLabel.setMaximumSize(new Dimension(60, 45));
+        reduceNodesLabel.setText("<html>Reduce<br>Nodes</html>");
+
         dilationCheck = new javax.swing.JCheckBox();
         dilationCheck.setSelected(false);
         erosionCheck = new javax.swing.JCheckBox();
         erosionCheck.setSelected(false);
+        reduceNodesCheck = new javax.swing.JCheckBox();
+        reduceNodesCheck.setSelected(true);
 
         dilationSlider = new javax.swing.JSlider();
         dilationSlider.setMajorTickSpacing(2);
@@ -1191,6 +1199,23 @@ public final class AllControlsAndListeners extends JFrame {
         erosionSlider.setEnabled(false);
         erosionSlider.setMaximumSize(new java.awt.Dimension(100, 45));
 
+        Hashtable<Integer,JLabel> reduceNodestable = new Hashtable<>();
+        for(int j = 0; j <= 30; j += 10) {
+            String s = String.format("%d", (int)(j/10.0));
+            reduceNodestable.put(Integer.valueOf(j), new JLabel(s));
+        }
+        reduceNodesSlider = new javax.swing.JSlider();
+        reduceNodesSlider.setMajorTickSpacing(10);
+        reduceNodesSlider.setMinimum(0);
+        reduceNodesSlider.setMaximum(30);
+        reduceNodesSlider.setValue(20);
+        reduceNodesSlider.setMinorTickSpacing(2);
+        reduceNodesSlider.setLabelTable(reduceNodestable);
+        reduceNodesSlider.setPaintLabels(true);
+        reduceNodesSlider.setPaintTicks(true);
+        reduceNodesSlider.setSnapToTicks(true);
+        reduceNodesSlider.setMaximumSize(new java.awt.Dimension(100, 45));
+
         jToolbarSciencePage4 = new javax.swing.JToolBar();
         jToolbarSciencePage4.add(dilationCheck);
         jToolbarSciencePage4.add(dilationLabel);
@@ -1198,6 +1223,9 @@ public final class AllControlsAndListeners extends JFrame {
         jToolbarSciencePage4.add(erosionCheck);
         jToolbarSciencePage4.add(erosionLabel);
         jToolbarSciencePage4.add(erosionSlider);
+        jToolbarSciencePage4.add(reduceNodesCheck);
+        jToolbarSciencePage4.add(reduceNodesLabel);
+        jToolbarSciencePage4.add(reduceNodesSlider);
 
         jScienceGoBackPage4 = new javax.swing.JButton(new javax.swing.ImageIcon(Screen.config.get("Go_back_parameter_page4")));
         jScienceGoBackPage4.setContentAreaFilled(false);
@@ -1214,9 +1242,152 @@ public final class AllControlsAndListeners extends JFrame {
     private void initializePage4ScienceListeners(){
         jScienceGoBackPage4.setToolTipText("Revert back to previous stage");
         jScienceNextPage4.setToolTipText("Go to next page if you see best detection result");
-        dilationSlider.setToolTipText("<html>A parameter to select mask size for dilation</html>");
-        duplicateLineDetectionByAngle.setToolTipText("<html>A parameter to select mask size for erosion</html>");
+        dilationSlider.setToolTipText("<html>Parameter to select mask size for dilation</html>");
+        erosionSlider.setToolTipText("<html>Parameter to select mask size for erosion</html>");
+        reduceNodesSlider.setToolTipText("<html>Threshold distance parameter for including node</html>");
 
+        HashMap<String,String> args = new HashMap<>();
+        args.put("dilationCheck",String.valueOf(dilationCheck.isSelected()));
+        args.put("dilationValue",String.valueOf(dilationSlider.getValue()));
+        args.put("erosionCheck",String.valueOf(erosionCheck.isSelected()));
+        args.put("erosionValue",String.valueOf(erosionSlider.getValue()));
+        args.put("reduceNodesCheck",String.valueOf(reduceNodesCheck.isSelected()));
+        args.put("reduceNodesValue",String.valueOf(reduceNodesSlider.getValue()/10.0));
+
+        dilationCheck.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e)  {
+                try{
+                    if(dilationCheck.isSelected()){
+                        dilationSlider.setEnabled(true);
+                    } else {
+                        dilationSlider.setEnabled(false);
+                    }
+                    args.put("dilationCheck",String.valueOf(dilationCheck.isSelected()));
+                    Screen.maths_science_exe.load_science(args);
+                    Screen.mainFrame.validate();
+                    Screen.mainFrame.repaint();
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.mainFrame.setVisible(true);
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
+                }
+                catch (IOException | InterruptedException ex) {
+                    Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        dilationSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                try{
+                    args.put("dilationValue",String.valueOf(dilationSlider.getValue()));
+                    Screen.maths_science_exe.load_science(args);
+                    Screen.mainFrame.validate();
+                    Screen.mainFrame.repaint();
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.mainFrame.setVisible(true);
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
+                 }
+                 catch (IOException | InterruptedException ex) {
+                    Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+            }
+        });
+
+        erosionCheck.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e)  {
+                try{
+                    if(erosionCheck.isSelected()){
+                        erosionSlider.setEnabled(true);
+                    } else {
+                        erosionSlider.setEnabled(false);
+                    }
+                    args.put("erosionCheck",String.valueOf(erosionCheck.isSelected()));
+                    Screen.maths_science_exe.load_science(args);
+                    Screen.mainFrame.validate();
+                    Screen.mainFrame.repaint();
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.mainFrame.setVisible(true);
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
+                }
+                catch (IOException | InterruptedException ex) {
+                    Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        erosionSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                try{
+                    args.put("erosionValue",String.valueOf(erosionSlider.getValue()));
+                    Screen.maths_science_exe.load_science(args);
+                    Screen.mainFrame.validate();
+                    Screen.mainFrame.repaint();
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.mainFrame.setVisible(true);
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
+                }
+                catch (IOException | InterruptedException ex) {
+                    Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        reduceNodesCheck.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e)  {
+                try{
+                    if(reduceNodesCheck.isSelected()){
+                        reduceNodesSlider.setEnabled(true);
+                    } else {
+                        reduceNodesSlider.setEnabled(false);
+                    }
+                    args.put("reduceNodesCheck",String.valueOf(reduceNodesCheck.isSelected()));
+                    Screen.maths_science_exe.load_science(args);
+                    Screen.mainFrame.validate();
+                    Screen.mainFrame.repaint();
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.mainFrame.setVisible(true);
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
+                }
+                catch (IOException | InterruptedException ex) {
+                    Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        reduceNodesSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                try{
+                    args.put("reduceNodesValue",String.valueOf(reduceNodesSlider.getValue()/10.0));
+                    Screen.maths_science_exe.load_science(args);
+                    Screen.mainFrame.validate();
+                    Screen.mainFrame.repaint();
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);  //Screen.a2.screenLabel.repaint();
+                    Screen.mainFrame.setVisible(true);
+                    screen.repaint(Screen.bufferedImageScreen, Screen.initialFrameSetup.screenCopy);
+                    Screen.initialFrameSetup.jScrollPane1.setViewportView(Screen.initialFrameSetup.screenLabel);
+                }
+                catch (IOException | InterruptedException ex) {
+                    Logger.getLogger(AllControlsAndListeners.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
 
         jScienceGoBackPage4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

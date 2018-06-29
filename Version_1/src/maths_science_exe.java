@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -161,7 +162,15 @@ public class maths_science_exe {
         file.delete();
     }
 
-    public void load_science() throws IOException, InterruptedException{
+    public void load_science(HashMap<String,String> args) throws IOException, InterruptedException{
+        Screen.linesObject = new GetLines();
+        Screen.circlesObject = new GetCircles();
+        Screen.regionsObject = new GetRegions();
+        Screen.polygonObject = new GetPolygon();
+        Screen.arcObject = new GetArc();
+        Screen.pathsObject = new GetPaths();
+        Screen.bezierObject = new GetBezier();
+
         String h1 = screen.currentFile.getAbsolutePath();
         String h2 = String.valueOf(screen.currentFile.getName());
         String ty = h2.substring(0,h2.lastIndexOf("."))+"_1"+h2.substring(h2.lastIndexOf("."));
@@ -175,7 +184,7 @@ public class maths_science_exe {
 //        Process process = runtime.exec("\""+ Screen.config.get("science.exe")+"\""+" "+"\""+ outputFile.getAbsolutePath()+"\"",null,dir);
 //        process.waitFor();
         ScienceExtraction extraction = new ScienceExtraction();
-        extraction.extract(outputFile.getAbsolutePath(),Screen.config.get("library_directory_path"));
+        extraction.extract(outputFile.getAbsolutePath(),Screen.config.get("library_directory_path"),args);
         System.out.println("Science done");
         File file = new File(Screen.config.get("library_directory_path")+"//regions.txt");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));

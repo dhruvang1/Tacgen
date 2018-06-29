@@ -86,6 +86,7 @@ public class Screen {
                 || Screen.allControlsAndListeners.jDeleteButton.isDisplayable()
                 || Screen.allControlsAndListeners.jSaveButton.isDisplayable()
                 || Screen.allControlsAndListeners.duplicateLineDetectionByDistance.isDisplayable()
+                || Screen.allControlsAndListeners.dilationSlider.isDisplayable()
                 ){
             return false;
         }
@@ -99,6 +100,7 @@ public class Screen {
                 || Screen.allControlsAndListeners.jDeleteButton.isDisplayable()
                 || Screen.allControlsAndListeners.jSaveButton.isDisplayable()
                 || Screen.allControlsAndListeners.duplicateLineDetectionByDistance.isDisplayable()
+                || Screen.allControlsAndListeners.dilationSlider.isDisplayable()
                 ){
             return false;
         }

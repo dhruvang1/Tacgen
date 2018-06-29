@@ -6,13 +6,14 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ScienceExtraction {
     private int threshold = 100;
     private double epsilon = 2;
 
-    public void extract(String srcImgPath, String destImgPath) throws IOException{
+    public void extract(String srcImgPath, String destImgPath, HashMap<String,String> args) throws IOException{
         Mat imgSrc = Imgcodecs.imread(srcImgPath, Imgcodecs.IMREAD_COLOR);
         if (imgSrc.empty()){
 
@@ -21,35 +22,28 @@ public class ScienceExtraction {
         Imgproc.cvtColor(imgSrc,imgGray,Imgproc.COLOR_BGR2GRAY);
         Imgproc.blur(imgGray,imgGray,new Size(3.0,3.0));
 
-        int erosion_size = 4;
-        int dilation_size = 4;
-        Mat elementErosion = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(erosion_size , erosion_size));
-        Mat elementDilation = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(dilation_size, dilation_size));
+
 
         Mat cannyOutput = new Mat();
         List<MatOfPoint> contours = new ArrayList<>();
         ArrayList<ArrayList<Point>> new_contours;
         Mat heirarchy = new Mat();
 
-//        Mat flooded = new Mat();
-//        Imgcodecs.imwrite("D:\\MTP\\TacGen\\before_flood.jpg",imgGray);
-//        Imgproc.floodFill(imgGray,flooded,new Point(1000,635),new Scalar(0),new Rect(),new Scalar(10),new Scalar(10),8);
-
-
-        Imgcodecs.imwrite("D:\\MTP\\TacGen\\after_flood.jpg",imgGray);
-
         Imgproc.Canny(imgGray,cannyOutput,threshold,threshold*2,3,false);
-        Imgcodecs.imwrite("D:\\MTP\\TacGen\\canny.jpg",cannyOutput);
+//        Imgcodecs.imwrite("D:\\MTP\\TacGen\\canny.jpg",cannyOutput);
 
-//        cannyOutput = Imgcodecs.imread("D:\\MTP\\TacGen\\canny2.jpg");
-//        Imgproc.cvtColor(cannyOutput,cannyOutput,Imgproc.COLOR_BGR2GRAY);
-//        Imgproc.threshold(cannyOutput,cannyOutput,100,255,Imgproc.THRESH_BINARY);
-//        Imgcodecs.imwrite("D:\\MTP\\TacGen\\canny3.jpg",cannyOutput);
-
-//        Imgproc.dilate(cannyOutput,cannyOutput,elementDilation);
+        if(Boolean.valueOf(args.get("dilationCheck"))){
+            int dilation_size =  Integer.parseInt(args.get("dilationValue"));
+            Mat elementDilation = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(dilation_size, dilation_size));
+            Imgproc.dilate(cannyOutput,cannyOutput,elementDilation);
+        }
 //        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\dilate.jpg",cannyOutput);
-//
-//        Imgproc.erode(cannyOutput,cannyOutput,elementErosion);
+
+        if(Boolean.valueOf(args.get("erosionCheck"))){
+            int erosion_size = Integer.parseInt(args.get("erosionValue"));
+            Mat elementErosion = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(erosion_size , erosion_size));
+            Imgproc.erode(cannyOutput,cannyOutput,elementErosion);
+        }
 //        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\erode.jpg",cannyOutput);
 
         Imgproc.findContours(cannyOutput,contours,heirarchy,Imgproc.RETR_CCOMP,Imgproc.CHAIN_APPROX_TC89_KCOS, new Point(0,0));
@@ -72,12 +66,16 @@ public class ScienceExtraction {
 //
 //        }
 
+        boolean toReduce = Boolean.valueOf(args.get("reduceNodesCheck"));
 
         for(int i=0;i<contours.size();i++){
             if(heirarchy.get(0,i)[3] == -1){
                 List <Point> tempContour = contours.get(i).toList();
                 originalPoints += tempContour.size();
-                tempContour = reducePoints(tempContour,0,tempContour.size()-1);
+                if(toReduce){
+                    epsilon = Double.valueOf(args.get("reduceNodesValue"));
+                    tempContour = reducePoints(tempContour,0,tempContour.size()-1);
+                }
                 reducedPoints += tempContour.size();
                 int tempSize = tempContour.size();
                 for(int j=0;j<tempSize-1;j++){

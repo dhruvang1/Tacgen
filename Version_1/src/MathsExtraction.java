@@ -452,7 +452,7 @@ public class MathsExtraction {
 
 //        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\before2.jpg",srcGray);
         threshold(srcGray,srcGray,175,255,THRESH_BINARY);
-        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\after2.jpg",srcGray);
+//        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\after2.jpg",srcGray);
 
         Core.MinMaxLocResult mmr = Core.minMaxLoc(srcGray);
         int max = (int)mmr.maxVal;
@@ -538,7 +538,7 @@ public class MathsExtraction {
         Mat cannyOutput = new Mat();
         Imgproc.Canny(src,cannyOutput,threshold,threshold*2,3,false);
 
-        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\canny.jpg",cannyOutput);
+//        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\canny.jpg",cannyOutput);
 
         int [][] accumulator = new int[accumulatorRows][accumulatorCols];
         for(int x=0;x<rows;x++){
@@ -598,10 +598,10 @@ public class MathsExtraction {
         }
         localPeaks.sort((int[] a, int[] b) -> b[2] - a[2]);
 
-        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\out.jpg",out);
+//        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\out.jpg",out);
         Mat blurredCanny = new Mat();
         GaussianBlur( cannyOutput, blurredCanny, new Size(7, 7), 2, 2 );
-        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\canny2.jpg",blurredCanny);
+//        Imgcodecs.imwrite("C:\\Users\\Dhruvang\\Desktop\\canny2.jpg",blurredCanny);
         return houghSegments(blurredCanny,localPeaks);
     }
 
